@@ -218,3 +218,14 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# ========== 项目大体积数据文件 ==========
+# 原始点云和真值矩阵体积大，无需提交到Git
+data/*.ply
+data/*.npy
+outputs/**/*.ply
+outputs/**/*.npy
+
+# ========== Windows 系统垃圾 ==========
+Thumbs.db
+desktop.ini

@@ -1,0 +1,30 @@
+# L3 关卡：高斯噪声 + 离群点
+# 噪声约 0.005 * 点云尺度，离群点 5–10%。
+# 现有 make_data.py 的 noise_sigma 单位为点云坐标单位（组合体尺度 ~0.8），
+# 因此 0.005 * 0.8 ≈ 0.004。
+level: L3
+n_points: 30000
+
+# --- 位姿变换（中等角度）---
+rot_x_deg: 20.0
+rot_y_deg: -25.0
+rot_z_deg: 30.0
+translation:
+  - 0.40
+  - 0.20
+  - -0.10
+
+# --- 退化处理：高斯噪声 + 离群点（不裁剪）---
+noise_sigma: 0.004
+outlier_ratio: 0.08
+crop_ratio: 0.0
+crop_axis: z
+crop_sign: "+"
+
+# --- 写死的随机种子（可复现）---
+seed: 303
+
+# --- 达标阈值 ---
+thresholds:
+  rot_max_deg: 5.0
+  fitness_min: 0.8

@@ -1,0 +1,29 @@
+# L1 关卡：小角度旋转 + 干净数据
+# 各轴旋转 <= 15 度，无噪声、无离群点、无裁剪。
+# 顶层参数名严格对应 src/make_data.py 中 LevelConfig 的字段名。
+level: L1
+n_points: 30000
+
+# --- 位姿变换（make_data.LevelConfig 字段）---
+rot_x_deg: 8.0
+rot_y_deg: -12.0
+rot_z_deg: 10.0
+translation:
+  - 0.30
+  - 0.10
+  - 0.20
+
+# --- 退化处理：L1 全部为 0，即干净数据 ---
+noise_sigma: 0.0
+outlier_ratio: 0.0
+crop_ratio: 0.0
+crop_axis: z
+crop_sign: "+"
+
+# --- 写死的随机种子（可复现）---
+seed: 101
+
+# --- 达标阈值（run_benchmark 判定用，不进 make_data）---
+thresholds:
+  rot_max_deg: 5.0
+  fitness_min: 0.8

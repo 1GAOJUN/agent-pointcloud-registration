@@ -1,0 +1,30 @@
+{
+  "case_type": "synthetic",
+  "seed": 1,
+  "config": {
+    "level": "L1",
+    "n_points": 30000,
+    "rot_x_deg": 5.0,
+    "rot_y_deg": 15.0,
+    "rot_z_deg": -5.0,
+    "translation": [
+      0.3,
+      0.1,
+      0.2
+    ],
+    "noise_sigma": 0.003,
+    "outlier_ratio": 0.01,
+    "crop_ratio": 0.08,
+    "crop_axis": "z",
+    "crop_sign": "+"
+  },
+  "extra_config": {},
+  "generated_at": "2026-10-04T20:33:15",
+  "source_points": 30000,
+  "target_points": 30274,
+  "paths": {
+    "source": "D:\\STUDY\\darker\\agent-pointcloud-registration\\data\\L1\\seed_001\\source.ply",
+    "target": "D:\\STUDY\\darker\\agent-pointcloud-registration\\data\\L1\\seed_001\\target.ply",
+    "gt_transform": "D:\\STUDY\\darker\\agent-pointcloud-registration\\data\\L1\\seed_001\\gt_transform.npy"
+  }
+}

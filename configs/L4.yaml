@@ -1,0 +1,30 @@
+# L4 关卡：部分重叠（目标点云裁剪 30%）
+# 现有 make_data.py 已内置裁剪（crop_ratio 为删除比例），
+# 因此 L4 直接复用 crop_ratio=0.30，无需新增裁剪函数。
+# 旋转保持小角度，以便"部分重叠"是唯一主要难度来源。
+level: L4
+n_points: 30000
+
+# --- 位姿变换（小角度）---
+rot_x_deg: 10.0
+rot_y_deg: 15.0
+rot_z_deg: -8.0
+translation:
+  - 0.30
+  - 0.15
+  - 0.25
+
+# --- 退化处理：目标点云裁剪 30%（半空间删除）---
+noise_sigma: 0.0
+outlier_ratio: 0.0
+crop_ratio: 0.30
+crop_axis: z
+crop_sign: "+"
+
+# --- 写死的随机种子（可复现）---
+seed: 404
+
+# --- 达标阈值（部分重叠下 ICP 通常难达标）---
+thresholds:
+  rot_max_deg: 5.0
+  fitness_min: 0.8

@@ -1,0 +1,21 @@
+evaluate.py self test report
+generated_at: 2026-10-04 20:50:56
+tolerance: 1e-06
+
+[PASS] identity
+  rot_err_deg = 0.0000000000 (expected 0.0)
+  trans_err   = 0.0000000000 (expected 0.0)
+
+[PASS] pure_rotation_30_z
+  rot_err_deg = 30.0000000000 (expected 30.0)
+  trans_err   = 0.0000000000 (expected 0.0)
+
+[PASS] pure_translation
+  rot_err_deg = 0.0000000000 (expected 0.0)
+  trans_err   = 0.6164414003 (expected 0.6164414002968976)
+
+[PASS] combined
+  rot_err_deg = 30.0000000000 (expected 30.0)
+  trans_err   = 0.3741657387 (expected 0.37416573867739417)
+
+all_passed: True
