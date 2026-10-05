@@ -1,0 +1,35 @@
+{
+  "source_ply": "D:\\STUDY\\darker\\agent-pointcloud-registration\\outputs\\ICP\\L2\\source.ply",
+  "target_ply": "D:\\STUDY\\darker\\agent-pointcloud-registration\\outputs\\ICP\\L2\\target.ply",
+  "gt_path": "D:\\STUDY\\darker\\agent-pointcloud-registration\\outputs\\ICP\\L2\\gt_transform.npy",
+  "thresholds": {
+    "rot_max_deg": 5.0,
+    "fitness_min": 0.8
+  },
+  "steps": [
+    {
+      "step": "baseline",
+      "strategy": "朴素ICP（单位阵初值）",
+      "rot_err_deg": 125.47383277877043,
+      "trans_err": 0.5267301293813061,
+      "fitness": 0.13443333333333332,
+      "elapsed_sec": 6.272146900000735,
+      "passed": false,
+      "detail": "rot_err=125.4738° trans_err=0.5267 fitness=0.1344"
+    },
+    {
+      "step": "global",
+      "strategy": "FPFH+RANSAC全局粗配准 + ICP精化",
+      "rot_err_deg": 1.2074182697257333e-06,
+      "trans_err": 0.0,
+      "fitness": 1.0,
+      "elapsed_sec": 0.5431057999994664,
+      "passed": true,
+      "detail": "rot_err=0.0000° trans_err=0.0000 fitness=1.0000 ransac_fitness=1.0000"
+    }
+  ],
+  "diagnosis": "旋转误差 125.47° 远超阈值（>5.0°），判定为大角度初始位姿偏差（单位阵初值远离真实变换），朴素 ICP 局部收敛失败。",
+  "final_passed": true,
+  "switch_strategy": true,
+  "total_elapsed_sec": 6.992621100000179
+}

@@ -1,0 +1,28 @@
+L2 Registration Pipeline Execution Log
+==================================================
+started_at: 2026-10-05 21:20:19
+source: D:\STUDY\darker\agent-pointcloud-registration\outputs\L2\source.ply
+target: D:\STUDY\darker\agent-pointcloud-registration\outputs\L2\target.ply
+gt:     D:\STUDY\darker\agent-pointcloud-registration\outputs\L2\gt_transform.npy
+
+[Stage 1] SVD cross-covariance global init
+  fitness(svd) = 1.0000
+  rmse(svd)    = 8.503e-16
+  rot_err vs gt = 0.000002 deg
+  elapsed     = 0.373 s
+
+[Stage 2] Naive point-to-plane ICP refinement (init = SVD global)
+  fitness(icp) = 1.0000
+  rmse(icp)    = 2.658e-16
+  rot_err vs gt = 0.000002 deg
+  elapsed     = 0.035 s
+
+[Stage 3] Evaluation vs gt_transform.npy
+  rot_err   = 0.000002 deg  (threshold 5.0 deg) -> PASS
+  trans_err = 0.000000  (threshold 0.05 ) -> PASS
+  fitness   = 1.0000  (min 0.8) -> PASS
+  overall success = True
+
+total_elapsed_s: 0.503
+est_transform saved to: D:\STUDY\darker\agent-pointcloud-registration\outputs\L2\est_transform.npy
+result json saved to:    D:\STUDY\darker\agent-pointcloud-registration\outputs\L2\l2_registration_result.json

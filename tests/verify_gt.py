@@ -78,7 +78,7 @@ def verify_pointwise_clean(case_dir: Path) -> Dict[str, float]:
 
 
 def main() -> int:
-    out_root = _PROJECT_ROOT / "outputs"
+    out_root = _PROJECT_ROOT / "outputs" / "ICP"
     all_ok = True
     print("=== 真值自验：刚体合法性（所有关卡）===")
     for lv in ["L1", "L2", "L3", "L4"]:

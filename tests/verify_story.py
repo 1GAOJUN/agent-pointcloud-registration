@@ -17,7 +17,7 @@ _PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
 
 def main() -> int:
-    csv_path = _PROJECT_ROOT / "outputs" / "baseline_results.csv"
+    csv_path = _PROJECT_ROOT / "outputs" / "reports" / "baseline_results.csv"
     if not csv_path.exists():
         print("[FAIL] 未找到 outputs/baseline_results.csv，请先运行 src/run_benchmark.py")
         return 1

@@ -6,6 +6,10 @@ fitness 指标来自 open3d.pipelines.registration.registration_icp 的 result.f
 
 运行：
     D:\APP\Anaconda\envs\pointcloud_agh\python.exe src\run_benchmark.py
+可选参数：
+    D:\APP\Anaconda\envs\pointcloud_agh\python.exe src\run_benchmark.py --visualize
+      基准测试跑完后自动调用 src/visualize_all_cases.py 生成配准对比图。
+      不加该参数时保持原有纯数值输出逻辑，不影响基准运行速度。
 """
 
 from __future__ import annotations
@@ -32,10 +36,6 @@ import evaluate   # noqa: E402
 
 # ---------------------------------------------------------------------------
 # 极简 YAML 加载器（仅支持本项目 configs 用到的语法子集）
-#   - 顶层 key: value 标量（str/int/float/bool）
-#   - 列表：多行 "- item"
-#   - 嵌套块：key: 后跟缩进的 key: value（仅一层）
-# 不依赖 PyYAML（环境未安装），保持 requirements 不变。
 # ---------------------------------------------------------------------------
 
 
@@ -61,20 +61,10 @@ def _parse_scalar(raw: str) -> Any:
 
 
 def load_yaml_config(path: Path) -> Dict[str, Any]:
-    """解析极简 YAML 配置文件为 dict。
-
-    支持的语法：
-      key: value          # 标量
-      key:                # 嵌套块（一层）
-        subkey: value
-      key:                # 列表
-        - item
-        - item
-    足以覆盖 configs/L*.yaml 的全部用法。
-    """
+    """解析极简 YAML 配置文件为 dict（标量、一层嵌套块、列表）。"""
     data: Dict[str, Any] = {}
-    current_block: str | None = None   # 当前所属嵌套块 key
-    current_list: str | None = None    # 当前所属列表 key
+    current_block: str | None = None
+    current_list: str | None = None
     lines = path.read_text(encoding="utf-8").splitlines()
     i = 0
     while i < len(lines):
@@ -105,9 +95,7 @@ def load_yaml_config(path: Path) -> Dict[str, Any]:
                 pass
         else:
             if is_list_item:
-                # 归入最近设置的空 key（当前列表）
                 if current_list is None:
-                    # 找到最近设置的空 dict key，转成列表
                     candidates = [k for k in data if isinstance(data[k], dict)]
                     if candidates:
                         current_list = candidates[-1]
@@ -140,20 +128,14 @@ def _estimate_normals(pcd: o3d.geometry.PointCloud) -> o3d.geometry.PointCloud:
 def run_level(level_name: str, cfg: Dict[str, Any], out_root: Path) -> Dict[str, Any]:
     """执行单个关卡：数据生成 → ICP → 评测 → 存盘。
 
-    Args:
-        level_name: 关卡名，如 L1。
-        cfg: 解析后的关卡配置 dict。
-        out_root: outputs/ 根目录。
-
-    Returns:
-        含 rot_err_deg/trans_err/fitness/耗时/达标 的 dict。
+    额外把 ICP 估计变换矩阵保存为 outputs/Lx/est_transform.npy，
+    供 src/visualize_all_cases.py 渲染"配准后 source"时使用。
     """
     seed = int(cfg.get("seed", 0))
     thresholds = cfg.get("thresholds", {})
     rot_max = float(thresholds.get("rot_max_deg", 5.0))
     fitness_min = float(thresholds.get("fitness_min", 0.8))
 
-    # 构造 make_data.LevelConfig 可识别的平铺 dict（只用已知字段）
     level_cfg = {k: v for k, v in cfg.items() if k in {
         "level", "n_points", "rot_x_deg", "rot_y_deg", "rot_z_deg",
         "translation", "noise_sigma", "outlier_ratio", "crop_ratio",
@@ -170,12 +152,10 @@ def run_level(level_name: str, cfg: Dict[str, Any], out_root: Path) -> Dict[str,
     tgt_ply = case_dir / "target.ply"
     gt_npy = case_dir / "gt_transform.npy"
     gt_T = np.asarray(case["gt_transform"], dtype=np.float64)
-    # 再存一份扁平到 outputs/Lx/（generate_case 写在 seed_xxx/ 子目录，这里补齐顶层）
     np.save(out_dir / "gt_transform.npy", gt_T)
     meta = {k: v for k, v in case.items() if k != "gt_transform"}
     (out_dir / "meta.json").write_text(
         json.dumps(meta, indent=2, ensure_ascii=False, default=str), encoding="utf-8")
-    # 拷贝输入点云到 outputs/Lx/ 顶层
     (out_dir / "source.ply").write_bytes(src_ply.read_bytes())
     (out_dir / "target.ply").write_bytes(tgt_ply.read_bytes())
 
@@ -188,7 +168,7 @@ def run_level(level_name: str, cfg: Dict[str, Any], out_root: Path) -> Dict[str,
     t0 = time.perf_counter()
     icp = reg.registration_icp(
         source, target,
-        0.04,  # max_correspondence_distance
+        0.04,
         np.eye(4),
         estimation_method=reg.TransformationEstimationPointToPlane(),
         criteria=reg.ICPConvergenceCriteria(max_iteration=100, relative_fitness=1e-6, relative_rmse=1e-6),
@@ -197,6 +177,8 @@ def run_level(level_name: str, cfg: Dict[str, Any], out_root: Path) -> Dict[str,
 
     est_T = np.asarray(icp.transformation, dtype=np.float64)
     fitness = float(icp.fitness)
+    # 新增：保存 ICP 估计变换矩阵，供可视化脚本渲染配准后 source
+    np.save(out_dir / "est_transform.npy", est_T)
 
     # 3. 评测（复用 evaluate.py）
     T_gt_loaded = evaluate.load_transform(str(out_dir / "gt_transform.npy"))
@@ -204,7 +186,7 @@ def run_level(level_name: str, cfg: Dict[str, Any], out_root: Path) -> Dict[str,
     trans_err = evaluate.translation_error(est_T, T_gt_loaded)
     passed = (rot_err < rot_max) and (fitness >= fitness_min)
 
-    record = {
+    return {
         "level": level_name,
         "seed": seed,
         "rot_err_deg": rot_err,
@@ -215,7 +197,6 @@ def run_level(level_name: str, cfg: Dict[str, Any], out_root: Path) -> Dict[str,
         "fitness_min": fitness_min,
         "passed": passed,
     }
-    return record
 
 
 # ---------------------------------------------------------------------------
@@ -239,11 +220,24 @@ def format_markdown_table(records: List[Dict[str, Any]]) -> str:
     return "\n".join(rows)
 
 
-def main() -> int:
+def _maybe_visualize() -> None:
+    """可选：基准跑完后调用可视化脚本。失败不影响基准结果。"""
+    try:
+        import visualize_all_cases  # noqa: E402
+        visualize_all_cases.main()
+    except Exception as exc:  # 可视化不应阻断基准
+        print(f"[warn] 可视化步骤失败（不影响基准数值）：{exc}")
+
+
+def main(argv: List[str] | None = None) -> int:
+    argv = argv if argv is not None else sys.argv[1:]
+    do_visualize = "--visualize" in argv
+
     root = _PROJECT_ROOT
     cfg_dir = root / "configs"
-    out_root = root / "outputs"
+    out_root = root / "outputs" / "ICP"
     out_root.mkdir(parents=True, exist_ok=True)
+    # CSV 与 ICP 关卡目录同级（outputs 根），保持评审主表位置不变
 
     levels = ["L1", "L2", "L3", "L4"]
     records: List[Dict[str, Any]] = []
@@ -261,7 +255,8 @@ def main() -> int:
               f"passed={rec['passed']}")
 
     # 写 CSV
-    csv_path = out_root / "baseline_results.csv"
+    csv_path = out_root.parent / "reports" / "baseline_results.csv"
+    csv_path.parent.mkdir(parents=True, exist_ok=True)
     cols = ["level", "seed", "rot_err_deg", "trans_err", "fitness",
             "elapsed_sec", "rot_max_deg", "fitness_min", "passed"]
     with open(csv_path, "w", newline="", encoding="utf-8") as f:
@@ -276,6 +271,11 @@ def main() -> int:
     print("## 基准汇总表")
     print(format_markdown_table(records))
     print("=" * 60)
+
+    # 可选：可视化
+    if do_visualize:
+        print("\n[visualize] 生成配准对比图 ...")
+        _maybe_visualize()
 
     return 0
 

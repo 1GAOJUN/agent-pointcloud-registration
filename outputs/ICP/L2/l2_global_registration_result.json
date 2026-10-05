@@ -1,0 +1,26 @@
+{
+  "case_dir": "D:\\STUDY\\darker\\agent-pointcloud-registration\\outputs\\ICP\\L2",
+  "thresholds": {
+    "rot_max_deg": 5.0,
+    "fitness_min": 0.8
+  },
+  "rows": [
+    {
+      "name": "朴素ICP（对照组）",
+      "rot_err_deg": 124.86832418092317,
+      "trans_err": 0.5297889611698064,
+      "fitness": 0.13393333333333332,
+      "elapsed_sec": 6.850990199998705,
+      "passed": false
+    },
+    {
+      "name": "FPFH+RANSAC+ICP（实验组）",
+      "rot_err_deg": 1.2074182697257333e-06,
+      "trans_err": 2.7755575615628914e-17,
+      "fitness": 1.0,
+      "elapsed_sec": 0.8429083000009996,
+      "passed": true
+    }
+  ],
+  "experiment_passed": true
+}
