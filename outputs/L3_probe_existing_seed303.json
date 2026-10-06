@@ -1,0 +1,42 @@
+{
+  "case": "L3 seed_303 existing outputs/ICP/L3",
+  "thresholds": {
+    "rot_max_deg": 5.0,
+    "fitness_min": 0.8
+  },
+  "steps": [
+    {
+      "rot_err_deg": 30.636945670924877,
+      "trans_err": 0.34147242884777146,
+      "fitness": 0.32253333333333334,
+      "rmse": 0.025380805352806495,
+      "elapsed_sec": 1.3851829999994152,
+      "ransac_fitness": null,
+      "ransac_rmse": null,
+      "strategy": "icp_naive",
+      "passed": false
+    },
+    {
+      "rot_err_deg": 29.366214453839202,
+      "trans_err": 0.3652934247018564,
+      "fitness": 0.19859610379367457,
+      "rmse": 0.022088692987857483,
+      "elapsed_sec": 3.111320599999999,
+      "ransac_fitness": null,
+      "ransac_rmse": null,
+      "strategy": "icp_robust_outlier",
+      "passed": false
+    },
+    {
+      "rot_err_deg": 0.13230365063161392,
+      "trans_err": 0.00015099813889630023,
+      "fitness": 1.0,
+      "rmse": 0.004952148834286029,
+      "elapsed_sec": 6.996972400000232,
+      "ransac_fitness": 1.0,
+      "ransac_rmse": 0.10523648751209738,
+      "strategy": "global_registration_robust",
+      "passed": true
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+[
+  {
+    "seed": 505,
+    "case_dir": "D:\\STUDY\\darker\\agent-pointcloud-registration\\data\\L3\\seed_505",
+    "source": "D:\\STUDY\\darker\\agent-pointcloud-registration\\data\\L3\\seed_505\\source.ply",
+    "target": "D:\\STUDY\\darker\\agent-pointcloud-registration\\data\\L3\\seed_505\\target.ply",
+    "gt_transform": "D:\\STUDY\\darker\\agent-pointcloud-registration\\data\\L3\\seed_505\\gt_transform.npy",
+    "source_points": 30000,
+    "target_points": 32400,
+    "thresholds": {
+      "rot_max_deg": 5.0,
+      "fitness_min": 0.8
+    },
+    "config": {
+      "level": "L3",
+      "n_points": 30000,
+      "rot_x_deg": 20.0,
+      "rot_y_deg": -25.0,
+      "rot_z_deg": 30.0,
+      "translation": [
+        0.4,
+        0.2,
+        -0.1
+      ],
+      "noise_sigma": 0.004,
+      "outlier_ratio": 0.08,
+      "crop_ratio": 0.0,
+      "crop_axis": "z",
+      "crop_sign": "+",
+      "seed": 505
+    }
+  },
+  {
+    "seed": 707,
+    "case_dir": "D:\\STUDY\\darker\\agent-pointcloud-registration\\data\\L3\\seed_707",
+    "source": "D:\\STUDY\\darker\\agent-pointcloud-registration\\data\\L3\\seed_707\\source.ply",
+    "target": "D:\\STUDY\\darker\\agent-pointcloud-registration\\data\\L3\\seed_707\\target.ply",
+    "gt_transform": "D:\\STUDY\\darker\\agent-pointcloud-registration\\data\\L3\\seed_707\\gt_transform.npy",
+    "source_points": 30000,
+    "target_points": 32400,
+    "thresholds": {
+      "rot_max_deg": 5.0,
+      "fitness_min": 0.8
+    },
+    "config": {
+      "level": "L3",
+      "n_points": 30000,
+      "rot_x_deg": 20.0,
+      "rot_y_deg": -25.0,
+      "rot_z_deg": 30.0,
+      "translation": [
+        0.4,
+        0.2,
+        -0.1
+      ],
+      "noise_sigma": 0.004,
+      "outlier_ratio": 0.08,
+      "crop_ratio": 0.0,
+      "crop_axis": "z",
+      "crop_sign": "+",
+      "seed": 707
+    }
+  }
+]

@@ -24,8 +24,8 @@ agent-pointcloud-registration\
 │       └── global_registration.py ← L2 大角度全局粗配准：FPFH 特征 + RANSAC 全局匹配 + 点到面 ICP 精化（可独立运行自检）
 ├── configs\                         ← 四关卡参数（严格对应 make_data.LevelConfig 字段）
 │   ├── L1.yaml                      ← 小角度、干净数据
-│   ├── L2.yaml                      ← 含噪声/离群
-│   ├── L3.yaml                      ← 更大旋转
+│   ├── L2.yaml                      ← 更大旋转
+│   ├── L3.yaml                      ← 含噪声/离群
 │   └── L4.yaml                      ← 部分重叠（target 裁剪 30%）
 ├── data\                            ← make_data 生成数据目录（按 关卡/seed 组织）
 │   ├── L1\seed_001\  └── source.ply / target.ply / gt_transform.npy / meta.json / visualize_before.png

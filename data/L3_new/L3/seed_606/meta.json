@@ -1,0 +1,30 @@
+{
+  "case_type": "synthetic",
+  "seed": 606,
+  "config": {
+    "level": "L3",
+    "n_points": 30000,
+    "rot_x_deg": 20.0,
+    "rot_y_deg": -25.0,
+    "rot_z_deg": 30.0,
+    "translation": [
+      0.4,
+      0.2,
+      -0.1
+    ],
+    "noise_sigma": 0.004,
+    "outlier_ratio": 0.08,
+    "crop_ratio": 0.0,
+    "crop_axis": "z",
+    "crop_sign": "+"
+  },
+  "extra_config": {},
+  "generated_at": "2026-10-06T13:44:38",
+  "source_points": 30000,
+  "target_points": 32400,
+  "paths": {
+    "source": "data\\L3_new\\L3\\seed_606\\source.ply",
+    "target": "data\\L3_new\\L3\\seed_606\\target.ply",
+    "gt_transform": "data\\L3_new\\L3\\seed_606\\gt_transform.npy"
+  }
+}

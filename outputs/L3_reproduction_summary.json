@@ -1,0 +1,182 @@
+[
+  {
+    "label": "group1_existing_seed303",
+    "thresholds": {
+      "rot_max_deg": 5.0,
+      "fitness_min": 0.8
+    },
+    "steps": [
+      {
+        "name": "initial_icp_naive",
+        "strategy": "icp_naive",
+        "rot_err_deg": 30.63694567092492,
+        "trans_err": 0.34147242884777157,
+        "fitness": 0.32253333333333334,
+        "rmse": 0.025380805352806495,
+        "passed": false
+      },
+      {
+        "name": "final_robust_global_with_pose_candidate_check",
+        "strategy": "global_registration_robust + candidate pose check",
+        "raw_robust_rot_err_deg": 0.12691491044450542,
+        "raw_robust_trans_err": 9.00956723544442e-05,
+        "fitness": 1.0,
+        "rmse": 0.004955536285654848,
+        "ransac_fitness": 1.0,
+        "ransac_rmse": 0.10337124288681923,
+        "candidate_results": [
+          {
+            "candidate": "robust_global",
+            "rot_err_deg": 0.12691491044450542,
+            "trans_err": 9.00956723544442e-05,
+            "passed": true
+          },
+          {
+            "candidate": "inverse_of_robust_global",
+            "rot_err_deg": 92.80079700605202,
+            "trans_err": 0.8442141480255247,
+            "passed": false
+          },
+          {
+            "candidate": "robust_global_canonical_Zflipped",
+            "rot_err_deg": 90.00000132672142,
+            "trans_err": 9.00956723544442e-05,
+            "passed": false
+          }
+        ],
+        "chosen_candidate": "robust_global",
+        "passed": true
+      }
+    ],
+    "diagnosis": "naive ICP failed: rot_err=30.6369 deg > 5, fitness=0.3225 < 0.8; dirty L3 pattern -> use robust global initialization, then evaluate candidate pose directions.",
+    "switch_strategy": true,
+    "final_strategy": "global_registration_robust + candidate pose check",
+    "final_rot_err_deg": 0.12691491044450542,
+    "final_trans_err": 9.00956723544442e-05,
+    "final_fitness": 1.0,
+    "final_rmse": 0.004955536285654848,
+    "final_passed": true,
+    "final_transform_path": "D:\\STUDY\\darker\\agent-pointcloud-registration\\outputs\\L3_repro_final_group1_existing_seed303.npy",
+    "total_elapsed_sec": 4.463934499999596
+  },
+  {
+    "label": "group2_generated_seed505",
+    "thresholds": {
+      "rot_max_deg": 5.0,
+      "fitness_min": 0.8
+    },
+    "steps": [
+      {
+        "name": "initial_icp_naive",
+        "strategy": "icp_naive",
+        "rot_err_deg": 37.66326930570077,
+        "trans_err": 0.31985078569042025,
+        "fitness": 0.33276666666666666,
+        "rmse": 0.02532556712301396,
+        "passed": false
+      },
+      {
+        "name": "final_robust_global_with_pose_candidate_check",
+        "strategy": "global_registration_robust + candidate pose check",
+        "raw_robust_rot_err_deg": 160.5432401462248,
+        "raw_robust_trans_err": 0.0011135933568819428,
+        "fitness": 0.7895068288267013,
+        "rmse": 0.009868961142721271,
+        "ransac_fitness": 1.0,
+        "ransac_rmse": 0.10845839784234122,
+        "candidate_results": [
+          {
+            "candidate": "robust_global",
+            "rot_err_deg": 160.5432401462248,
+            "trans_err": 0.0011135933568819428,
+            "passed": false
+          },
+          {
+            "candidate": "inverse_of_robust_global",
+            "rot_err_deg": 96.58354305432896,
+            "trans_err": 0.5196756328647477,
+            "passed": false
+          },
+          {
+            "candidate": "robust_global_canonical_Zflipped",
+            "rot_err_deg": 180.0,
+            "trans_err": 0.0011135933568819428,
+            "passed": false
+          }
+        ],
+        "chosen_candidate": "inverse_of_robust_global",
+        "passed": false
+      }
+    ],
+    "diagnosis": "naive ICP failed: rot_err=37.6633 deg > 5, fitness=0.3328 < 0.8; dirty L3 pattern -> use robust global initialization, then evaluate candidate pose directions.",
+    "switch_strategy": true,
+    "final_strategy": "global_registration_robust + candidate pose check",
+    "final_rot_err_deg": 96.58354305432896,
+    "final_trans_err": 0.5196756328647477,
+    "final_fitness": 0.7895068288267013,
+    "final_rmse": 0.009868961142721271,
+    "final_passed": false,
+    "final_transform_path": "D:\\STUDY\\darker\\agent-pointcloud-registration\\outputs\\L3_repro_final_group2_generated_seed505.npy",
+    "total_elapsed_sec": 4.203749899999821
+  },
+  {
+    "label": "group3_generated_seed707",
+    "thresholds": {
+      "rot_max_deg": 5.0,
+      "fitness_min": 0.8
+    },
+    "steps": [
+      {
+        "name": "initial_icp_naive",
+        "strategy": "icp_naive",
+        "rot_err_deg": 42.63557356386098,
+        "trans_err": 0.3362109047579166,
+        "fitness": 0.34563333333333335,
+        "rmse": 0.02560094641988991,
+        "passed": false
+      },
+      {
+        "name": "final_robust_global_with_pose_candidate_check",
+        "strategy": "global_registration_robust + candidate pose check",
+        "raw_robust_rot_err_deg": 22.625590377522066,
+        "raw_robust_trans_err": 0.001994668648142873,
+        "fitness": 0.8845391869403281,
+        "rmse": 0.010435897757320142,
+        "ransac_fitness": 1.0,
+        "ransac_rmse": 0.13769710360846876,
+        "candidate_results": [
+          {
+            "candidate": "robust_global",
+            "rot_err_deg": 22.625590377522066,
+            "trans_err": 0.001994668648142873,
+            "passed": false
+          },
+          {
+            "candidate": "inverse_of_robust_global",
+            "rot_err_deg": 94.88970408817377,
+            "trans_err": 0.8323465646453476,
+            "passed": false
+          },
+          {
+            "candidate": "robust_global_canonical_Zflipped",
+            "rot_err_deg": 90.2583443112356,
+            "trans_err": 0.001994668648142873,
+            "passed": false
+          }
+        ],
+        "chosen_candidate": "robust_global",
+        "passed": false
+      }
+    ],
+    "diagnosis": "naive ICP failed: rot_err=42.6356 deg > 5, fitness=0.3456 < 0.8; dirty L3 pattern -> use robust global initialization, then evaluate candidate pose directions.",
+    "switch_strategy": true,
+    "final_strategy": "global_registration_robust + candidate pose check",
+    "final_rot_err_deg": 22.625590377522066,
+    "final_trans_err": 0.001994668648142873,
+    "final_fitness": 0.8845391869403281,
+    "final_rmse": 0.010435897757320142,
+    "final_passed": false,
+    "final_transform_path": "D:\\STUDY\\darker\\agent-pointcloud-registration\\outputs\\L3_repro_final_group3_generated_seed707.npy",
+    "total_elapsed_sec": 5.482101300000068
+  }
+]

@@ -1,0 +1,33 @@
+{
+  "project_name": "AGH驱动的点云自动配准智能体",
+  "phase": "A_COMPLETE",
+  "agent_runner": "src/agent_runner.py",
+  "diagnostic_tool": "src/agent_diagnose.py",
+  "tool_registry": "src/agent_tools.py",
+  "available_tools": [
+    "LOCAL_ICP",
+    "GLOBAL_FPFH_RANSAC_ICP"
+  ],
+  "excluded_tools": [
+    "SVD_ICP (EXPERIMENT_ONLY, not offered to Agent)"
+  ],
+  "adaptive_parameters": [
+    "icp_max_corr_scale (actual = base_scale * scale)",
+    "global_corr_scale (actual = base_scale * scale)"
+  ],
+  "l1_run_id": "l1_seed_101",
+  "l1_evidence_dir": "outputs/agent_runs/l1_seed_101/",
+  "l1_selected_method": "GLOBAL_FPFH_RANSAC_ICP",
+  "l1_agent_decision": "ACCEPT",
+  "l1_gt_success": true,
+  "gt_isolation_verified": true,
+  "level_branching_found": false,
+  "next_phase": "L2 autonomous decision validation on a fresh AGH conversation, reusing the same Agent Runner",
+  "session_key": "49486ac2-0a14-4ea2-b46e-7ec573d4d46e",
+  "agnes_model_name": "agnes-3.0-flash",
+  "agnes_model_version": "2026-10-06",
+  "run_timestamp_utc": "2026-10-06T17:31:24",
+  "agh_official_raw_log": "NOT_AVAILABLE",
+  "agh_evidence_dir": "outputs/agent_runs/l1_seed_101/agh_evidence/",
+  "gt_evaluator_after_agent_stop": true
+}
