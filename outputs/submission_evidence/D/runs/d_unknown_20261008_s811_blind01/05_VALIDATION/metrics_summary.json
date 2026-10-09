@@ -1,0 +1,55 @@
+{
+  "agent_verdict": "ABORT",
+  "attempt_count": 2,
+  "attempts": [
+    {
+      "attempt": 1,
+      "derived_parameters": {
+        "icp_max_correspondence_distance": 0.05083900452404684,
+        "ransac_max_correspondence_distance": 0.16946334841348945
+      },
+      "directory": ".",
+      "fitness": 0.616176354602098,
+      "method": "GLOBAL_FPFH_RANSAC_ICP",
+      "parameter_policy": {
+        "global_corr_scale": 5.0,
+        "icp_max_corr_scale": 1.5
+      },
+      "retried": true,
+      "rmse": 0.0073373766124013905,
+      "runtime_s": 127.152,
+      "verdict": "RETRY"
+    },
+    {
+      "attempt": 2,
+      "derived_parameters": {
+        "max_correspondence_distance": 0.06778533936539578
+      },
+      "directory": ".",
+      "fitness": 0.6525333333333333,
+      "method": "LOCAL_ICP",
+      "parameter_policy": {
+        "icp_max_corr_scale": 2.0
+      },
+      "retried": false,
+      "rmse": 0.011754162765814011,
+      "runtime_s": 0.632,
+      "verdict": "ABORT"
+    }
+  ],
+  "derived_parameters": "UNKNOWN",
+  "final_result": true,
+  "fitness": 0.6525333333333333,
+  "gt_rotation_error_deg": 0.02960604434929143,
+  "gt_translation_error": 0.00034075831604421,
+  "missing_items": [],
+  "parameter_policy": {
+    "icp_max_corr_scale": 2.0
+  },
+  "retry_occurred": true,
+  "rmse": 0.011754162765814011,
+  "run_id": "d_unknown_20261008_s811_blind01",
+  "runtime_s": 0.5562597000025562,
+  "selected_method": "LOCAL_ICP",
+  "status": "COMPLETE"
+}

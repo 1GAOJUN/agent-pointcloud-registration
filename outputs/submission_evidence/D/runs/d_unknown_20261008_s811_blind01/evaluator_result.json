@@ -1,0 +1,11 @@
+{
+  "gt_evaluator": true,
+  "note": "GT 仅在此处读取；Agent 决策阶段不可见。",
+  "rot_err_deg": 0.02960604434929143,
+  "trans_err": 0.00034075831604421,
+  "success": true,
+  "rot_thr_deg": 5.0,
+  "trans_thr": 0.05,
+  "gt_path": "data/formal_blind/case_unknown_D_20261008_s811/evaluator_only/gt_transform.npy",
+  "timestamp": "2026-10-08 14:56:31"
+}

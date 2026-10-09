@@ -1,0 +1,49 @@
+{
+  "manifest_name": "B3_SYSTEM_FREEZE_MANIFEST.json",
+  "phase": "B3A",
+  "created_at_utc": "2026-10-07T00:00:00Z",
+  "run_id": "b3_l1_20261007_seed101_blind01",
+  "anonymous_case_label": "case_unknown_A",
+  "level_hidden_from_agent": true,
+  "git": {
+    "commit": "314a85e6a749eb1be7dd159acf3d1dcab85c4956",
+    "status_dirty": true,
+    "status_note": "Working tree contains Phase B1/B2A/B2B untracked docs/outputs/new source files; frozen manifest records current working-tree state, not a clean commit. B3B must verify these hashes again."
+  },
+  "file_hashes_sha256": {
+    "src/agent_probes.py": "B93139892ABB642C05CB192894B2C5B8CC66938D7DAA7F5C18DE0BC46BDD68B9",
+    "src/agnnes_agent.py": "A8149C7A651E70E862F38FAC3F56BC5A71EBEBE6CDE688B4F6AF2CCCAE4A5DC0",
+    "src/agent_tools.py": "8B681CC2D3CB0C1FA998713A6CFDBBD65BB9F470FDFB609CBEC0DA0D54DA3048",
+    "src/agent_diagnose.py": "7C1E089EFBBB52C3E3675895BBC1530022A4A22C8F94F68CAD93EDAC2FDD7F20",
+    "src/agent_evaluator.py": "B0A7736FC1E3B1348A3025EDF270FA4083C7F4864F82EC58BC00812A4381DD88",
+    "src/agent_runner.py": "C567DA5937E6C459820A49194BF6F1AE5D861E41956868035A1BB7E1D1903343",
+    "src/evaluate.py": "CAF1FF7AFA5ACEC1C7997CE3D30C8FDD3A576BD55D3820FF25A6745177CD976B",
+    "tests/test_b2b_probes.py": "75FEB2B85267A12FEE8DF4B19BD3AD5B3736BA55BA8FCCC06649FDDE54700ED7",
+    "tests/_b2b_smoke_scaffold.py": "7FED41AE4855C352BCAD963B65263F0780F51F07FCF9BCD91A1822CE37C06B18"
+  },
+  "frozen_components": {
+    "agnnes_decision_schema": "B2B build_decision_prompt / validate_decision (information_sufficient + requested_probe + selected_method + parameter_policy)",
+    "agnnes_assessment_schema": "B2B build_assessment_prompt / validate_assessment (ACCEPT/RETRY/ABORT + guardrail)",
+    "probe_schema": "B2B PROBE_REGISTRY + PROBE_DISPATCH + MAX_PROBES_PER_RUN=2",
+    "probe_whitelist": ["NONE", "PCA_ORIENTATION", "CHEAP_LOCAL_ICP"],
+    "parameter_ranges": {
+      "global_corr_scale": {"min": 2.0, "max": 10.0},
+      "icp_max_corr_scale": {"min": 0.5, "max": 5.0}
+    },
+    "floor_guardrail_fitness": 0.3,
+    "max_retry_limit": 3,
+    "cheap_icp_probe_fixed": {"iterations": 5, "corr_scale": 2.0},
+    "pca_ambiguity_rule": "LOW confidence + null rotation_estimate_deg when symmetric/degenerate; no forced angle",
+    "agent_logic_owner": "Real Agnes LLM (subagent_fork)"
+  },
+  "agnnes_model": {
+    "name": "agnes-3.0-flash",
+    "invocation": "AGH subagent_fork",
+    "gh_session_key_current": "1bb566eb-963f-421c-ad28-37d8faa097f9"
+  },
+  "data_paths_hidden_from_agent": {
+    "source_cloud": "source_cloud (path withheld from Agnes)",
+    "target_cloud": "target_cloud (path withheld from Agnes)",
+    "gt_transform": "gt_transform.npy (read only by evaluator after Agent stops)"
+  }
+}

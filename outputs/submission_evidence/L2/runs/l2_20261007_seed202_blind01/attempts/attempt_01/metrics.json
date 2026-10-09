@@ -1,0 +1,45 @@
+{
+  "attempt_number": 1,
+  "attempt_status": "ACCEPT",
+  "selected_method": "GLOBAL_FPFH_RANSAC_ICP",
+  "agent_policy_parameters": {
+    "global_corr_scale": 5.0,
+    "icp_max_corr_scale": 2.0
+  },
+  "base_scale": 0.03388506693216584,
+  "derived_actual_parameters": {
+    "ransac_max_corr": 0.1694253346608292,
+    "icp_max_corr": 0.06777013386433169
+  },
+  "agent_observable_metrics": {
+    "fitness": 1.0,
+    "rmse": 1.2229338887297887e-16,
+    "ransac_fitness": 1.0,
+    "ransac_rmse": 1.436358929950681e-16,
+    "elapsed_s": 0.6179801999996926,
+    "ransac_max_correspondence_distance": 0.1694253346608292,
+    "icp_max_correspondence_distance": 0.06777013386433169
+  },
+  "gt_evaluation_metrics": {
+    "rotation_error_deg": 1.7075472925031877e-06,
+    "translation_error": 0.0,
+    "success": true,
+    "rot_thr_deg": 5.0,
+    "trans_thr": 0.05,
+    "note": "GT read only after Agent stopped. See 05_VALIDATION/evaluator_result.json."
+  },
+  "agent_assessment": {
+    "decision": "ACCEPT",
+    "reason": "可观测 fitness=1.0000 已达阈值 0.8，判定配准质量可接受。",
+    "confidence": 0.6
+  },
+  "evidence_files": {
+    "decision": "02_AGENT/decision_01.json",
+    "parameters": "04_CONFIG/parameters.json",
+    "tool_call": "03_TOOL_CHAIN/tool_call_01.json",
+    "observation": "03_TOOL_CHAIN/observation_01.json",
+    "assessment": "02_AGENT/agent_assessment_01.json",
+    "gt_evaluator": "05_VALIDATION/evaluator_result.json",
+    "visuals": ["06_VISUALS/before.png", "06_VISUALS/after.png", "06_VISUALS/compare.png", "06_VISUALS/metrics_panel.png"]
+  }
+}

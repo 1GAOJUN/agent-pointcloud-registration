@@ -1,0 +1,12 @@
+{
+  "fitness": 1.0,
+  "rmse": 1.6312898482533053e-16,
+  "inlier_rmse": null,
+  "ransac_fitness": 1.0,
+  "ransac_rmse": 1.9658100514157112e-16,
+  "elapsed_s": 0.5821463000029325,
+  "max_correspondence_distance": null,
+  "ransac_max_correspondence_distance": 0.13554026772866337,
+  "icp_max_correspondence_distance": 0.03388506693216584,
+  "tool_name": "GLOBAL_FPFH_RANSAC_ICP"
+}

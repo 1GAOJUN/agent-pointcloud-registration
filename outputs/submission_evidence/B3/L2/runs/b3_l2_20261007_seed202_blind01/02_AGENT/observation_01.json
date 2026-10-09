@@ -1,0 +1,41 @@
+{
+  "transform": [
+    [
+      0.43301270189221935,
+      -0.853853892268062,
+      0.2888486293176435,
+      0.2
+    ],
+    [
+      -0.24999999999999992,
+      0.19411428382689067,
+      0.9485882377588146,
+      0.4
+    ],
+    [
+      -0.8660254037844389,
+      -0.48296291314453416,
+      -0.12940952255126037,
+      0.3
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "fitness": 1.0,
+  "rmse": 1.6312898482533053e-16,
+  "ransac_fitness": 1.0,
+  "ransac_rmse": 1.9658100514157112e-16,
+  "elapsed_s": 0.5821463000029325,
+  "ransac_max_correspondence_distance": 0.13554026772866337,
+  "icp_max_correspondence_distance": 0.03388506693216584,
+  "tool_name": "GLOBAL_FPFH_RANSAC_ICP",
+  "parameter_policy_used": {
+    "global_corr_scale": 4.0,
+    "icp_max_corr_scale": 1.0
+  },
+  "tool_elapsed_s": 0.602
+}

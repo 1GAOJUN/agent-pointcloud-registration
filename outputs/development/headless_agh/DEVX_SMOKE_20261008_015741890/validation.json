@@ -1,0 +1,6 @@
+{
+  "status": "SUPERSEDED",
+  "reason": "AGH completed, but Windows PowerShell stdin encoding corrupted the Chinese prompt in the native session ledger. The run is retained as development evidence and is not the accepted Smoke.",
+  "agh_exit_code": 0,
+  "session_id": "agnes:local:local-dev:cli:workspace:f7a8d4b327eba0be"
+}

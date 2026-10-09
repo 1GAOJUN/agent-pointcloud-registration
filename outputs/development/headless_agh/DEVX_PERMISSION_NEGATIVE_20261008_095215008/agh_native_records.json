@@ -1,0 +1,7 @@
+{
+    "availability":  "AVAILABLE",
+    "format":  "agnes",
+    "path":  "agh_session_export.jsonl",
+    "exit_code":  0,
+    "note":  "AGH-native event/session export; default redaction retained."
+}

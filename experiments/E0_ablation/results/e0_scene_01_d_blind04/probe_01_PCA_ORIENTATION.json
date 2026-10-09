@@ -1,0 +1,22 @@
+{
+  "probe_name": "PCA_ORIENTATION",
+  "rotation_estimate_deg": null,
+  "orientation_confidence": "LOW",
+  "ambiguity_detected": true,
+  "ambiguity_reason": "near_line_degeneracy (λ1≈λ2; transverse axes undetermined); near_line_degeneracy (λ1≈λ2; transverse axes undetermined)",
+  "source_anisotropy": 2.7236,
+  "target_anisotropy": 2.7236,
+  "source_eigenvalues": [
+    0.11356283,
+    0.04793283,
+    0.04169539
+  ],
+  "target_eigenvalues": [
+    0.11356283,
+    0.04793283,
+    0.04169539
+  ],
+  "ambiguity_handling": "per_axis_sign_greedy + permutation_argmax_trace",
+  "runtime_s": 0.1156,
+  "note": "主轴结构不稳定；不得将 rotation_estimate_deg 用于算法选择。"
+}

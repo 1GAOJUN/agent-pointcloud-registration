@@ -1,0 +1,33 @@
+{
+  "run_id": "b3_l2_20261007_seed202_blind01",
+  "agent_observable_metrics": {
+    "fitness": 1.0,
+    "rmse": 1.6312898482533053e-16,
+    "ransac_fitness": 1.0,
+    "ransac_rmse": 1.9658100514157112e-16,
+    "elapsed_s": 0.5821463000029325,
+    "tool_name": "GLOBAL_FPFH_RANSAC_ICP"
+  },
+  "independent_gt_evaluation": {
+    "rotation_error_deg": 0.0,
+    "translation_error": 0.0,
+    "success": true,
+    "rot_thr_deg": 5.0,
+    "trans_thr": 0.05
+  },
+  "probe_observations": [
+    {
+      "probe_name": "PCA_ORIENTATION",
+      "rotation_estimate_deg": null,
+      "orientation_confidence": "LOW"
+    },
+    {
+      "probe_name": "CHEAP_LOCAL_ICP",
+      "initial_fitness": 0.13656666666666667,
+      "probe_fitness": 0.16496666666666668
+    }
+  ],
+  "final_agent_decision": "ACCEPT",
+  "attempt_count": 1,
+  "retried": false
+}

@@ -1,0 +1,28 @@
+{
+  "observation_summary": "source=30000 pts, target=32400 pts; centroid_distance=0.4739, density_ratio=1.192, base_scale=0.0339. Target high_distance_ratio_proxy=0.0684 indicates elevated sparse/isolated regions. Large initial offset (~14×base_scale) → not a small-angle clean scene.",
+  "information_sufficient": true,
+  "requested_probe": "NONE",
+  "candidate_methods": [
+    {
+      "method": "GLOBAL_FPFH_RANSAC_ICP",
+      "pros": "Robust global initial estimate; handles large offset and sparse target regions",
+      "risks": "Higher runtime; RANSAC may miss structure if overlap very low"
+    },
+    {
+      "method": "LOCAL_ICP",
+      "pros": "Fast, low cost",
+      "risks": "Identity initial transform; likely converges to wrong local optimum at 14× offset"
+    }
+  ],
+  "selected_method": "GLOBAL_FPFH_RANSAC_ICP",
+  "parameter_policy": {
+    "global_corr_scale": 5.0,
+    "icp_max_corr_scale": 2.0
+  },
+  "reasoning_summary": "Centroid offset ≈14× base_scale with sparse target regions → LOCAL_ICP from identity is unreliable. Use FPFH+RANSAC global initial with moderate scale (5.0×), refine with point-to-plane ICP at 2.0× for local convergence.",
+  "confidence": 0.72,
+  "_agnnes_model": "agnes-3.0-flash",
+  "_agnnes_timestamp": "2026-10-08T17:06:48",
+  "_implementation": "agnnes_real",
+  "_agnnes_raw_response": "{\"observation_summary\": \"source=30000 pts, target=32400 pts; centroid_distance=0.4739, density_ratio=1.192, base_scale=0.0339. Target high_distance_ratio_proxy=0.0684 indicates elevated sparse/isolated regions. Large initial offset (~14\\u00d7base_scale) \\u2192 not a small-angle clean scene.\", \"information_sufficient\": true, \"requested_probe\": \"NONE\", \"candidate_methods\": [{\"method\": \"GLOBAL_FPFH_RANSAC_ICP\", \"pros\": \"Robust global initial estimate; handles large offset and sparse target regions\", \"risks\": \"Higher runtime; RANSAC may miss structure if overlap very low\"}, {\"method\": \"LOCAL_ICP\", \"pros\": \"Fast, low cost\", \"risks\": \"Identity initial transform; likely converges to wrong local optimum at 14\\u00d7 offset\"}], \"selected_method\": \"GLOBAL_FPFH_RANSAC_ICP\", \"parameter_policy\": {\"global_corr_scale\": 5.0, \"icp_max_corr_scale\": 2.0}, \"reasoning_summary\": \"Centroid offset \\u224814\\u00d7 base_scale with sparse target regions \\u2192 LOCAL_ICP from identity is unreliable. Use FPFH+RANSAC global initial with moderate scale (5.0\\u00d7), refine with point-to-plane ICP at 2.0\\u00d7 for local convergence.\", \"confidence\": 0.72}"
+}

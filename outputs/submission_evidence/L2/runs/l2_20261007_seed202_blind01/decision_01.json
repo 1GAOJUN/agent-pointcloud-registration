@@ -1,0 +1,15 @@
+{
+  "observation_summary": "source=30000点, target=30000点, centroid_distance=0.5591, density_ratio=0.9999999999999997, base_scale=0.03389",
+  "diagnosis": "基于可观测指标判断场景难度，不依赖场景标签/真值",
+  "candidate_methods": [
+    "GLOBAL_FPFH_RANSAC_ICP",
+    "LOCAL_ICP"
+  ],
+  "selected_method": "GLOBAL_FPFH_RANSAC_ICP",
+  "parameter_policy": {
+    "global_corr_scale": 5.0,
+    "icp_max_corr_scale": 2.0
+  },
+  "reasoning_summary": "初值偏移大或密度比失衡，判定为较难场景，直接用全局配准兜底。",
+  "confidence": 0.6
+}

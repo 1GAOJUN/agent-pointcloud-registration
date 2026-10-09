@@ -1,0 +1,8 @@
+{
+  "base_scale": 0.03388850369141497,
+  "final_selected_method": "LOCAL_ICP",
+  "final_parameter_policy": {
+    "icp_max_corr_scale": 2.0
+  },
+  "note": "Agent chose multiplier relative to diagnostic scale, not absolute distance."
+}

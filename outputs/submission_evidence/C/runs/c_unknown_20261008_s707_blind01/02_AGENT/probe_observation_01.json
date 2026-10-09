@@ -1,0 +1,28 @@
+{
+  "probe_name": "PCA_ORIENTATION",
+  "rotation_estimate_deg": null,
+  "orientation_confidence": "LOW",
+  "ambiguity_detected": true,
+  "ambiguity_reason": "near_line_degeneracy (λ1≈λ2; transverse axes undetermined); near_line_degeneracy (λ1≈λ2; transverse axes undetermined)",
+  "source_anisotropy": 2.967,
+  "target_anisotropy": 2.7319,
+  "source_eigenvalues": [
+    0.11981974,
+    0.04383399,
+    0.04038401
+  ],
+  "target_eigenvalues": [
+    0.1243044,
+    0.0492602,
+    0.04550111
+  ],
+  "ambiguity_handling": "per_axis_sign_greedy + permutation_argmax_trace",
+  "runtime_s": 0.1037,
+  "note": "主轴结构不稳定；不得将 rotation_estimate_deg 用于算法选择。",
+  "_probe_request": {
+    "probe_name": "PCA_ORIENTATION",
+    "requested_by": "agnnes_real",
+    "probe_reason": "Rotation magnitude is not implemented/unknown, and bbox_diagonal_ratio of 1.4 suggests possible global misalignment; PCA_ORIENTATION gives a coarse relative rotation + orientation confidence at near-zero cost before committing to the more expensive global method.",
+    "round": 1
+  }
+}

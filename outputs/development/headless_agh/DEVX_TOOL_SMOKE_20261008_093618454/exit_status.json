@@ -1,0 +1,9 @@
+{
+    "schema":  "devx-agh-exit-status/v1",
+    "agh_process_exit_code":  2,
+    "agh_result_exit_code":  "NOT_AVAILABLE",
+    "reason":  "NOT_AVAILABLE",
+    "session_id":  "NOT_AVAILABLE",
+    "launcher_error":  "NONE",
+    "completed_at_utc":  "2026-10-08T01:36:20.6145643Z"
+}

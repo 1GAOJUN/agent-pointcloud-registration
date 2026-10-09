@@ -1,0 +1,35 @@
+{
+  "agent_verdict": "ACCEPT",
+  "attempt_count": 1,
+  "attempts": [
+    {
+      "attempt": 1,
+      "derived_parameters": "UNKNOWN",
+      "directory": "attempt_01",
+      "fitness": 0.9829666666666667,
+      "method": "LOCAL_ICP",
+      "parameter_policy": {
+        "icp_max_corr_scale": 2.0
+      },
+      "retried": false,
+      "rmse": 0.016155636859487073,
+      "runtime_s": 0.9265064999999595,
+      "verdict": "ACCEPT"
+    }
+  ],
+  "derived_parameters": "UNKNOWN",
+  "final_result": false,
+  "fitness": 0.9829666666666667,
+  "gt_rotation_error_deg": 50.77068575117076,
+  "gt_translation_error": 0.004303687526989729,
+  "missing_items": [],
+  "parameter_policy": {
+    "icp_max_corr_scale": 2.0
+  },
+  "retry_occurred": false,
+  "rmse": 0.016155636859487073,
+  "run_id": "c_unknown_20261008_s707_blind01",
+  "runtime_s": 0.9265064999999595,
+  "selected_method": "LOCAL_ICP",
+  "status": "COMPLETE"
+}

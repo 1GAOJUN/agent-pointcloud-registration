@@ -1,0 +1,43 @@
+git_snapshot.txt — generated 2026-10-07 (L1 Evidence Closeout)
+Repository: D:\STUDY\darker\agent-pointcloud-registration
+NO automatic commit was made as part of this closeout (per user instruction:
+do not commit unless explicitly asked).
+
+branch: main
+branch state: up to date with origin/main
+current commit hash: 314a85e6a749eb1be7dd159acf3d1dcab85c4956
+current commit subject: update: 新的方案和项目书
+
+git status --porcelain (untracked, this closeout's new files):
+?? outputs/submission_evidence/
+
+Note: .gitignore ignores outputs/**/*.ply and outputs/**/*.npy (large
+binary data, kept out of Git on purpose). This means the .ply files inside
+outputs/submission_evidence/l1_seed_101/figures/ will NOT be shown as
+untracked by git status even though they exist on disk — they are covered
+by the "outputs/**/*.ply" ignore rule. All JSON/Markdown/PNG files under
+outputs/submission_evidence/l1_seed_101/ are NOT ignored and will need to
+be git-added if/when a commit is requested.
+
+Files created/modified by this closeout (uncommitted, all under
+outputs/submission_evidence/l1_seed_101/ unless noted):
+  run_manifest.json
+  parameters.json
+  metrics_summary.json
+  run_summary.md
+  TOOL_CHAIN.md
+  AGH_EVIDENCE_README.md
+  raw/            (verbatim mirror of outputs/agent_runs/l1_seed_101/)
+  figures/before.png
+  figures/after.png
+  figures/compare.png
+  figures/compare_zoomed.png
+  figures/metrics_panel.png
+  figures/source.ply   (git-ignored by outputs/**/*.ply rule, kept for
+                        reproducibility of the figure generation)
+  figures/target.ply   (git-ignored by outputs/**/*.ply rule, kept for
+                        reproducibility of the figure generation)
+  docs/evidence_log/2026-10-07.md   (new, untracked)
+
+No files under outputs/agent_runs/l1_seed_101/ (the original run evidence)
+were modified by this closeout.

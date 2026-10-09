@@ -1,0 +1,12 @@
+{
+  "assessment": "Global pipeline converged cleanly: RANSAC fitness 0.903 (rmse ~0.091, loose global estimate) refined by point-to-plane ICP to fitness 0.613 with inlier rmse 0.0072 (~0.65x the source spacing), which is a strong local fit. ICP fitness stays below 1 because the target is sparser and the clouds do not fully overlap - consistent with the diagnosis (point_count_ratio 0.60, bbox ratio 0.88) - not with a bad registration.",
+  "global_consistency_assessment": "The two-stage result is internally consistent: RANSAC inlier quality improved from rmse 0.091 to 0.0072 after ICP refinement, and the rotation matrix is well-conditioned. All observable geometry supports a single coherent pose. Without probe or ground-truth evidence, a competing global optimum cannot be excluded, but the RANSAC stage (0.902 fitness with a generous 0.203 threshold) plus the tight ICP refinement is the standard signature of the correct global pose for an offset scene.",
+  "local_optimum_risk": "LOW",
+  "evidence_conflicts": [],
+  "decision": "ACCEPT",
+  "reason": "Global FPFH-RANSAC-ICP found a coherent pose: RANSAC fitness 0.903 -> ICP fitness 0.613 with inlier rmse 0.0072 (~0.65x source spacing). The moderate ICP fitness is explained by genuine partial overlap / sparser target, not misalignment. No observable evidence conflicts; a retry (tighter or looser thresholds) risks trading local fit for the same answer. Combined observable evidence is sufficient to accept.",
+  "next_method": null,
+  "next_parameter_policy": null,
+  "confidence": 0.8,
+  "_implementation": "agnnes_real"
+}

@@ -1,0 +1,9 @@
+{
+    "schema":  "devx-agh-exit-status/v1",
+    "agh_process_exit_code":  0,
+    "agh_result_exit_code":  0,
+    "reason":  "completed",
+    "session_id":  "agnes:local:local-dev:cli:workspace:f7a8d4b327eba0be",
+    "launcher_error":  "NONE",
+    "completed_at_utc":  "2026-10-07T17:58:00.8445979Z"
+}

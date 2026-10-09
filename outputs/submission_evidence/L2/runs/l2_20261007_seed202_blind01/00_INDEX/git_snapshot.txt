@@ -1,0 +1,11 @@
+git commit: 314a85e6a749eb1be7dd159acf3d1dcab85c4956
+git subject: update: 新的方案和项目书
+git status: clean (only new evidence dirs are untracked)
+
+SHA-256 frozen file hashes (verified before L2 blind run):
+  src/agent_runner.py      40bf497a489731f7e5ba13aabbc0dd89337b0357cd735bb3dfc0081aa637fda3
+  src/agent_tools.py       8b681cc2d3cb0c1fa998713a6cfdbbd65bb9f470fdfb609cbec0da0d54da3048
+  src/agent_diagnose.py    7c1e089efbbb52c3e3675895bbc1530022a4a22c8f94f68cad93edac2fdd7f20
+  src/agent_evaluator.py   b0a7736fc1e3b1348a3025edf270fa4083c7f4864f82ec58bc00812a4381dd88
+
+All four files identical to Phase A L1 reference. No source modifications made during this L2 blind run.

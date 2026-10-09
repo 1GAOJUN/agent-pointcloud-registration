@@ -1,0 +1,82 @@
+{
+  "run_id": "b3_l1_20261007_seed101_blind02",
+  "gt_evaluator": {
+    "gt_evaluator": true,
+    "note": "GT read only after Agent stop (ACCEPT). Pure-Python computation (no BLAS matmul).",
+    "rot_err_deg": 0.9483414645974396,
+    "trans_err": 0.0008369475893995273,
+    "success": true,
+    "rot_thr_deg": 5.0,
+    "trans_thr": 0.05,
+    "gt_path": "D:\\STUDY\\darker\\agent-pointcloud-registration\\data\\L1\\seed_101\\gt_transform.npy"
+  },
+  "observable_metrics": {
+    "fitness": 1.0,
+    "rmse": 0.0014233424366097808,
+    "ransac_fitness": 1.0,
+    "ransac_rmse": 0.0029491236171239887,
+    "elapsed_s": 287.8276557999998,
+    "tool_name": "GLOBAL_FPFH_RANSAC_ICP"
+  },
+  "probe_metrics": {
+    "PCA_ORIENTATION": {
+      "probe_name": "PCA_ORIENTATION",
+      "rotation_estimate_deg": 16.09,
+      "orientation_confidence": "MEDIUM",
+      "ambiguity_detected": false,
+      "ambiguity_reason": "partial_axis_degeneracy (one eigenvalue pair close; estimate usable but reduced confidence)",
+      "source_anisotropy": 3.4494,
+      "target_anisotropy": 2.9739,
+      "source_eigenvalues": [
+        0.00238597,
+        0.00112207,
+        0.0006917
+      ],
+      "target_eigenvalues": [
+        0.002757,
+        0.00134925,
+        0.00092708
+      ],
+      "selected_axis_permutation": [
+        0,
+        1,
+        2
+      ],
+      "ambiguity_handling": "per_axis_sign_greedy + permutation_argmax_trace",
+      "runtime_s": 0.0421,
+      "note": "rotation_estimate_deg 是 PCA 主轴 frame 相对旋转角（0~180°），非逐点配准误差。"
+    },
+    "CHEAP_LOCAL_ICP": {
+      "probe_name": "CHEAP_LOCAL_ICP",
+      "initial_fitness": 0.0,
+      "probe_fitness": 0.0,
+      "initial_rmse": 0.0,
+      "probe_rmse": 0.0,
+      "fitness_improvement": 0.0,
+      "correspondence_count": null,
+      "iterations": 5,
+      "runtime_s": 0.0662,
+      "transform_delta_magnitude": 0.0,
+      "max_correspondence_distance": 0.009994671187040016,
+      "note": "initial_* 为 identity 初值 1 次迭代近似 baseline；probe 固定 5 次迭代，无 Global 初始化，无 SOR。 结果只作观察信息，不直接映射算法。"
+    }
+  },
+  "diagnosis": {
+    "source_point_count": 30000,
+    "target_point_count": 30282,
+    "source_bbox_diagonal": 0.2498667796760004,
+    "target_bbox_diagonal": 0.7427149068791176,
+    "source_median_spacing": 0.001568212320182312,
+    "target_median_spacing": 0.0027931771317078516,
+    "density_ratio": 1.781121788013457,
+    "centroid_distance": 0.39307727635848594,
+    "initial_transform_available": true,
+    "sample_size": 5000,
+    "sampling_seed": 101,
+    "overlap_ratio": "NOT_IMPLEMENTED",
+    "noise_level": "NOT_IMPLEMENTED",
+    "outlier_level": "NOT_IMPLEMENTED",
+    "rotation_magnitude_estimate": "NOT_IMPLEMENTED",
+    "base_scale": 0.004997335593520008
+  }
+}

@@ -1,0 +1,14 @@
+[
+  {
+    "attempt": 1,
+    "selected_method": "LOCAL_ICP",
+    "parameter_policy": {
+      "base_scale": 0.04,
+      "icp_max_corr_scale": 1.0
+    },
+    "fitness": 0.2870666666666667,
+    "rmse": 0.02588460288742047,
+    "runtime_s": 0.8991110999995726,
+    "outcome": "NOT_APPLICABLE"
+  }
+]

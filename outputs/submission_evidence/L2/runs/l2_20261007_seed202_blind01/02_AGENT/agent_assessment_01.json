@@ -1,0 +1,6 @@
+{
+  "result_assessment": "可观测 fitness=1.0000 已达阈值 0.8，判定配准质量可接受。",
+  "decision": "ACCEPT",
+  "reason": "可观测 fitness=1.0000 已达阈值 0.8，判定配准质量可接受。",
+  "next_action": {}
+}

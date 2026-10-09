@@ -1,53 +1,63 @@
-"""统一 Agent 配准闭环 runner（L1 与后续 L2 复用同一 runner）。
+"""Agent 配准闭环 runner（L1 与后续 L2 复用同一 runner）。
 
-流程：
-  source/target -> diagnose -> Agnes 决策(读诊断+工具说明, 不读GT/场景标签)
-  -> dispatcher 调已有工具 -> observation -> Agnes ACCEPT/RETRY/ABORT
-  -> (RETRY 可再次决策, 最多 2 次) -> Agent 停止
-  -> 独立 Evaluator 才读 GT -> 保存完整证据包。
+B2A 架构说明（Phase B2A — Real Agnes Decision Integration）：
+
+决策层分离：
+- heuristic_decide / heuristic_assess：确定性 Python 启发式，保留为 baseline 对照
+- Agnes 决策/评估：由 AGH 外层编排机制调用（subagent_fork 或等价），
+  通过注入 agnes_decide_fn / agnes_assess_fn 接入，Python 不再替代 Agent 决定算法/参数
 
 GT 隔离：
-- 传给 Agnes 的 prompt 输入只含匿名化 source_cloud/target_cloud + 诊断结果 + 工具说明；
-- 不含完整磁盘路径、不含 L1/L2/L3/L4 场景标签、不读 gt_transform。
-- Agnes 的 decision / assessment JSON 由 Agnes 模型产生（本 runner 调用
-  agnes_decide / agnes_assess，二者只接收诊断/观测，不接触 GT）。
+- 传给 Agnes 的输入只含匿名化 diagnosis + 工具说明 + 既往 attempts；
+- 不含磁盘路径、场景标签、gt_transform。
+- Evaluator 只在 Agent 停止后读取 GT，时序不变。
 
-本 runner 只做调度与证据保存，不实现新算法；工具均复用 src/agent_tools.py。
-"""
+本 runner 只做调度与证据保存，不实现新算法；工具均复用 src/agent_tools.py。"""
 
 from __future__ import annotations
 
 import json
 import time
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, Callable, Dict, List, Optional, Protocol
 
 import numpy as np
 
 from agent_diagnose import diagnose
 from agent_tools import TOOL_REGISTRY, dispatch, run_local_icp, run_global_fpfh_ransac_icp
+from agent_probes import dispatch_probe
 from agent_evaluator import evaluate_agent_result, save_evaluator_result
+from agnnes_agent import MAX_PROBES_PER_RUN
+
+
+class AgnesDecideFn(Protocol):
+    """真实 Agnes 决策器：读 diagnosis + tools + prior_attempts，输出 structured decision。"""
+    def __call__(self, diagnosis: Dict[str, Any],
+                 tools: List[Dict[str, Any]],
+                 prior_attempts: List[Dict[str, Any]]) -> Dict[str, Any]: ...
+
+
+class AgnesAssessFn(Protocol):
+    """真实 Agnes 评估器：读 observation + prior_attempts，输出 ACCEPT/RETRY/ABORT。"""
+    def __call__(self, observation: Dict[str, Any],
+                 prior_attempts: List[Dict[str, Any]]) -> Dict[str, Any]: ...
 
 
 # ---------------------------------------------------------------------------
-# 可注入的 Agnes 决策器（供测试/真实 AGH 复用同一接口）
+# Heuristic Baseline（Phase A/B0 保留，@deprecated — 不得作为 Agnes 决策证据）
+# B1 审计确认：以下函数是确定性 Python 分支，非 LLM 调用。
+# 仅供 baseline 对照使用；主路径使用 agnes_decide_fn / agnes_assess_fn 注入。
 # ---------------------------------------------------------------------------
-def agnes_decide(diagnosis: Dict[str, Any], tools: List[Dict[str, Any]],
-                  prior_attempts: List[Dict[str, Any]]) -> Dict[str, Any]:
-    """Agnes 读取诊断 + 工具说明 + 既往尝试，产出结构化决策。
+def heuristic_decide(diagnosis: Dict[str, Any], tools: List[Dict[str, Any]],
+                     prior_attempts: List[Dict[str, Any]]) -> Dict[str, Any]:
+    """确定性 Python heuristic：easy/hard 分支，算法/参数均为字面量，无 LLM 调用。
 
-    返回至少包含：
-      observation_summary / diagnosis / candidate_methods / selected_method /
-      parameter_policy / reasoning_summary / confidence
+    @deprecated — B2A 之后仅保留为 baseline 对照，不得用于正式 Agnes 证明。
+    返回字段与真实 Agnes 路径 schema 对齐（便于对比测试）。
     """
-    # ---- 真实 Agnes 决策（本实现为可审计的启发式，见模块尾说明）----
     base_scale = float(diagnosis.get("base_scale", 0.0))
     centroid = float(diagnosis.get("centroid_distance", 0.0))
     ratio = diagnosis.get("density_ratio")
-
-    # 场景判据（全部来自可观测指标，不来自场景标签）：
-    #  初值偏移大(centroid_distance 相对 base_scale 大) 或 密度比明显失衡 -> 偏“难”，
-    #  否则 -> 偏“易/干净”，倾向低成本 LOCAL_ICP。
     offset_proxy = centroid / max(base_scale, 1e-9)
     easy = offset_proxy < 3.0 and (ratio is None or 0.5 < ratio < 2.0)
 
@@ -64,7 +74,6 @@ def agnes_decide(diagnosis: Dict[str, Any], tools: List[Dict[str, Any]],
         candidate = ["GLOBAL_FPFH_RANSAC_ICP", "LOCAL_ICP"]
         conf = 0.6
     else:
-        # 已有一次失败 -> RETRY：升级/降级到另一工具
         last_fail = [a for a in prior_attempts if a.get("decision") == "RETRY"]
         used = {a.get("selected_method") for a in last_fail}
         selected = "LOCAL_ICP" if "GLOBAL_FPFH_RANSAC_ICP" in used else "GLOBAL_FPFH_RANSAC_ICP"
@@ -87,21 +96,22 @@ def agnes_decide(diagnosis: Dict[str, Any], tools: List[Dict[str, Any]],
         "parameter_policy": policy,
         "reasoning_summary": reasoning,
         "confidence": conf,
+        "_implementation": "heuristic_baseline",
     }
 
 
-def agnes_assess(observation: Dict[str, Any],
-                 pass_fittess: float = 0.8) -> Dict[str, Any]:
-    """Agnes 读取工具真实观测（不含 GT），给出 ACCEPT/RETRY/ABORT。
+def heuristic_assess(observation: Dict[str, Any],
+                     prior_attempts: List[Dict[str, Any]] = None,
+                     pass_fittess: float = 0.8) -> Dict[str, Any]:
+    """确定性 Python threshold：fitness >= 0.8 → ACCEPT，else RETRY。无 ABORT 路径。
 
-    注：此判断只用可观测 fitness/rmse，不读 gt_transform。
+    @deprecated — B2A 之后仅保留为 baseline 对照，不得用于正式 Agnes 证明。
     """
     fitness = float(observation.get("fitness", 0.0))
-    elapsed = observation.get("elapsed_s", 0.0)
     if fitness >= pass_fittess:
         decision = "ACCEPT"
         reason = f"可观测 fitness={fitness:.4f} 已达阈值 {pass_fittess}，判定配准质量可接受。"
-        nxt = {}
+        nxt: Dict[str, Any] = {}
     else:
         decision = "RETRY"
         reason = f"可观测 fitness={fitness:.4f} 低于阈值 {pass_fittess}，需换工具或参数重跑。"
@@ -111,6 +121,7 @@ def agnes_assess(observation: Dict[str, Any],
         "decision": decision,
         "reason": reason,
         "next_action": nxt,
+        "_implementation": "heuristic_baseline",
     }
 
 
@@ -138,10 +149,35 @@ def run_agent_case(
     max_retry: int = 2,
     agent_model_name: str = "agnes-3.0-flash",
     agent_model_version: str = "2026-10-06",
+    # B2A：Agnes 决策器注入（None → 使用 heuristic baseline）
+    agnes_decide_fn: Optional[AgnesDecideFn] = None,
+    agnes_assess_fn: Optional[AgnesAssessFn] = None,
+    variant: str = "REAL_AGNES_NO_PROBE",
+    probe_state: Optional[Dict[str, List[Any]]] = None,
+    run_id: Optional[str] = None,
 ) -> Dict[str, Any]:
-    """完整跑一次 Agent 闭环并落盘证据包。"""
+    """完整跑一次 Agent 闭环并落盘证据包。
+
+    B2A 架构：
+    - 若 agnes_decide_fn / agnes_assess_fn 已注入 → 走真实 Agnes 路径
+    - 若为 None → 走 heuristic baseline（@deprecated，仅用于对照）
+    """
+    if variant not in ("REAL_AGNES_NO_PROBE", "REAL_AGNES_ACTIVE_PROBE"):
+        raise ValueError(f"unsupported E0 variant: {variant}")
+
+    # 选路
+    _decide = agnes_decide_fn or heuristic_decide
+    _assess = agnes_assess_fn or (lambda obs, priors=None: heuristic_assess(obs, priors))
+    _impl = "agnnes_real" if (agnes_decide_fn and agnes_assess_fn) else "heuristic_baseline"
     run_dir_p = Path(run_dir)
     run_dir_p.mkdir(parents=True, exist_ok=True)
+    if probe_state is None:
+        probe_state = {"probes_already_run": [], "probe_observations": []}
+    probes_already_run = probe_state.setdefault("probes_already_run", [])
+    probe_observations = probe_state.setdefault("probe_observations", [])
+    decision_files: List[str] = []
+    probe_files: List[str] = []
+    decision_round = 0
 
     # 1) 诊断（GT-free）
     diagnosis = diagnose(source_ply, target_ply)
@@ -167,9 +203,55 @@ def run_agent_case(
     # 2) 决策-执行-评估 循环（最多 max_retry 次 RETRY）
     for i in range(max_retry + 1):
         step = i + 1
-        decision = agnes_decide(diagnosis, TOOL_REGISTRY, attempts)
-        _write_json(decision, run_dir_p / f"decision_{step:02d}.json")
-        final_decision = decision
+        while True:
+            decision_round += 1
+            decision = _decide(diagnosis, TOOL_REGISTRY, attempts)
+            if not isinstance(decision, dict):
+                raise RuntimeError(
+                    f"invalid Agnes Decision schema: expected object, got {type(decision).__name__}")
+            decision_name = f"decision_{decision_round:02d}.json"
+            _write_json(decision, run_dir_p / decision_name)
+            decision_files.append(decision_name)
+            final_decision = decision
+
+            if decision.get("_error"):
+                raise RuntimeError(f"invalid Agnes decision: {decision['_error']}")
+
+            information_sufficient = decision.get("information_sufficient", True)
+            requested_probe = decision.get("requested_probe", "NONE")
+            if information_sufficient:
+                if requested_probe != "NONE":
+                    raise RuntimeError(
+                        "invalid Agnes decision: information_sufficient=true requires requested_probe=NONE")
+                break
+
+            if variant == "REAL_AGNES_NO_PROBE":
+                raise RuntimeError(
+                    f"probe '{requested_probe}' requested but disabled by REAL_AGNES_NO_PROBE")
+            if len(probes_already_run) >= MAX_PROBES_PER_RUN:
+                raise RuntimeError(
+                    f"probe quota exhausted ({len(probes_already_run)}/{MAX_PROBES_PER_RUN})")
+            if requested_probe in probes_already_run:
+                raise RuntimeError(f"duplicate probe request: {requested_probe}")
+
+            probe_obs = dispatch_probe(
+                requested_probe,
+                source_ply,
+                target_ply,
+                base_scale=float(diagnosis.get("base_scale", 0.1)),
+            )
+            probe_obs_save = {
+                k: (v.tolist() if isinstance(v, np.ndarray) else v)
+                for k, v in probe_obs.items()
+            }
+            probe_obs_save["probe_name"] = requested_probe
+            probe_obs_save["gt_read"] = False
+            probe_index = len(probes_already_run) + 1
+            probe_name = f"probe_{probe_index:02d}_{requested_probe}.json"
+            _write_json(probe_obs_save, run_dir_p / probe_name)
+            probe_files.append(probe_name)
+            probes_already_run.append(requested_probe)
+            probe_observations.append(probe_obs_save)
 
         method = decision["selected_method"]
         policy = decision.get("parameter_policy", {})
@@ -208,19 +290,50 @@ def run_agent_case(
         _write_json(tool_call, run_dir_p / f"tool_call_{step:02d}.json")
         final_obs = obs
 
-        # Agnes 评估（只用可观测指标，不读 GT）
-        assessment = agnes_assess(obs)
+        # 评估（Agnes 路径 或 heuristic baseline）
+        assessment = _assess(obs, attempts) if agnes_assess_fn else heuristic_assess(obs, attempts)
+        if not isinstance(assessment, dict):
+            raise RuntimeError(
+                f"invalid Agnes Assessment schema: expected object, got {type(assessment).__name__}")
         _write_json(assessment, run_dir_p / f"agent_assessment_{step:02d}.json")
+        if assessment.get("_error"):
+            raise RuntimeError(f"invalid Agnes Assessment schema: {assessment['_error']}")
+        verdict = assessment.get("decision")
+        if verdict not in ("ACCEPT", "RETRY", "ABORT"):
+            raise RuntimeError(
+                "invalid Agnes Assessment schema: required decision must be "
+                f"ACCEPT/RETRY/ABORT, got {verdict!r}")
         final_assessment = assessment
         final_transform = obs["transform"]
 
-        attempts.append({"step": step, "selected_method": method,
-                         "parameter_policy": policy,
-                         "decision": assessment["decision"]})
+        # Feed only compact GT-free quality observations back into the next Agnes decision.
+        # This makes RETRY actionable without turning Python into a method/parameter policy.
+        retry_observation = {
+            k: obs_save.get(k) for k in (
+                "fitness", "rmse", "inlier_rmse", "elapsed_s",
+                "ransac_fitness", "ransac_rmse",
+                "max_correspondence_distance",
+                "ransac_max_correspondence_distance",
+                "icp_max_correspondence_distance",
+            ) if k in obs_save
+        }
+        attempts.append({
+            "step": step,
+            "selected_method": method,
+            "parameter_policy": policy,
+            "observation": retry_observation,
+            "assessment": {
+                k: assessment.get(k) for k in (
+                    "decision", "reason", "next_method",
+                    "next_parameter_policy", "confidence",
+                ) if k in assessment
+            },
+            "decision": verdict,
+        })
 
-        if assessment["decision"] == "ACCEPT":
+        if verdict == "ACCEPT":
             break
-        if assessment["decision"] == "ABORT":
+        if verdict == "ABORT":
             break
         # RETRY：继续循环
 
@@ -250,15 +363,23 @@ def run_agent_case(
     agh_log = {
         "agent_model_name": agent_model_name,
         "agent_model_version": agent_model_version,
+        "decision_implementation": _impl,
+        "variant": variant,
+        "run_id": run_id or run_dir_p.name,
         "run_timestamp": time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()),
         "task_prompt_summary": (
             "给定匿名 source_cloud / target_cloud 与诊断指标及可用工具说明，"
             "选择配准方法与参数策略，执行后据可观测指标判断 ACCEPT/RETRY/ABORT。"
         ),
         "tool_calls": [f"tool_call_{a['step']:02d}.json" for a in attempts],
-        "decisions": [f"decision_{a['step']:02d}.json" for a in attempts],
+        "decisions": decision_files,
         "assessments": [f"agent_assessment_{a['step']:02d}.json" for a in attempts],
-        "note": "decision/assessment JSON 由 Agnes 模型产生；本记录为可审计的执行链路。",
+        "probes_executed": list(probes_already_run),
+        "probe_files": probe_files,
+        "note": (
+            "decision_implementation=agnnes_real: decision/assessment JSON 由真实 Agnes 模型产生（AGH 会话调用）。\n"
+            "decision_implementation=heuristic_baseline: @deprecated，确定性 Python 分支，非 LLM 调用。"
+        ),
     }
     _write_json(agh_log, run_dir_p / "agh_run_log.json")
 
@@ -271,6 +392,7 @@ def run_agent_case(
         "gt_trans_err": evaluator_result["trans_err"],
         "evaluator_result": str(run_dir_p / "evaluator_result.json"),
         "agh_run_log": str(run_dir_p / "agh_run_log.json"),
+        "probe_count": len(probes_already_run),
     }
 
 
@@ -313,6 +435,7 @@ def main() -> None:
         target_ply = str(case / "target.ply")
         gt_npy = str(case / "gt_transform.npy")
     out_dir = root / "outputs" / "agent_runs" / run_id
+    # B2A：CLI 直接运行使用 heuristic baseline（真实 Agnes 路径通过 AGH 会话注入）
     res = run_agent_case(source_ply, target_ply, str(out_dir), gt_npy)
     print(json.dumps(res, indent=2, ensure_ascii=False))
 

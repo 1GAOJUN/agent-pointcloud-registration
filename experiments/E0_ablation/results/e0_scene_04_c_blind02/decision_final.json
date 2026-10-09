@@ -1,0 +1,26 @@
+{
+  "observation_summary": "30k source vs 18k target points; density_ratio 0.77 (target slightly sparser), bbox ratio 0.88, centroid offset 0.595 (~17.6x base_scale, large initial misalignment relative to object scale). Rotation magnitude and overlap are NOT_IMPLEMENTED, so true initial pose error is unknown but likely beyond ICP's convergence basin.",
+  "information_sufficient": true,
+  "requested_probe": "NONE",
+  "probe_reason": null,
+  "candidate_methods": [
+    {
+      "method": "LOCAL_ICP",
+      "pros": "Cheap and fast; excellent convergence when initial pose is already close and overlap is clean.",
+      "risks": "Centroid offset is ~17.6x base_scale with unknown rotation; identity initialization will very likely converge to a poor local minimum or fail on valid correspondence."
+    },
+    {
+      "method": "GLOBAL_FPFH_RANSAC_ICP",
+      "pros": "SOR + FPFH + RANSAC provides a pose estimate that is robust to large rotation/translation offsets; SOR handles the small outlier fraction indicated by the NN statistics; point-to-plane ICP refines.",
+      "risks": "Slower; FPFH matching quality depends on feature distinctiveness; a too-tight global correspondence threshold risks zero RANSAC inliers, so the threshold must be generous."
+    }
+  ],
+  "selected_method": "GLOBAL_FPFH_RANSAC_ICP",
+  "parameter_policy": {
+    "global_corr_scale": 6.0,
+    "icp_max_corr_scale": 1.5
+  },
+  "reasoning_summary": "Large centroid offset relative to base_scale with unknown rotation makes identity-initialized LOCAL_ICP high-risk. Choose the global pipeline first. global_corr_scale=6.0 gives a RANSAC correspondence distance of ~0.204 (generous, covers the expected initial misalignment while staying inside the 2.0-10.0 guardrail range); icp_max_corr_scale=1.5 (~0.051) is slightly above the source spacing to keep ICP on valid inliers after RANSAC initialization.",
+  "confidence": 0.7,
+  "_implementation": "agnnes_real"
+}

@@ -1,0 +1,22 @@
+{
+  "probe_name": "PCA_ORIENTATION",
+  "rotation_estimate_deg": null,
+  "orientation_confidence": "LOW",
+  "ambiguity_detected": true,
+  "ambiguity_reason": "near_line_degeneracy (\u03bb1\u2248\u03bb2; transverse axes undetermined); near_line_degeneracy (\u03bb1\u2248\u03bb2; transverse axes undetermined)",
+  "source_anisotropy": 2.7177,
+  "target_anisotropy": 2.8456,
+  "source_eigenvalues": [
+    0.11253179,
+    0.04551057,
+    0.0414069
+  ],
+  "target_eigenvalues": [
+    0.12793797,
+    0.05111039,
+    0.04496001
+  ],
+  "ambiguity_handling": "per_axis_sign_greedy + permutation_argmax_trace",
+  "runtime_s": 0.2518,
+  "note": "\u4e3b\u8f74\u7ed3\u6784\u4e0d\u7a33\u5b9a\uff1b\u4e0d\u5f97\u5c06 rotation_estimate_deg \u7528\u4e8e\u7b97\u6cd5\u9009\u62e9\u3002"
+}

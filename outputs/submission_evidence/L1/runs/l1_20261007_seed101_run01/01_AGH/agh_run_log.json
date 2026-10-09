@@ -1,0 +1,16 @@
+{
+  "agent_model_name": "agnes-3.0-flash",
+  "agent_model_version": "2026-10-06",
+  "run_timestamp": "2026-10-06 17:31:28",
+  "task_prompt_summary": "给定匿名 source_cloud / target_cloud 与诊断指标及可用工具说明，选择配准方法与参数策略，执行后据可观测指标判断 ACCEPT/RETRY/ABORT。",
+  "tool_calls": [
+    "tool_call_01.json"
+  ],
+  "decisions": [
+    "decision_01.json"
+  ],
+  "assessments": [
+    "agent_assessment_01.json"
+  ],
+  "note": "decision/assessment JSON 由 Agnes 模型产生；本记录为可审计的执行链路。"
+}

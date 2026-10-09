@@ -1,0 +1,112 @@
+{
+  "run_id": "b3_l1_20261007_seed101_blind02",
+  "phase": "B3A",
+  "anonymous_case": "case_unknown_A",
+  "level": "L1",
+  "level_hidden_from_agent": true,
+  "agnnes_model": "agnes-3.0-flash",
+  "gh_session_key": "f2adfac5-8193-400e-8ba7-e7ccdb4f8476",
+  "created_at": "2026-10-07T20:16:54",
+  "pre_flight_pass": true,
+  "pre_flight_doc": "docs/agent_loop_2026-10-07/B3A_PRE_FLIGHT_PASS.md",
+  "freeze_manifest": "outputs/submission_evidence/B3/L1/runs/b3_l1_20261007_seed101_blind02/00_INDEX/B3_SYSTEM_FREEZE_MANIFEST.json",
+  "attempts_count": 1,
+  "attempts": [
+    {
+      "number": 1,
+      "method": "GLOBAL_FPFH_RANSAC_ICP",
+      "decision": "ACCEPT",
+      "gt_success": true
+    }
+  ],
+  "final_agent_decision": "ACCEPT",
+  "gt_success": true,
+  "gt_rot_err_deg": 0.9483414645974396,
+  "gt_trans_err": 0.0008369475893995273,
+  "run_status": "PASS",
+  "probe_trace": [
+    {
+      "round": 1,
+      "requested_by": "agnnes_real",
+      "probe": "PCA_ORIENTATION",
+      "observation": {
+        "probe_name": "PCA_ORIENTATION",
+        "rotation_estimate_deg": 16.09,
+        "orientation_confidence": "MEDIUM",
+        "ambiguity_detected": false,
+        "ambiguity_reason": "partial_axis_degeneracy (one eigenvalue pair close; estimate usable but reduced confidence)",
+        "source_anisotropy": 3.4494,
+        "target_anisotropy": 2.9739,
+        "source_eigenvalues": [
+          0.00238597,
+          0.00112207,
+          0.0006917
+        ],
+        "target_eigenvalues": [
+          0.002757,
+          0.00134925,
+          0.00092708
+        ],
+        "selected_axis_permutation": [
+          0,
+          1,
+          2
+        ],
+        "ambiguity_handling": "per_axis_sign_greedy + permutation_argmax_trace",
+        "runtime_s": 0.0421,
+        "note": "rotation_estimate_deg 是 PCA 主轴 frame 相对旋转角（0~180°），非逐点配准误差。",
+        "_probe_request": {
+          "probe_name": "PCA_ORIENTATION",
+          "requested_by": "agnnes_real",
+          "probe_reason": "PCA gives a coarse relative-rotation estimate and anisotropy in under 1 ms. Given the large centroid offset and unknown rotation, even a LOW-confidence PCA result helps distinguish 'small rotation, likely LOCAL_ICP works' from 'large/symmetric rotation, need GLOBAL fallback', and flags ambiguity when the shape is isotropic. Cheaper and more informative than burning the first probe on an ICP trial before knowing the rotation regime.",
+          "round": 1
+        }
+      }
+    },
+    {
+      "round": 2,
+      "requested_by": "agnnes_real",
+      "probe": "CHEAP_LOCAL_ICP",
+      "observation": {
+        "probe_name": "CHEAP_LOCAL_ICP",
+        "initial_fitness": 0.0,
+        "probe_fitness": 0.0,
+        "initial_rmse": 0.0,
+        "probe_rmse": 0.0,
+        "fitness_improvement": 0.0,
+        "correspondence_count": null,
+        "iterations": 5,
+        "runtime_s": 0.0662,
+        "transform_delta_magnitude": 0.0,
+        "max_correspondence_distance": 0.009994671187040016,
+        "note": "initial_* 为 identity 初值 1 次迭代近似 baseline；probe 固定 5 次迭代，无 Global 初始化，无 SOR。 结果只作观察信息，不直接映射算法。",
+        "_probe_request": {
+          "probe_name": "CHEAP_LOCAL_ICP",
+          "requested_by": "agnnes_real",
+          "probe_reason": "PCA with MEDIUM confidence tells us there may be roughly a small-to-moderate rotation, but does not say whether identity-initialized local ICP will actually converge. A CHEAP_LOCAL_ICP probe directly tests that convergence trend at very low cost and discriminates between the LOCAL_ICP and GLOBAL_FPFH_RANSAC_ICP regimes, which the PCA angle alone cannot confirm given its uncertainty and the degenerate eigenvalue pair.",
+          "round": 2
+        }
+      }
+    }
+  ],
+  "decision_rounds": [
+    {
+      "round": 1,
+      "raw_file": "agnnes_raw_decision_01.json",
+      "information_sufficient": false,
+      "requested_probe": "PCA_ORIENTATION"
+    },
+    {
+      "round": 2,
+      "raw_file": "agnnes_raw_decision_02.json",
+      "information_sufficient": false,
+      "requested_probe": "CHEAP_LOCAL_ICP"
+    },
+    {
+      "round": 3,
+      "raw_file": "agnnes_raw_decision_03.json",
+      "information_sufficient": true,
+      "selected_method": "GLOBAL_FPFH_RANSAC_ICP"
+    }
+  ]
+}

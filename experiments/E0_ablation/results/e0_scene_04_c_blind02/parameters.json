@@ -1,0 +1,9 @@
+{
+  "base_scale": 0.0338927887782005,
+  "final_selected_method": "GLOBAL_FPFH_RANSAC_ICP",
+  "final_parameter_policy": {
+    "global_corr_scale": 6.0,
+    "icp_max_corr_scale": 1.5
+  },
+  "note": "Agent chooses multipliers relative to the diagnosed scale, not absolute values."
+}

@@ -1,0 +1,21 @@
+{
+  "observation_summary": "Smoke-test case: single source and single target point, base_scale 1.0; only LOCAL_ICP is available and no rotation/overlap evidence exists.",
+  "information_sufficient": true,
+  "requested_probe": "NONE",
+  "probe_reason": null,
+  "candidate_methods": [
+    {
+      "method": "LOCAL_ICP"
+    }
+  ],
+  "selected_method": "LOCAL_ICP",
+  "parameter_policy": {
+    "icp_max_corr_scale": 1.0
+  },
+  "reasoning_summary": "Only tool available; default mid-range icp_max_corr_scale=1.0 (base_scale x 1.0) is appropriate and within range.",
+  "confidence": 0.9,
+  "_agnnes_model": "agnes-3.0-flash",
+  "_agnnes_timestamp": "2026-10-08T22:20:59",
+  "_implementation": "agnnes_real",
+  "_agnnes_raw_response": "{\"observation_summary\":\"Smoke-test case: single source and single target point, base_scale 1.0; only LOCAL_ICP is available and no rotation/overlap evidence exists.\",\"information_sufficient\":true,\"requested_probe\":\"NONE\",\"probe_reason\":null,\"candidate_methods\":[{\"method\":\"LOCAL_ICP\"}],\"selected_method\":\"LOCAL_ICP\",\"parameter_policy\":{\"icp_max_corr_scale\":1.0},\"reasoning_summary\":\"Only tool available; default mid-range icp_max_corr_scale=1.0 (base_scale x 1.0) is appropriate and within range.\",\"confidence\":0.9}"
+}

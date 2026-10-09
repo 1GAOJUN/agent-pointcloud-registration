@@ -1,0 +1,83 @@
+{
+  "test_name": "B2A_REAL_AGNES_SMOKE",
+  "timestamp": "2026-10-07T15:20:00",
+  "case": "L1/seed_101 (development smoke test only, NOT L1/L2 formal RUN_INDEX)",
+  "agnnes_model": "agnes-3.0-flash",
+  "agh_session_key": "805b6033-7fc5-4e39-bce4-64a32816c9df",
+
+  "smoke_test_result": "PASS",
+
+  "checklist": [
+    {"item": "1. 真实 Agnes 调用确实发生", "pass": true,
+     "evidence": "subagent_fork 调用两次，返回 LLM 生成的 JSON；agnnes_raw_decision.json / agnnes_raw_assessment.json 为原始文本"},
+    {"item": "2. diagnosis 真实传给 Agnes", "pass": true,
+     "evidence": "agnnes_decision_prompt.json 里包含完整 diagnosis JSON（centroid_distance=0.3761, base_scale=0.03389 等）"},
+    {"item": "3. Agnes 真实输出 structured decision", "pass": true,
+     "evidence": "agnnes_raw_decision.json 含 selected_method=GLOBAL_FPFH_RANSAC_ICP, parameter_policy, confidence=0.62"},
+    {"item": "4. dispatcher 按 Agnes 选择执行", "pass": true,
+     "evidence": "observation_01.json 里 tool_name=GLOBAL_FPFH_RANSAC_ICP，与 Agnes 选择的 selected_method 一致"},
+    {"item": "5. observation 传回 Agnes", "pass": true,
+     "evidence": "agnnes_assessment_prompt.json 里包含 observation（fitness=1.0, rmse=0.0, ransac_fitness=1.0）"},
+    {"item": "6. Agnes 真实输出 ACCEPT/RETRY/ABORT", "pass": true,
+     "evidence": "agnnes_raw_assessment.json 里 decision=ACCEPT, confidence=0.98"},
+    {"item": "7. GT 只在最后由 Evaluator 读取", "pass": true,
+     "evidence": "evaluator_result.json 里 gt_evaluator=true，在 agent 停止后生成；decision/assessment prompt 均不含 GT 字段"}
+  ],
+
+  "decision": {
+    "selected_method": "GLOBAL_FPFH_RANSAC_ICP",
+    "parameter_policy": {"global_corr_scale": 5.0, "icp_max_corr_scale": 2.0},
+    "confidence": 0.62,
+    "information_sufficient": false,
+    "reasoning_summary": "Because rotation magnitude, noise level, and overlap ratio are all unimplemented/unknown, a conservative fallback to a global registration pipeline is safer than identity-initialized ICP.",
+    "owner": "agnnes_model (real LLM call via subagent_fork)",
+    "raw_response_file": "agnnes_raw_decision.json",
+    "parsed_response_file": "agnnes_decision_parsed.json"
+  },
+
+  "observation": {
+    "fitness": 1.0,
+    "rmse": 0.0,
+    "ransac_fitness": 1.0,
+    "tool_name": "GLOBAL_FPFH_RANSAC_ICP",
+    "elapsed_s": 0.52
+  },
+
+  "assessment": {
+    "decision": "ACCEPT",
+    "confidence": 0.98,
+    "reason": "fitness = 1.0 and rmse = 0.0 represent essentially perfect alignment; no plausible retry path could improve on a zero-error result.",
+    "guardrail_applied": null,
+    "owner": "agnnes_model (real LLM call via subagent_fork)",
+    "raw_response_file": "agnnes_raw_assessment.json",
+    "parsed_response_file": "agnnes_assessment_parsed.json"
+  },
+
+  "evaluator": {
+    "success": true,
+    "rot_err_deg": 0.000001,
+    "trans_err": 0.0,
+    "result_file": "evaluator_result.json"
+  },
+
+  "gt_isolation_check": {
+    "decision_prompt_contains_gt_keywords": false,
+    "assessment_prompt_contains_gt_keywords": false,
+    "agnnes_raw_response_contains_gt_keywords": false,
+    "gt_read_by_agent": false,
+    "gt_read_by_evaluator_only": true,
+    "note": "Evaluator uses pure-Python math because this env's numpy BLAS crashes on matmul; numeric result is valid"
+  },
+
+  "anti_fake_agent_checks": {
+    "A_close_agnnes_cannot_decide_method": "PASS — heuristic_decide() has a separate code path; agnes path requires subagent_fork",
+    "B_close_agnnes_cannot_decide_accept": "PASS — heuristic_assess() is the only ACCEPT/RETRY fallback; agnes path requires subagent_fork",
+    "C_no_offset_proxy_in_main_path": "PASS — offset_proxy mapping exists only in heuristic_decide() which is @deprecated; agnes path does not call it"
+  },
+
+  "notes": [
+    "This smoke test is NOT a formal L1/L2 run; it is a development test saved to outputs/development_tests/.",
+    "The environment's numpy 2.4.6 has a broken BLAS/matmul path (SIGSEGV on R.T @ R); evaluator workaround uses pure-Python math.",
+    "Agnes model: agnes-3.0-flash, AGH session key: 805b6033-7fc5-4e39-bce4-64a32816c9df."
+  ]
+}

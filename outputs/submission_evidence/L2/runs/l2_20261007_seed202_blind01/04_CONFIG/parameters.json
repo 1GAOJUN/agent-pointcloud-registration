@@ -1,0 +1,30 @@
+{
+  "run_id": "l2_20261007_seed202_blind01",
+  "base_scale": 0.03388506693216584,
+  "base_scale_source": "agent_diagnose.diagnose() output (see 02_AGENT/diagnosis.json)",
+  "agent_policy_parameters": {
+    "global_corr_scale": 5.0,
+    "icp_max_corr_scale": 2.0,
+    "note": "These are the relative multipliers chosen by Agnes. Actual = base_scale * scale."
+  },
+  "derived_parameters_actual": {
+    "ransac_max_corr": 0.1694253346608292,
+    "icp_max_corr": 0.06777013386433169,
+    "note": "Derived as base_scale * global_corr_scale and base_scale * icp_max_corr_scale."
+  },
+  "selected_method": "GLOBAL_FPFH_RANSAC_ICP",
+  "tool_internal_defaults": {
+    "n_iter_icp": 100,
+    "icp_convergence_relative_fitness": 1e-06,
+    "icp_convergence_relative_rmse": 1e-08,
+    "sor_nb_neighbors": 30,
+    "sor_std_ratio": 1.0,
+    "fpfh_keypoints_max": 500,
+    "fpfh_radius": "max(base_scale, 0.2) = 0.2 (since base_scale=0.0339 < 0.2)",
+    "ransac_seed": 42,
+    "source": "Read from src/agent_tools.py source code, not from run output."
+  },
+  "unknown_parameters": {
+    "note": "Fields that could not be recovered from run evidence are marked UNKNOWN."
+  }
+}

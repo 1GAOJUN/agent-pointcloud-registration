@@ -1,0 +1,22 @@
+{
+  "model": "agnes-3.0-flash",
+  "invocation": "agh_headless_cli_fresh_session",
+  "entry": "D:\\STUDY\\darker\\agnes-harness\\packages\\cli\\dist\\local\\agnes.mjs",
+  "session_id": "agnes:local:local-dev:cli:workspace:f7a8d4b327eba0be",
+  "cli_exit_code": 0,
+  "wall_s": 11.751,
+  "prompt_bytes": 11430,
+  "record": {
+    "v": "agnes-cli-result/v1",
+    "sessionId": "agnes:local:local-dev:cli:workspace:f7a8d4b327eba0be",
+    "reason": "completed",
+    "exitCode": 0,
+    "lastSeq": 47,
+    "credits": {
+      "used": 0,
+      "source": "estimated"
+    },
+    "text": "{\"observation_summary\":\"PCA returned LOW confidence (no usable rotation), and CHEAP_LOCAL_ICP shows only a modest fitness gain (0.535→0.542) with a small transform delta (~0.064) and high RMSE (~0.043), indicating identity init is in a weak/wrong basin and local convergence is not established.\",\"information_sufficient\":true,\"requested_probe\":\"NONE\",\"probe_reason\":\"\",\"candidate_methods\":[{\"method\":\"GLOBAL_FPFH_RANSAC_ICP\",\"pros\":\"Robust to large rotation, the target cloud's moderate outliers (~0.063 high-distance ratio), and low overlap; provides a reliable global init before point-to-plane ICP.\",\"risks\":\"Higher runtime cost; overkill if the true relative pose were small, but the weak local-probe trend makes that unlikely.\"},{\"method\":\"LOCAL_ICP\",\"pros\":\"Fast and cheap.\",\"risks\":\"Identity-only init; the cheap probe shows poor convergence (tiny fitness improvement, high RMSE, significant centroid distance 0.47), so it is likely to diverge or hit a local optimum.\"}],\"selected_method\":\"GLOBAL_FPFH_RANSAC_ICP\",\"parameter_policy\":{\"global_corr_scale\":4.0,\"icp_max_corr_scale\":2.0},\"reasoning_summary\":\"No usable PCA angle and the cheap local ICP probe is not converging (small delta, high RMSE), while the clouds show a moderate global misalignment (bbox_diagonal_ratio ~1.4, centroid_distance ~0.47) and some target outliers. Commit to the robust global method; set global_corr_scale=4.0 (0.135 m) to safely cover correspondence distance across the misalignment and icp_max_corr_scale=2.0 for the refinement ICP.\",\"confidence\":0.78}"
+  },
+  "text_payload": "{\"observation_summary\":\"PCA returned LOW confidence (no usable rotation), and CHEAP_LOCAL_ICP shows only a modest fitness gain (0.535→0.542) with a small transform delta (~0.064) and high RMSE (~0.043), indicating identity init is in a weak/wrong basin and local convergence is not established.\",\"information_sufficient\":true,\"requested_probe\":\"NONE\",\"probe_reason\":\"\",\"candidate_methods\":[{\"method\":\"GLOBAL_FPFH_RANSAC_ICP\",\"pros\":\"Robust to large rotation, the target cloud's moderate outliers (~0.063 high-distance ratio), and low overlap; provides a reliable global init before point-to-plane ICP.\",\"risks\":\"Higher runtime cost; overkill if the true relative pose were small, but the weak local-probe trend makes that unlikely.\"},{\"method\":\"LOCAL_ICP\",\"pros\":\"Fast and cheap.\",\"risks\":\"Identity-only init; the cheap probe shows poor convergence (tiny fitness improvement, high RMSE, significant centroid distance 0.47), so it is likely to diverge or hit a local optimum.\"}],\"selected_method\":\"GLOBAL_FPFH_RANSAC_ICP\",\"parameter_policy\":{\"global_corr_scale\":4.0,\"icp_max_corr_scale\":2.0},\"reasoning_summary\":\"No usable PCA angle and the cheap local ICP probe is not converging (small delta, high RMSE), while the clouds show a moderate global misalignment (bbox_diagonal_ratio ~1.4, centroid_distance ~0.47) and some target outliers. Commit to the robust global method; set global_corr_scale=4.0 (0.135 m) to safely cover correspondence distance across the misalignment and icp_max_corr_scale=2.0 for the refinement ICP.\",\"confidence\":0.78}"
+}

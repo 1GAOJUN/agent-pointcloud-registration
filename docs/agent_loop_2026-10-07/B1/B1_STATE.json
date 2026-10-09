@@ -1,0 +1,38 @@
+{
+  "phase": "B1_COMPLETE",
+  "audit_date": "2026-10-07",
+  "algorithm_selection_owner": "Python heuristic in src/agent_runner.py agnes_decide (lines 44-90). No real LLM call. Global_FPFH_RANSAC_ICP selected when offset_proxy >= 3.0 OR density_ratio outside (0.5,2.0).",
+  "accept_retry_owner": "Python threshold in src/agent_runner.py agnes_assess (line 101): fitness >= 0.8 -> ACCEPT, else RETRY. No ABORT branch implemented.",
+  "gt_leakage": "PASS. gt_transform.npy only read in agent_evaluator.evaluate_agent_result, called after Agent loop ends. tool_call files record gt_read=false. initial_transform_available=True is a fixed LOCAL_ICP tool property (np.eye(4) init), not a GT leak.",
+  "initial_transform_semantics": "Always True. Means LOCAL_ICP tool can use identity matrix as init. Field name is misleading; B2 should rename or remove. See 02_INITIAL_TRANSFORM_AUDIT.md.",
+  "parameter_adaptation_status": "NOT_IMPLEMENTED (at Agnes/LLM level). Both L1 and L2 use identical params (global_corr_scale=5.0, icp_max_corr_scale=2.0) because both hit the same hard branch with hardcoded multipliers. base_scale is computed deterministically; multiplier is a Python literal, not an LLM choice.",
+  "main_observation_gap": "rotation_magnitude_estimate = NOT_IMPLEMENTED. Cannot distinguish Case A (small rotation + large translation) from Case B (large rotation + similar translation). L1 and L2 both fall into hard branch; LOCAL_ICP fast path never exercised.",
+  "recommended_b2_probes": [
+    "Probe A: PCA Orientation Probe (rotation_estimate_deg, orientation_confidence, ambiguity_reason)",
+    "Probe B: Cheap Local ICP Probe (probe_fitness, probe_rmse, correspondence_count, improvement, runtime)"
+  ],
+  "b2_must_also_do": [
+    "Replace agnes_decide/agnnes_assess Python heuristics with real LLM calls",
+    "Implement Probe A and Probe B as Agnes-invocable tools (not in agent_diagnose fixed diagnosis)",
+    "Support Probe invocation loop in runner"
+  ],
+  "b2_forbidden": [
+    "Adding fixed threshold on Probe result to force algorithm selection (re-introduces heuristic)",
+    "Reading GT in any Probe",
+    "Adding Probe results to agent_diagnose fixed diagnosis fields",
+    "Modifying L1/L2 Frozen evidence packages"
+  ],
+  "files_created": [
+    "docs/agent_loop_2026-10-07/B1/01_DECISION_AUDIT.md",
+    "docs/agent_loop_2026-10-07/B1/02_INITIAL_TRANSFORM_AUDIT.md",
+    "docs/agent_loop_2026-10-07/B1/03_OBSERVATION_GAP.md",
+    "docs/agent_loop_2026-10-07/B1/04_PARAMETER_AUDIT.md",
+    "docs/agent_loop_2026-10-07/B1/05_ACCEPT_RETRY_AUDIT.md",
+    "docs/agent_loop_2026-10-07/B1/06_PROBE_PLAN.md",
+    "docs/agent_loop_2026-10-07/B1/07_ARCHITECTURE.md",
+    "docs/agent_loop_2026-10-07/B1/B1_HANDOFF.md",
+    "docs/agent_loop_2026-10-07/B1/B1_STATE.json"
+  ],
+  "next_phase": "B2",
+  "next_phase_entry_file": "docs/agent_loop_2026-10-07/B1/B1_HANDOFF.md"
+}

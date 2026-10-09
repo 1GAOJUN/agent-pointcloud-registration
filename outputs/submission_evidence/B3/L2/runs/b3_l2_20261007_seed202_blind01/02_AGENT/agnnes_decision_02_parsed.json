@@ -1,0 +1,28 @@
+{
+  "observation_summary": "PCA shows high ambiguity with near-degenerate transverse eigenvalues on both clouds, yielding a LOW-confidence, null rotation estimate. Centroid distance (0.559) is moderate relative to cloud size, and identical density/spacing suggest a coherent overlap. The key unknown is rotation magnitude, which PCA cannot resolve and diagnosis does not estimate.",
+  "information_sufficient": false,
+  "requested_probe": "CHEAP_LOCAL_ICP",
+  "probe_reason": "PCA was inconclusive (LOW confidence, null rotation). A cheap local ICP probe from the available initial pose will reveal how much the pose is actually off: strong fitness/rmse indicates rotation is small and LOCAL_ICP is viable; weak result signals large misalignment, favoring a global method. This is the decisive information PCA could not provide.",
+  "candidate_methods": [
+    {
+      "method": "LOCAL_ICP",
+      "pros": "Low cost, fast, high-precision refinement when initial pose is close. Ideal if CHEAP_LOCAL_ICP probe shows good convergence.",
+      "risks": "Fails or produces poor alignment if rotation is large or initial pose is far from identity. Prone to local minima with low similarity."
+    },
+    {
+      "method": "GLOBAL_FPFH_RANSAC_ICP",
+      "pros": "Robust to large rotations and low similarity via statistical outlier removal, FPFH descriptors, and RANSAC. Safer default when pose uncertainty is high.",
+      "risks": "Higher compute cost. Descriptor matching can degrade under heavy noise/outliers or near-degenerate geometry. Slower turnaround."
+    }
+  ],
+  "selected_method": null,
+  "parameter_policy": {
+    "global_corr_scale": null,
+    "icp_max_corr_scale": null
+  },
+  "reasoning_summary": "PCA gave no usable rotation (ambiguity due to near-eigenvalue degeneracy), and rotation magnitude is unestimated, so information is not sufficient to choose. Since 1 of 2 probes is used, I will request CHEAP_LOCAL_ICP: it directly tests whether the initial pose is close enough for cheap local refinement. If the probe converges well, I will select LOCAL_ICP; if it converges poorly, I will select GLOBAL_FPFH_RANSAC_ICP. Parameters will be set after the probe observation rather than guessed now.",
+  "confidence": 0.45,
+  "_agnnes_model": "agnes-3.0-flash",
+  "_agnnes_timestamp": "2026-10-07T20:57:00",
+  "_implementation": "agnnes_real"
+}

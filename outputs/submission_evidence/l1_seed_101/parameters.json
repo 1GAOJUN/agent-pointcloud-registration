@@ -1,0 +1,40 @@
+{
+  "agent_policy": {
+    "global_corr_scale": 5.0,
+    "icp_max_corr_scale": 2.0,
+    "note": "Agent 选择的是相对诊断尺度 base_scale 的倍率档位，非绝对值。来源: decision_01.json / tool_call_01.json"
+  },
+  "derived_parameters": {
+    "base_scale": 0.033892031543267295,
+    "ransac_max_correspondence_distance": "max(1e-3, base_scale * global_corr_scale) = 0.1694601577163365 (verified from observation_01.json)",
+    "icp_max_correspondence_distance": "max(1e-4, base_scale * icp_max_corr_scale) = 0.06778406308653459 (verified from observation_01.json)",
+    "normal_estimation_radius": "max(1e-3, base_scale * 0.5) = 0.01694601577163365",
+    "fpfh_search_radius": "max(base_scale, 0.2) = 0.2",
+    "fpfh_num_keypoints": "min(500, num_points) = 500 (both source and target)",
+    "note": "按 src/agent_tools.py run_global_fpfh_ransac_icp 实际代码济生；其中 ransac/icp 两个值已用 observation_01.json 实际返回值核对一致。"
+  },
+  "tool_defaults": {
+    "SOR": {
+      "nb_neighbors": 30,
+      "std_ratio": 1.0
+    },
+    "FPFH_normal_max_nn": 30,
+    "FPFH_search_max_nn": 30,
+    "RANSAC": {
+      "mutual_filter": true,
+      "other_params": "Open3D registration_ransac_based_on_feature_matching 其余参数均使用默认值（未在代码中显式设置，故记为 UNKNOWN 级别，仅确认 mutual_filter=True 为显式参数）"
+    },
+    "ICP": {
+      "estimation_method": "PointToPlane",
+      "max_iteration": 100,
+      "relative_fitness": 1e-06,
+      "relative_rmse": 1e-06,
+      "note": "These values are explicitly set in run_global_fpfh_ransac_icp, not left to Open3D defaults."
+    },
+    "random_seed": {
+      "np.random.seed": 42,
+      "note": "固定随机种子，保证重复运行可复现"
+    },
+    "open3d_version": "UNKNOWN (不能在当前环境重新校验当时使用的 Open3D 版本，未在运行证据中记录)"
+  }
+}

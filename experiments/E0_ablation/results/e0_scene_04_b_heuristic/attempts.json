@@ -1,0 +1,36 @@
+[
+  {
+    "attempt": 1,
+    "selected_method": "GLOBAL_FPFH_RANSAC_ICP",
+    "parameter_policy": {
+      "global_corr_scale": 5.0,
+      "icp_max_corr_scale": 2.0
+    },
+    "fitness": 0.5939724727100142,
+    "rmse": 0.021725951402137855,
+    "runtime_s": 249.17260439999518,
+    "outcome": "RETRY"
+  },
+  {
+    "attempt": 2,
+    "selected_method": "LOCAL_ICP",
+    "parameter_policy": {
+      "icp_max_corr_scale": 1.5
+    },
+    "fitness": 0.6377333333333334,
+    "rmse": 0.007476849474501007,
+    "runtime_s": 1.6642273000034038,
+    "outcome": "RETRY"
+  },
+  {
+    "attempt": 3,
+    "selected_method": "LOCAL_ICP",
+    "parameter_policy": {
+      "icp_max_corr_scale": 1.5
+    },
+    "fitness": 0.6377333333333334,
+    "rmse": 0.007476849474500991,
+    "runtime_s": 1.6260526999976719,
+    "outcome": "RETRY"
+  }
+]

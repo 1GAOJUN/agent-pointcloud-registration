@@ -1,0 +1,55 @@
+{
+  "agent_observable_metrics": {
+    "source": "observation_01.json (tool return values, GT-free, visible to Agent at assessment time)",
+    "fitness": 1.0,
+    "rmse": 1.0480573452953922e-16,
+    "inlier_rmse": 1.0480573452953922e-16,
+    "ransac_fitness": 1.0,
+    "ransac_rmse": 1.3449969344340598e-16,
+    "elapsed_s": 0.7089753000000201,
+    "ransac_max_correspondence_distance": 0.1694601577163365,
+    "icp_max_correspondence_distance": 0.06778406308653459,
+    "transform": [
+      [
+        0.9632873407929414,
+        -0.20045436175063014,
+        -0.17859324713776506,
+        0.3
+      ],
+      [
+        0.16985354835670544,
+        0.9701990375235616,
+        -0.17281087841623471,
+        0.09999999999999999
+      ],
+      [
+        0.2079116908177593,
+        0.13613183479077168,
+        0.9686283355228664,
+        0.2
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "note": "inlier_rmse 与 rmse 在本工具实现中同源（都是 icp.inlier_rmse），数值相同。"
+  },
+  "agent_assessment": {
+    "decision": "ACCEPT",
+    "reason": "fitness=1.0 达到阈值 0.8（来源 agent_assessment_01.json / agent_final_assessment.json）"
+  },
+  "gt_evaluation_metrics": {
+    "source": "evaluator_result.json (独立 Evaluator，仅在 Agent 停止后读取 GT)",
+    "rotation_error_deg": 0.0,
+    "translation_error": 1.3877787807814457e-17,
+    "success": true,
+    "rot_thr_deg": 5.0,
+    "trans_thr": 0.05,
+    "gt_path": "outputs/ICP/L1/L1/seed_101/gt_transform.npy",
+    "timestamp": "2026-10-06 17:31:28",
+    "note": "这些值在 Agent 决策阶段不可见，仅供独立验证与本论证展示使用，不可回标为 Agent 当时可见信息。"
+  }
+}

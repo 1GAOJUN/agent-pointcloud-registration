@@ -1,0 +1,14 @@
+{
+    "schema":  "devx-permission-policy-evidence/v1",
+    "source":  "D:\\STUDY\\darker\\agent-pointcloud-registration\\configs\\agh_headless_permissions.json",
+    "snapshot":  "permission_policy_snapshot.json",
+    "sha256":  "611d7b15fe3c66d562ffe5ce0fa5219718cbd787a303dd00ea367a05d4966b45",
+    "agh_preset":  "agent-pointcloud-headless-windows",
+    "preset_source":  "D:\\STUDY\\darker\\agnes-harness\\packages\\code\\presets\\agent-pointcloud-headless-windows.yaml",
+    "preset_sha256":  "f401724cb052b8ce738c88099cdb73c35887f10da8eaae2af89cccf3b0fdf7f6",
+    "profile_source":  "D:\\STUDY\\darker\\agent-pointcloud-registration\\configs\\agh_profile.local-dev.yaml",
+    "profile_sha256":  "f935298c454e02b5da80dcd71cd68ee8e139ca0ac3351ac3f075e15ec1ffa5e4",
+    "deployed_profile":  "C:\\Users\\GAOJUN\\AppData\\Local\\agh-devx1-private-20261008\\profiles\\local-dev\\profile.yaml",
+    "validation":  "PASS",
+    "behavior":  "fail-closed"
+}

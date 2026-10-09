@@ -1,0 +1,18 @@
+{
+    "schema":  "devx-agh-environment/v1",
+    "captured_at_utc":  "2026-10-08T01:36:19.5178283Z",
+    "computer_name":  "LAPTOP-M6DKBA6A",
+    "os_version":  "Microsoft Windows NT 10.0.22621.0",
+    "powershell_version":  "5.1.22621.4249",
+    "node_version":  "v24.21.0",
+    "agh_cli_version":  "agh 0.0.0 node 24.21.0 protocol _agnes/v1",
+    "agh_entry":  "D:\\STUDY\\darker\\agnes-harness\\packages\\cli\\dist\\local\\agnes.mjs",
+    "agh_entry_sha256":  "0c1fe937a48cb645c306983d01328baea5e485ba4e08ba4b9d6c45634497ea3a",
+    "workspace":  "D:\\STUDY\\darker\\agent-pointcloud-registration",
+    "profile":  "local-dev",
+    "permission_mode":  "policy",
+    "permission_policy_sha256":  "4f31273f45e179fa82437a341ebbde56e853f6feac85008f10bd4aa22fb270ca",
+    "agh_preset":  "agent-pointcloud-headless-windows",
+    "agh_preset_sha256":  "f401724cb052b8ce738c88099cdb73c35887f10da8eaae2af89cccf3b0fdf7f6",
+    "permission_note":  "AGH approval.command_policy is selected explicitly with --preset; unmatched approval requests fail closed."
+}

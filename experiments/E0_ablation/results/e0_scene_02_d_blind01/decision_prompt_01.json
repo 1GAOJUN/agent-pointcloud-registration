@@ -1,0 +1,238 @@
+{
+  "task": "3D point cloud registration strategy selection",
+  "diagnosis": {
+    "source_point_count": 30000,
+    "target_point_count": 30000,
+    "source_bbox_diagonal": 1.6946923397149645,
+    "target_bbox_diagonal": 1.7879232541159686,
+    "source_median_spacing": 0.01111120560563559,
+    "target_median_spacing": 0.01111120560563559,
+    "density_ratio": 1.0,
+    "point_count_ratio": 1.0,
+    "bbox_diagonal_ratio": 1.0550134748450477,
+    "nearest_neighbor_distance_stats": {
+      "source": {
+        "sample_size": 5000,
+        "median": 0.01111120560563559,
+        "p90": 0.02020997756367279,
+        "p95": 0.023055276146731706,
+        "mad": 0.004309250974400467,
+        "high_distance_threshold": 0.030277892089573988,
+        "high_distance_ratio_proxy": 0.0058
+      },
+      "target": {
+        "sample_size": 5000,
+        "median": 0.01111120560563559,
+        "p90": 0.020209977563672734,
+        "p95": 0.023055276146731706,
+        "mad": 0.004309250974400464,
+        "high_distance_threshold": 0.03027789208957397,
+        "high_distance_ratio_proxy": 0.0058
+      },
+      "high_distance_ratio_delta": 0.0,
+      "interpretation": "Robust within-cloud spacing and isolated-point proxies only; not a ground-truth noise/outlier estimate and not an algorithm trigger."
+    },
+    "centroid_distance": 0.5597483743168442,
+    "initial_transform_available": true,
+    "sample_size": 5000,
+    "sampling_seed": 101,
+    "overlap_ratio": "NOT_IMPLEMENTED",
+    "noise_level": "NOT_IMPLEMENTED",
+    "outlier_level": "NOT_IMPLEMENTED",
+    "rotation_magnitude_estimate": "NOT_IMPLEMENTED",
+    "base_scale": 0.03389384679429929
+  },
+  "available_tools": [
+    {
+      "tool_name": "LOCAL_ICP",
+      "purpose": "单位阵初值的点到面 ICP。低成本、快。",
+      "applicable_conditions": "旋转角度较小、数据干净、source 与 target 重叠高、尺度接近。",
+      "required_inputs": [
+        "source.ply",
+        "target.ply"
+      ],
+      "adjustable_parameters": [
+        "icp_max_corr_scale"
+      ],
+      "returned_metrics": [
+        "transform",
+        "fitness",
+        "rmse",
+        "inlier_rmse",
+        "elapsed_s"
+      ],
+      "known_limitations": "初值只能单位阵；大角度/脏数据/低重叠下发散或局部最优。"
+    },
+    {
+      "tool_name": "GLOBAL_FPFH_RANSAC_ICP",
+      "purpose": "统计离群剔除 + FPFH + RANSAC 全局配准，再点到面 ICP。高成本、鲁棒。",
+      "applicable_conditions": "大角度、脏数据（噪声/离群）、重叠较低、或 LOCAL_ICP 失败时的补救。",
+      "required_inputs": [
+        "source.ply",
+        "target.ply"
+      ],
+      "adjustable_parameters": [
+        "global_corr_scale",
+        "icp_max_corr_scale"
+      ],
+      "returned_metrics": [
+        "transform",
+        "fitness",
+        "rmse",
+        "ransac_fitness",
+        "ransac_rmse",
+        "elapsed_s"
+      ],
+      "known_limitations": "耗时高；对完全干净且小角度数据可能不必要；对极低重叠仍有限。"
+    },
+    {
+      "tool_name": "SVD_ICP",
+      "status": "EXPERIMENT_ONLY",
+      "purpose": "SVD 交叉协方差全局初值（干净且完全重叠时极准）。",
+      "excluded_from_agent": true,
+      "reason_excluded": "依赖现实中不可保证的“干净且完全重叠”前提，不作为通用 Agent 候选。"
+    }
+  ],
+  "parameter_ranges": {
+    "global_corr_scale": {
+      "min": 2.0,
+      "max": 10.0,
+      "description": "RANSAC 最大对应距离 = base_scale × global_corr_scale"
+    },
+    "icp_max_corr_scale": {
+      "min": 0.5,
+      "max": 5.0,
+      "description": "ICP 最大对应距离 = base_scale × icp_max_corr_scale"
+    }
+  },
+  "prior_attempts": [],
+  "probes": {
+    "available_probes": [
+      {
+        "probe_name": "PCA_ORIENTATION",
+        "tool_name": "PCA_ORIENTATION",
+        "type": "probe",
+        "purpose": "PCA 主轴 frame 对比，估计 source→target 的粗旋转角与主轴各向异性。低成本（微秒级）。",
+        "returns": [
+          "rotation_estimate_deg (float or null)",
+          "orientation_confidence: HIGH|MEDIUM|LOW",
+          "ambiguity_detected: bool",
+          "ambiguity_reason: string or null",
+          "source_anisotropy: float (λmax/λmin)",
+          "target_anisotropy: float",
+          "ambiguity_handling: string",
+          "runtime_s: float"
+        ],
+        "cost": "extremely low (numpy 3x3 eigendecomposition, <1 ms on 1000-point samples)",
+        "limitations": [
+          "各向同性/对称/近平面/近细长点云时 orientation_confidence=LOW，rotation_estimate_deg=null",
+          "输出角度是 PCA frame 相对旋转，不是逐点配准意义上的旋转误差",
+          "不得据此做'角度>X 就用某算法'的固定映射，那是 Agnes 的专业判断"
+        ]
+      },
+      {
+        "probe_name": "CHEAP_LOCAL_ICP",
+        "tool_name": "CHEAP_LOCAL_ICP",
+        "type": "probe",
+        "purpose": "固定低成本局部 ICP（identity 初值、5 次迭代、不做 Global 初始化、不做 SOR），回答'当前局部初始化是否已有收敛迹象'。",
+        "returns": [
+          "initial_fitness / probe_fitness / fitness_improvement",
+          "initial_rmse (or null) / probe_rmse",
+          "correspondence_count (or null)",
+          "source_to_target_support / target_to_source_support",
+          "bidirectional_support / support_confidence",
+          "iterations: 5",
+          "runtime_s",
+          "transform_delta_magnitude (or null)"
+        ],
+        "cost": "low: 5 ICP iterations, ≈6% of formal LOCAL_ICP wall time (measured)",
+        "limitations": [
+          "仅反映 identity 初值下的局部收敛趋势，大旋转下可能处于错误 basin",
+          "不替代正式 LOCAL_ICP / GLOBAL_FPFH_RANSAC_ICP 的完整配准",
+          "结果只作为 Agnes 的观察信息，不由 Python 映射成算法选择"
+        ]
+      }
+    ],
+    "probe_policy": {
+      "max_probes_per_run": 2,
+      "note": "Whether to call a probe, which probe, and the order are YOUR professional judgment. Python only validates the request against the whitelist and quota, executes it, and returns the observation. Probe outputs are observational signals only — they never auto-select an algorithm."
+    },
+    "already_executed": [
+      "PCA_ORIENTATION",
+      "CHEAP_LOCAL_ICP"
+    ],
+    "observations": [
+      {
+        "probe_name": "PCA_ORIENTATION",
+        "rotation_estimate_deg": null,
+        "orientation_confidence": "LOW",
+        "ambiguity_detected": true,
+        "ambiguity_reason": "near_line_degeneracy (λ1≈λ2; transverse axes undetermined); near_line_degeneracy (λ1≈λ2; transverse axes undetermined)",
+        "source_anisotropy": 2.9409,
+        "target_anisotropy": 2.9409,
+        "source_eigenvalues": [
+          0.11722424,
+          0.04550812,
+          0.03985959
+        ],
+        "target_eigenvalues": [
+          0.11722424,
+          0.04550812,
+          0.03985959
+        ],
+        "ambiguity_handling": "per_axis_sign_greedy + permutation_argmax_trace",
+        "runtime_s": 0.0553,
+        "note": "主轴结构不稳定；不得将 rotation_estimate_deg 用于算法选择。"
+      },
+      {
+        "probe_name": "CHEAP_LOCAL_ICP",
+        "initial_fitness": 0.13426666666666667,
+        "probe_fitness": 0.16186666666666666,
+        "initial_rmse": 0.03849676627544105,
+        "probe_rmse": 0.03807516441872893,
+        "fitness_improvement": 0.027599999999999986,
+        "correspondence_count": null,
+        "iterations": 5,
+        "runtime_s": 0.3245,
+        "transform_delta_magnitude": 0.6303499619410063,
+        "max_correspondence_distance": 0.06778769358859858,
+        "source_to_target_support": 0.16186666666666666,
+        "target_to_source_support": 0.1695,
+        "bidirectional_support": 0.1655954129363243,
+        "support_confidence": "HIGH",
+        "support_distance_threshold": 0.06778769358859858,
+        "note": "initial_* 为 identity 初值 1 次迭代近似 baseline；probe 固定 5 次迭代，无 Global 初始化，无 SOR。 双向 support 是同一距离阈值下的最近邻支持代理，不是真实 overlap。 结果只作观察信息，不直接映射算法。"
+      }
+    ],
+    "quota_note": "Up to 2 probes may be executed this run; 2 already used."
+  },
+  "output_schema": {
+    "observation_summary": "string (1-3 sentences summarizing diagnosis + any probe observations)",
+    "information_sufficient": "boolean: is the current information enough to select a formal registration method?",
+    "requested_probe": "NONE | PCA_ORIENTATION | CHEAP_LOCAL_ICP",
+    "probe_reason": "string, required when requested_probe != NONE (why this probe adds information)",
+    "candidate_methods": [
+      {
+        "method": "string (tool name)",
+        "pros": "string",
+        "risks": "string"
+      }
+    ],
+    "selected_method": "tool name REQUIRED when information_sufficient=true, null when false",
+    "parameter_policy": {
+      "global_corr_scale": "float in range, only if GLOBAL_FPFH_RANSAC_ICP",
+      "icp_max_corr_scale": "float in range"
+    },
+    "reasoning_summary": "string (short professional justification, no hidden chain-of-thought)",
+    "confidence": "float in [0.0, 1.0]"
+  },
+  "notes": [
+    "Do NOT read GT transform, rotation error, translation error, or level label.",
+    "All decisions must be based solely on the provided diagnosis, probe observations, and tool metadata.",
+    "If parameter_policy values are out of range, the system will reject and you must re-select.",
+    "Probes are observational tools: their output informs your judgment but never auto-selects an algorithm.",
+    "A probe observation with LOW confidence should be treated as 'insufficient', not as a usable angle.",
+    "When orientation or geometry evidence is ambiguous, degenerate, or contradicts local convergence, include local-optimum risk in each candidate method's risks and in your method justification.",
+    "Local overlap quality alone does not establish that the globally correct pose has been identified."
+  ]
+}

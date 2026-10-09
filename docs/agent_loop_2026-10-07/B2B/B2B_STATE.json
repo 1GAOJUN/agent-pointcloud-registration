@@ -1,0 +1,85 @@
+{
+  "phase": "B2B_COMPLETE",
+  "audit_date": "2026-10-07",
+  "core_capability": "Real Agnes can actively acquire additional professional observation: after Basic Diagnosis, Agnes decides whether information is sufficient; if not, it requests a Probe (PCA_ORIENTATION or CHEAP_LOCAL_ICP); Python validates (whitelist+dedup+quota MAX_PROBES_PER_RUN=2) and dispatches; probe observation is fed back; Agnes re-decides (possibly requesting the other probe), then selects a formal method + parameter policy. Python has NO automatic probe trigger branch.",
+  "probes_implementation_owner": "src/agent_probes.py: run_pca_orientation_probe (numpy PCA on 1000-pt samples, eigh 3x3) and run_cheap_local_icp_probe (identity init, 5 ICP iterations, no global init, no SOR, icp_max_corr_scale=2.0 fixed low-cost setting). Registered in PROBE_DISPATCH; independent from agent_tools.TOOL_REGISTRY (registration algorithms).",
+  "probe_decision_owner": "Real Agnes LLM (agnes-3.0-flash) via AGH subagent_fork. requested_probe appears in agnnes_raw_decision_NN.json. Probe ORDER (PCA then ICP in the smoke trace) was chosen by two independent Agnes decisions, NOT by Python.",
+  "python_probe_guardrails": {
+    "whitelist": "PROBE_WHITELIST = {NONE, PCA_ORIENTATION, CHEAP_LOCAL_ICP} (agnnes_agent.py / agent_probes.py)",
+    "quota": "MAX_PROBES_PER_RUN = 2 (legal guardrail; prevents infinite probing). No probe ORDER constraint in Python.",
+    "dedup": "validate_decision(probes_already_run=...) rejects re-requesting an already-executed probe"
+  },
+  "pca_ambiguity_handling": "Per-axis greedy sign disambiguation (v <- ±v maximizing dot product with source frame) + enumeration of 6 axis permutations taking argmax |trace(R)| (max geometric consistency). LOW confidence + rotation_estimate_deg=null when near-isotropic/symmetric (λ0/λ1<1.25 & λ1/λ2<1.5) or near-planar (λ0/λ1<1.25) or near-line (λ1/λ2<1.25) on either side. GT never used to disambiguate.",
+  "cheap_icp_cost_vs_formal": {
+    "iterations": "5 vs 100 (20x)",
+    "wall_time_l2_seed_202": "probe ≈0.32s vs formal LOCAL_ICP ≈5.06s (~16x, ~6% of formal cost)",
+    "conclusion": "Cheap ICP Probe is genuinely low-cost; B2B does NOT need NEEDS_REDESIGN"
+  },
+  "gt_leakage": "PASS. Neither probe reads gt_transform/rotation_error/translation_error/level label. All 12 agnnes_*.json files in B2B smoke evidence scanned: 0 hits for banned keywords. Evaluator (agent_evaluator) runs only after Agent loop + all probes stop.",
+  "smoke_test_result": "PASS",
+  "smoke_test_dir": "outputs/development_tests/B2B_ACTIVE_PROBE_SMOKE/",
+  "smoke_trace": {
+    "case": "L1/L1/seed_101 (development smoke only, NOT formal L1/L2 run, not in RUN_INDEX)",
+    "decision_01": "information_sufficient=false, requested_probe=PCA_ORIENTATION (real Agnes, confidence 0.72)",
+    "probe_01": "PCA_ORIENTATION: rotation_estimate_deg=null, orientation_confidence=LOW, ambiguity_reason=near_line_degeneracy (λ1≈λ2 on both clouds)",
+    "decision_02": "information_sufficient=false, requested_probe=CHEAP_LOCAL_ICP (real Agnes recognized LOW-confidence PCA as insufficient, confidence 0.3)",
+    "probe_02": "CHEAP_LOCAL_ICP: initial_fitness=0.2356, probe_fitness=0.2764, fitness_improvement=0.0408, iterations=5, runtime_s≈0.51, transform_delta_magnitude=0.4083",
+    "decision_03": "information_sufficient=true, requested_probe=NONE, selected_method=LOCAL_ICP, parameter_policy={global_corr_scale:null, icp_max_corr_scale:2.5} (real Agnes, confidence 0.78, quota exhausted)",
+    "formal_tool": "LOCAL_ICP executed with icp_max_corr_scale=2.5 -> observation fitness=1.0, rmse≈2.4e-16",
+    "assessment": "ACCEPT (real Agnes, confidence 0.9, no guardrail overwrite)",
+    "evaluator": "success=true, rot_err_deg=0.0, trans_err≈1.2e-17 (GT read only after Agent stop)"
+  },
+  "anti_fake_agent_checks": {
+    "A_probe_auto_trigger_in_python": false,
+    "B_probe_order_hardcoded_in_python": false,
+    "C_offset_proxy_in_agnnes_main_path": false,
+    "note": "grep across src/agent_probes.py + src/agnnes_agent.py: no code path selects a probe from diagnosis metrics (offset_proxy, rotation estimate, fitness, etc.). Probes are dispatched only after a real Agnes raw decision JSON (agnnes_raw_decision_NN.json) passes whitelist/dedup/quota validation."
+  },
+  "heuristic_baseline_status": "Unchanged: agent_runner.heuristic_decide/heuristic_assess remain @deprecated, still available as Rule-based Baseline for future E phase. Real Agnes main path does NOT use offset_proxy>=3->GLOBAL fixed mapping. B2B added no Python automatic probe branch.",
+  "files_created": [
+    "src/agent_probes.py",
+    "tests/test_b2b_probes.py",
+    "tests/_b2b_smoke_scaffold.py",
+    "tests/_b2b_cost_profile.py",
+    "tests/_b2b_exec_probe2.py",
+    "tests/_b2b_print_next_prompt.py",
+    "tests/_b2b_patch_parser.py",
+    "docs/agent_loop_2026-10-07/B2B/B2B_IMPLEMENTATION_PLAN.md",
+    "docs/agent_loop_2026-10-07/B2B/01_PCA_PROBE.md",
+    "docs/agent_loop_2026-10-07/B2B/02_CHEAP_ICP_PROBE.md",
+    "docs/agent_loop_2026-10-07/B2B/03_ACTIVE_PROBE_SCHEMA.md",
+    "docs/agent_loop_2026-10-07/B2B/04_TOOL_TESTS.md",
+    "docs/agent_loop_2026-10-07/B2B/05_ACTIVE_PROBE_SMOKE.md",
+    "docs/agent_loop_2026-10-07/B2B/06_GT_ISOLATION.md",
+    "docs/agent_loop_2026-10-07/B2B/07_REAL_AGNES_PROBE_VALIDATION.md",
+    "docs/agent_loop_2026-10-07/B2B/B2B_HANDOFF.md",
+    "docs/agent_loop_2026-10-07/B2B/B2B_STATE.json"
+  ],
+  "files_modified": [
+    "src/agnnes_agent.py (added PROBE_WHITELIST, MAX_PROBES_PER_RUN; extended validate_decision with information_sufficient/requested_probe/probes_already_run; extended build_decision_prompt with probes section + probe observations; added build_probe_prompt; extended AgnesDecisionAdapter with probes_already_run_fn/probe_observations_fn; hardened parse_agnnes_decision/parse_agnnes_assessment to strip BOM and tolerate surrounding prose; build_assessment_prompt now carries probe_observations)",
+    "src/agent_runner.py (NOT modified in B2B)"
+  ],
+  "outputs_written": [
+    "outputs/development_tests/B2B_ACTIVE_PROBE_SMOKE/_cost_profile.json",
+    "outputs/development_tests/B2B_ACTIVE_PROBE_SMOKE/probe_unit_test/* (constructed PLYs + unit_test_summary.json)",
+    "outputs/development_tests/B2B_ACTIVE_PROBE_SMOKE/diagnosis.json",
+    "outputs/development_tests/B2B_ACTIVE_PROBE_SMOKE/agnnes_decision_prompt_01/02/03.json",
+    "outputs/development_tests/B2B_ACTIVE_PROBE_SMOKE/agnnes_raw_decision_01/02/03.json",
+    "outputs/development_tests/B2B_ACTIVE_PROBE_SMOKE/agnnes_decision_01/02/03_parsed.json",
+    "outputs/development_tests/B2B_ACTIVE_PROBE_SMOKE/probe_observation_01/02.json",
+    "outputs/development_tests/B2B_ACTIVE_PROBE_SMOKE/observation_01.json",
+    "outputs/development_tests/B2B_ACTIVE_PROBE_SMOKE/agnnes_assessment_prompt.json",
+    "outputs/development_tests/B2B_ACTIVE_PROBE_SMOKE/agnnes_raw_assessment.json",
+    "outputs/development_tests/B2B_ACTIVE_PROBE_SMOKE/agnnes_assessment_parsed.json",
+    "outputs/development_tests/B2B_ACTIVE_PROBE_SMOKE/evaluator_result.json",
+    "outputs/development_tests/B2B_ACTIVE_PROBE_SMOKE/B2B_SMOKE_EVIDENCE.json"
+  ],
+  "smoke_test_evidence_file": "outputs/development_tests/B2B_ACTIVE_PROBE_SMOKE/B2B_SMOKE_EVIDENCE.json",
+  "not_done": [
+    "Formal L1/L2 blind test with B2B Agent version (deferred to B3, per instruction §22)",
+    "L2 full-flow probe trace (only cost profiling ran on L2 seed_202; formal L2 Agent run is B3)",
+    "correspondence_count populated with real values (Open3D 0.20 API does not expose per-iteration match count; output is null, not fabricated)"
+  ],
+  "next_phase": "B3",
+  "next_phase_entry_file": "docs/agent_loop_2026-10-07/B2B/B2B_HANDOFF.md"
+}

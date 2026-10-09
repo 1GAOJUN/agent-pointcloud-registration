@@ -1,0 +1,3 @@
+system_variant,run_count,gt_success_rate,median_rotation_error,median_translation_error,median_runtime,mean_probe_count,mean_retry_count,false_accept_count,false_accept_rate,false_abort_count,false_abort_rate
+FIXED_PIPELINE,4,0.25,48.62301588479123,0.24102102220919036,1.8632789500006766,0.0,0.0,0,0.0,0,0.0
+HEURISTIC_BASELINE,4,0.75,0.017329159133105888,8.726746941519419e-05,76.11946869999883,0.0,0.75,0,0.0,0,0.0

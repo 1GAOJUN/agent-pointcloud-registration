@@ -1,0 +1,26 @@
+{
+  "run_id": "l2_20261007_seed202_blind01",
+  "agent_observable_metrics": {
+    "source": "03_TOOL_CHAIN/observation_01.json",
+    "fitness": 1.0,
+    "rmse": 1.2229338887297887e-16,
+    "ransac_fitness": 1.0,
+    "ransac_rmse": 1.436358929950681e-16,
+    "elapsed_s": 0.6179801999996926,
+    "ransac_max_correspondence_distance": 0.1694253346608292,
+    "icp_max_correspondence_distance": 0.06777013386433169,
+    "tool_name": "GLOBAL_FPFH_RANSAC_ICP",
+    "note": "All values above were visible to the Agent before its ACCEPT/ABORT decision. No GT was read."
+  },
+  "gt_evaluation_metrics": {
+    "source": "05_VALIDATION/evaluator_result.json",
+    "rotation_error_deg": 1.7075472925031877e-06,
+    "translation_error": 0.0,
+    "success": true,
+    "rot_thr_deg": 5.0,
+    "trans_thr": 0.05,
+    "note": "GT was read only after the Agent completed its ACCEPT/ABORT decision. Evaluator timestamp: 2026-10-07 13:45:15 (local)."
+  },
+  "gt_read_policy": "GT is read exclusively by src/agent_evaluator.evaluate_agent_result(), which is called by run_agent_case() only after the Agent loop has terminated (ACCEPT or ABORT). All tool_call_NN.json files record gt_read=false.",
+  "run_status": "PASS"
+}

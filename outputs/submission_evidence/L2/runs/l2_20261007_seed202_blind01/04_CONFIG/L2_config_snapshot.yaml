@@ -1,0 +1,57 @@
+# L2 Config Snapshot — configs/L2.yaml (frozen at run time)
+
+level: L2
+n_points: 30000
+
+# --- 位姿变换 ---
+rot_x_deg: 75.0
+rot_y_deg: 120.0
+rot_z_deg: 150.0
+translation:
+  - 0.20
+  - 0.40
+  - 0.30
+
+# --- 退化处理：干净 ---
+noise_sigma: 0.0
+outlier_ratio: 0.0
+crop_ratio: 0.0
+crop_axis: z
+crop_sign: "+"
+
+# --- 随机种子（可复现）---
+seed: 202
+
+# --- 达标阈值 ---
+thresholds:
+  rot_max_deg: 5.0
+  fitness_min: 0.8
+
+---
+## Three-Layer Parameter Split
+
+### Layer 1: Agent Decision Parameters (relative to base_scale)
+| Parameter | Value |
+|---|---|
+| `global_corr_scale` | 5.0 |
+| `icp_max_corr_scale` | 2.0 |
+
+### Layer 2: Derived Absolute Values
+| Derived value | Calculation | Actual |
+|---|---|---|
+| `ransac_max_correspondence_distance` | `base_scale * global_corr_scale` = 0.03388506693216584 × 5.0 | 0.1694253346608292 |
+| `icp_max_correspondence_distance` | `base_scale * icp_max_corr_scale` = 0.03388506693216584 × 2.0 | 0.06777013386433169 |
+
+### Layer 3: Tool Internal Defaults
+| Parameter | Value |
+|---|---|
+| `n_iter` (ICP iterations) | 100 |
+| `relative_fitness` / `relative_rmse` (ICP convergence) | 1e-6 / 1e-8 |
+| FPFH keypoint count (max) | 500 |
+| SOR `nb_neighbors` / `std_ratio` | 30 / 1.0 |
+| `fpfh_radius` = `max(base_scale, 0.2)` | 0.2 (since base_scale < 0.2) |
+| RANSAC seed | 42 (np.random.seed) |
+
+### base_scale
+`base_scale = max(source_median_spacing, bbox_diagonal/50) = max(0.01085, 0.03389) = 0.03389`
+(Source median spacing = 0.01085; bbox_diagonal = 1.6943; 1.6943/50 = 0.03389)

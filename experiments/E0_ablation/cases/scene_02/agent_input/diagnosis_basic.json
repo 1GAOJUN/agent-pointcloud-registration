@@ -1,0 +1,48 @@
+{
+  "source_point_count": 30000,
+  "target_point_count": 30000,
+  "source_bbox_diagonal": 1.6946923397149645,
+  "target_bbox_diagonal": 1.7879232541159686,
+  "source_median_spacing": 0.01111120560563559,
+  "target_median_spacing": 0.01111120560563559,
+  "density_ratio": 1.0,
+  "point_count_ratio": 1.0,
+  "bbox_diagonal_ratio": 1.0550134748450477,
+  "nearest_neighbor_distance_stats": {
+    "source": {
+      "sample_size": 5000,
+      "median": 0.01111120560563559,
+      "p90": 0.02020997756367279,
+      "p95": 0.023055276146731706,
+      "mad": 0.004309250974400467,
+      "high_distance_threshold": 0.030277892089573988,
+      "high_distance_ratio_proxy": 0.0058
+    },
+    "target": {
+      "sample_size": 5000,
+      "median": 0.01111120560563559,
+      "p90": 0.020209977563672734,
+      "p95": 0.023055276146731706,
+      "mad": 0.004309250974400464,
+      "high_distance_threshold": 0.03027789208957397,
+      "high_distance_ratio_proxy": 0.0058
+    },
+    "high_distance_ratio_delta": 0.0,
+    "interpretation": "Robust within-cloud spacing and isolated-point proxies only; not a ground-truth noise/outlier estimate and not an algorithm trigger."
+  },
+  "centroid_distance": 0.5597483743168442,
+  "initial_transform_available": true,
+  "sample_size": 5000,
+  "sampling_seed": 101,
+  "overlap_ratio": "NOT_IMPLEMENTED",
+  "noise_level": "NOT_IMPLEMENTED",
+  "outlier_level": "NOT_IMPLEMENTED",
+  "rotation_magnitude_estimate": "NOT_IMPLEMENTED",
+  "base_scale": 0.03389384679429929,
+  "run_meta": {
+    "case_id": "scene_02",
+    "variant": "REAL_AGNES_NO_PROBE",
+    "frozen_seed": "1002",
+    "expected_run_id": "e0_scene_02_c_blind02"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "run_id": "l2_20261007_seed202_blind01",
+  "date": "2026-10-07",
+  "seed": 202,
+  "level": "L2",
+  "status": "PASS",
+  "agnes_model": "agnes-3.0-flash",
+  "selected_method": "GLOBAL_FPFH_RANSAC_ICP",
+  "retry_count": 0,
+  "fitness": 1.0,
+  "rmse": 1.2229338887297887e-16,
+  "runtime_s": 0.6179801999996926,
+  "rotation_error_deg": 1.7075472925031877e-06,
+  "translation_error": 0.0,
+  "evidence_path": "runs/l2_20261007_seed202_blind01/",
+  "raw_run_dir": "outputs/agent_runs/l2_20261007_seed202_blind01/",
+  "gt_evaluated": true,
+  "gt_success": true,
+  "note": "First L2 blind frozen run. No RETRY. GLOBAL tool selected by Agent heuristic (centroid_distance high, density balanced). PASS confirmed by independent GT Evaluator."
+}

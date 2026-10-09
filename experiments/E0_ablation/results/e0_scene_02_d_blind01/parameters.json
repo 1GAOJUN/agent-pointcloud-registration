@@ -1,0 +1,9 @@
+{
+  "base_scale": 0.03389384679429929,
+  "final_selected_method": "GLOBAL_FPFH_RANSAC_ICP",
+  "final_parameter_policy": {
+    "global_corr_scale": 5.0,
+    "icp_max_corr_scale": 2.0
+  },
+  "note": "Agent 选择的是相对诊断尺度的倍率档位，非绝对值。"
+}

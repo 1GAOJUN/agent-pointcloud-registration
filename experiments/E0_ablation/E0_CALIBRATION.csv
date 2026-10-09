@@ -1,0 +1,3 @@
+system_variant,agent_verdict_applicable,false_accept_count,false_accept_rate,false_abort_count,false_abort_rate
+FIXED_PIPELINE,False,0,0.0,0,0.0
+HEURISTIC_BASELINE,False,0,0.0,0,0.0

@@ -1,0 +1,28 @@
+{
+  "observation_summary": "PCA orientation probe is uninformative: near-line degeneracy on both clouds (lambda1≈lambda2≈lambda3 scale is weak, anisotropy ≈2.83 with transverse axes undetermined), so no reliable rotation estimate exists. The cheap 5-iteration local ICP probe from identity init shows modest but positive fitness improvement (+0.041) and a transform delta magnitude of ~0.41, indicating a meaningful, not extreme, misalignment that local refinement can plausibly converge on; data are clean with matching density and good overlap.",
+  "information_sufficient": true,
+  "requested_probe": "NONE",
+  "probe_reason": "",
+  "candidate_methods": [
+    {
+      "method": "LOCAL_ICP",
+      "pros": "low cost; clean data with good overlap and only moderate misalignment suggests identity-init point-to-plane ICP can converge; the cheap probe already improved fitness and reduced RMSE, confirming a workable local trajectory",
+      "risks": "identity init only; if the true rotation is larger than the probe suggests or local optimum is present, ICP may diverge or stall — but the clean-data profile and moderate delta make this a controlled risk"
+    },
+    {
+      "method": "GLOBAL_FPFH_RANSAC_ICP",
+      "pros": "robust to large rotation and dirty data; guaranteed global search before local refinement; safer when misalignment magnitude is unknown",
+      "risks": "high cost (SOR + FPFH + RANSAC over 30k points each); PCA could not confirm orientation so FPFH matching may still struggle under near-line degeneracy / symmetry; the cheap probe already signals local convergence, making global overhead likely unnecessary for a clean high-overlap case"
+    }
+  ],
+  "selected_method": "LOCAL_ICP",
+  "parameter_policy": {
+    "global_corr_scale": null,
+    "icp_max_corr_scale": 2.5
+  },
+  "reasoning_summary": "PCA probe is LOW-confidence and null-angle, so no angle-based algorithm choice is warranted. The 5-iteration cheap ICP probe from identity init improved fitness (+0.041) and barely changed RMSE (0.0371→0.0369), indicating a moderately misaligned but locally convergent regime on clean, high-overlap data. A full global FPFH-RANSAC stage is likely overkill and, given the near-line degeneracy detected by PCA, its feature-matching phase is also at risk; committing to LOCAL_ICP with a slightly widened correspondence scale (2.5× base, i.e. ~0.085 m vs base 0.0339 m) balances robustness against the moderate misalignment without paying the global cost. If LOCAL_ICP diverges or stalls at evaluation, the fallback escalation to GLOBAL_FPFH_RANSAC_ICP remains available at the next agent loop iteration.",
+  "confidence": 0.78,
+  "_agnnes_model": "agnes-3.0-flash",
+  "_agnnes_timestamp": "2026-10-07T19:12:58",
+  "_implementation": "agnnes_real"
+}

@@ -1,0 +1,7 @@
+{
+  "selected_method": null,
+  "requested_probe": "PCA_ORIENTATION",
+  "information_sufficient": false,
+  "_error": "probe_reason required when requesting a probe",
+  "_agnnes_raw_response": "{\"selected_method\": null, \"requested_probe\": \"PCA_ORIENTATION\", \"information_sufficient\": false}"
+}

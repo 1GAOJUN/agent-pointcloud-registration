@@ -1,0 +1,28 @@
+{
+  "observation_summary": "Both clouds have identical median spacing, density ratio 1.0, and point-count ratio 1.0, but the bbox diagonal ratio is 1.055 and centroid distance is 0.5598; key diagnostic quantities such as overlap, noise, outlier, and rotation magnitude are not implemented, leaving uncertainty about whether an identity-initialized LOCAL_ICP is already near a valid basin.",
+  "information_sufficient": false,
+  "requested_probe": "CHEAP_LOCAL_ICP",
+  "probe_reason": "A cheap identity-initialized 5-iteration ICP gives low-cost observational evidence of local convergence, bidirectional support, and transform delta, helping decide whether LOCAL_ICP may already be adequate versus a GLOBAL_FPFH_RANSAC_ICP remedy.",
+  "candidate_methods": [
+    {
+      "method": "LOCAL_ICP",
+      "pros": "Low cost and fast; suitable if the data are clean and sufficiently overlapping with only a small residual pose offset.",
+      "risks": "Identity initialization can diverge or converge to a local optimum if rotation, scale mismatch, or low overlap are present; current diagnosis does not rule that out."
+    },
+    {
+      "method": "GLOBAL_FPFH_RANSAC_ICP",
+      "pros": "More robust to larger pose error, noise, outliers, and lower overlap because FPFH + RANSAC provides a global initialization before ICP refinement.",
+      "risks": "Higher computational cost; may be unnecessary for a clean small-angle case and still can struggle with very low overlap."
+    }
+  ],
+  "selected_method": null,
+  "parameter_policy": {
+    "icp_max_corr_scale": 2.0
+  },
+  "reasoning_summary": "Because overlap, noise, outlier, and rotation magnitude are unavailable, probe observation is the most informative next step before committing to a formal registration tool.",
+  "confidence": 0.72,
+  "_agnnes_model": "agnes-3.0-flash",
+  "_agnnes_timestamp": "2026-10-08T22:56:01",
+  "_implementation": "agnnes_real",
+  "_agnnes_raw_response": "{\"observation_summary\":\"Both clouds have identical median spacing, density ratio 1.0, and point-count ratio 1.0, but the bbox diagonal ratio is 1.055 and centroid distance is 0.5598; key diagnostic quantities such as overlap, noise, outlier, and rotation magnitude are not implemented, leaving uncertainty about whether an identity-initialized LOCAL_ICP is already near a valid basin.\",\"information_sufficient\":false,\"requested_probe\":\"CHEAP_LOCAL_ICP\",\"probe_reason\":\"A cheap identity-initialized 5-iteration ICP gives low-cost observational evidence of local convergence, bidirectional support, and transform delta, helping decide whether LOCAL_ICP may already be adequate versus a GLOBAL_FPFH_RANSAC_ICP remedy.\",\"candidate_methods\":[{\"method\":\"LOCAL_ICP\",\"pros\":\"Low cost and fast; suitable if the data are clean and sufficiently overlapping with only a small residual pose offset.\",\"risks\":\"Identity initialization can diverge or converge to a local optimum if rotation, scale mismatch, or low overlap are present; current diagnosis does not rule that out.\"},{\"method\":\"GLOBAL_FPFH_RANSAC_ICP\",\"pros\":\"More robust to larger pose error, noise, outliers, and lower overlap because FPFH + RANSAC provides a global initialization before ICP refinement.\",\"risks\":\"Higher computational cost; may be unnecessary for a clean small-angle case and still can struggle with very low overlap.\"}],\"selected_method\":null,\"parameter_policy\":{\"icp_max_corr_scale\":2.0},\"reasoning_summary\":\"Because overlap, noise, outlier, and rotation magnitude are unavailable, probe observation is the most informative next step before committing to a formal registration tool.\",\"confidence\":0.72}"
+}

@@ -1,0 +1,12 @@
+{
+  "attempt_no": 1,
+  "final_agent_decision": "ACCEPT",
+  "method": "GLOBAL_FPFH_RANSAC_ICP",
+  "parameter_policy": {
+    "global_corr_scale": 4.0,
+    "icp_max_corr_scale": 1.0
+  },
+  "fitness": 1.0,
+  "rmse": 1.6312898482533053e-16,
+  "retried": false
+}

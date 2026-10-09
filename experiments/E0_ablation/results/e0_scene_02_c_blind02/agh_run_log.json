@@ -1,0 +1,21 @@
+{
+  "agent_model_name": "agnes-3.0-flash",
+  "agent_model_version": "2026-10-06",
+  "decision_implementation": "agnnes_real",
+  "run_timestamp": "2026-10-08 19:05:32",
+  "task_prompt_summary": "Given anonymous source/target + Basic Diagnosis + tool descriptions + prior attempts, Agnes selects a registration method + parameter policy, executes via src.agent_tools.dispatch, and judges ACCEPT/RETRY/ABORT from observable metrics only. Active Probe disabled; requested_probe=NONE. GT read only by the independent Evaluator after the Agent verdict.",
+  "variant": "REAL_AGNES_NO_PROBE",
+  "case_id": "scene_02",
+  "frozen_seed": "1002",
+  "expected_run_id": "e0_scene_02_c_blind02",
+  "tool_calls": [
+    "tool_call_01.json"
+  ],
+  "decisions": [
+    "decision_01.json"
+  ],
+  "assessments": [
+    "agent_assessment_01.json"
+  ],
+  "note": "decision_implementation=agnnes_real: decision/assessment JSON 由真实 Agnes 模型产生（AGH 会话调用）。requested_probe=NONE per variant; no probe dispatch performed."
+}

@@ -1,0 +1,55 @@
+{
+  "phase": "B2A_COMPLETE",
+  "audit_date": "2026-10-07",
+  "algorithm_selection_owner": "Real Agnes LLM (agnnes-3.0-flash) via AGH subagent_fork. Selected method output in agnnes_raw_decision.json. Heuristic baseline retained as @deprecated for A/B comparison only.",
+  "accept_retry_owner": "Real Agnes LLM. ACCEPT/RETRY/ABORT output in agnnes_raw_assessment.json. Python guardrail: FLOORGUARD_FITNESS=0.3 (overwrites ACCEPT→RETRY only if fitness<0.3, documented as deterministic guardrail, not Agnes decision). Max retry limit enforced by Python loop.",
+  "parameter_adaptation_owner": "Real Agnes LLM. Agnes freely selects global_corr_scale in [2.0,10.0] and icp_max_corr_scale in [0.5,5.0]. Out-of-range values rejected by agnnes_agent.validate_parameter_policy() and returned to Agnes for re-selection (no silent fallback to heuristic values).",
+  "gt_leakage": "PASS. GT only read by agent_evaluator.evaluate_agent_result() after Agent stops. Decision/assessment prompts verified to contain no gt_transform/rotation_error/translation_error/level label.",
+  "agnnes_model": "agnes-3.0-flash",
+  "agnnes_gh_session_key": "805b6033-7fc5-4e39-bce4-64a32816c9df",
+  "integration_mode": "AGH outer orchestration: Python via shell runs diagnosis+tool execution; AGH subagent_fork calls real Agnes LLM for decisions and assessments. No Python-internal Agnes client used (AGH Python runtime is spike-gated/not implemented).",
+  "heuristic_baseline_status": "agnnes_decide() renamed to heuristic_decide() and agnnes_assess() renamed to heuristic_assess(), both marked @deprecated in src/agent_runner.py. Retained for A/B comparison only. No LLM involvement in either function.",
+  "smoke_test_result": "PASS",
+  "smoke_test_dir": "outputs/development_tests/B2A_REAL_AGNES_SMOKE/",
+  "evidence_files": [
+    "agnnes_raw_decision.json",
+    "agnnes_raw_assessment.json",
+    "agnnes_decision_parsed.json",
+    "agnnes_assessment_parsed.json",
+    "observation_01.json",
+    "evaluator_result.json",
+    "B2A_SMOKE_EVIDENCE.json"
+  ],
+  "anti_fake_agent_checks": {
+    "A_close_agnnes_can_still_decide_method": false,
+    "B_close_agnnes_can_still_decide_accept": false,
+    "C_offset_proxy_in_main_path": false,
+    "note": "Heuristic offset_proxy→GLOBAL mapping exists only in @deprecated heuristic_decide(), NOT in the agnnes_real path. The agnnes_real path requires a live subagent_fork call."
+  },
+  "files_created": [
+    "docs/agent_loop_2026-10-07/B2A/01_AGNES_INTEGRATION.md",
+    "docs/agent_loop_2026-10-07/B2A/02_DECISION_SCHEMA.md",
+    "docs/agent_loop_2026-10-07/B2A/03_AGENT_GUARDRAILS.md",
+    "docs/agent_loop_2026-10-07/B2A/04_GT_ISOLATION.md",
+    "docs/agent_loop_2026-10-07/B2A/05_SMOKE_TEST.md",
+    "docs/agent_loop_2026-10-07/B2A/06_REAL_AGNES_VALIDATION.md",
+    "docs/agent_loop_2026-10-07/B2A/HEURISTIC_BASELINE_CORRECTION_LINK.md",
+    "docs/agent_loop_2026-10-07/B2A/B2A_HANDOFF.md",
+    "docs/agent_loop_2026-10-07/B2A/B2A_STATE.json",
+    "docs/evidence_log/HEURISTIC_BASELINE_CORRECTION.md",
+    "src/agnnes_agent.py",
+    "tests/test_b2a_smoke.py",
+    "tests/_b2a_eval.py"
+  ],
+  "files_modified": [
+    "src/agent_runner.py (renamed agnnes_decide→heuristic_decide, agnnes_assess→heuristic_assess, added injection interface, added agnes_real marker to agh_run_log)"
+  ],
+  "not_done": [
+    "Probe A (PCA orientation) — B2B",
+    "Probe B (Cheap ICP) — B2B",
+    "L2/L3/L4 formal blind tests — B2B",
+    "AGH raw model call trace export — NOT_AVAILABLE in current AGH version; agnnes_raw_*.json used as raw output evidence instead"
+  ],
+  "next_phase": "B2B",
+  "next_phase_entry_file": "docs/agent_loop_2026-10-07/B2A/B2A_HANDOFF.md"
+}

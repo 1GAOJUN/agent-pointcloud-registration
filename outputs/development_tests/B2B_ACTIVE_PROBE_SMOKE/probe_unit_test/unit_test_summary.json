@@ -1,0 +1,46 @@
+{
+  "tests": [
+    {
+      "name": "T1_pca_asymmetric_orientation_estimate",
+      "status": "PASS",
+      "detail": "rot_est=45.0° conf=HIGH (true=45°), runtime=0.0045s (wall 0.005s)"
+    },
+    {
+      "name": "T2_pca_near_symmetric_low_confidence",
+      "status": "PASS",
+      "detail": "rot_est=None conf=LOW reason=near_isotropic_or_symmetric (all eigenvalues close; no stable principal frame)"
+    },
+    {
+      "name": "T2b_pca_sphere_vs_sphere_low_confidence",
+      "status": "PASS",
+      "detail": "conf=LOW reason=near_isotropic_or_symmetric (all eigenvalues close; no stable principal frame); near_isotropic_or_symmetric (all eigenvalues close; no stable principal frame)"
+    },
+    {
+      "name": "T3_cheap_icp_output_complete",
+      "status": "PASS",
+      "detail": "missing=none"
+    },
+    {
+      "name": "T3_cheap_icp_iterations_capped",
+      "status": "PASS",
+      "detail": "iterations=5"
+    },
+    {
+      "name": "T3_cheap_icp_input_unmodified",
+      "status": "PASS",
+      "detail": "source/target PLY byte-identical point sets before/after"
+    },
+    {
+      "name": "T3_cheap_icp_no_gt_fields",
+      "status": "PASS",
+      "detail": "no rotation_error/translation_error/gt_transform in output"
+    },
+    {
+      "name": "T3_cheap_icp_runtime_budget",
+      "status": "PASS",
+      "detail": "probe_wall=0.582s vs formal_icp_wall=5.080s (ratio 0.11x)"
+    }
+  ],
+  "n_pass": 8,
+  "n_fail": 0
+}

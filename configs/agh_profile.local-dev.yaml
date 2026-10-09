@@ -1,0 +1,5 @@
+# User-layer fragment deployed as <AGH_HOME>/profiles/local-dev/profile.yaml.
+name: local-dev
+presets:
+  default: agent-pointcloud-headless-windows
+  allowed: [agent-pointcloud-headless-windows]

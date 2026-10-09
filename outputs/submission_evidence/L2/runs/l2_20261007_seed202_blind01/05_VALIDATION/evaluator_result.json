@@ -1,0 +1,11 @@
+{
+  "gt_evaluator": true,
+  "note": "GT 仅在此处读取；Agent 决策阶段不可见。",
+  "rot_err_deg": 1.7075472925031877e-06,
+  "trans_err": 0.0,
+  "success": true,
+  "rot_thr_deg": 5.0,
+  "trans_thr": 0.05,
+  "gt_path": "outputs/ICP/L2/L2/seed_202/gt_transform.npy",
+  "timestamp": "2026-10-07 13:45:15"
+}

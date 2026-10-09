@@ -1,0 +1,28 @@
+{
+  "observation_summary": "Source 30000 pts, target 32400 pts; similar density (ratio 1.19) and point count (1.08), but target bbox diagonal is ~40% larger than source (1.694 vs 2.375). Centroid distance is 0.474 (roughly 14x base_scale ~0.034), indicating a non-trivial translation gap. initial_transform_available=true. Target shows a higher isolated-point proxy (0.063 vs 0.007, delta 0.056) but this is not a confirmed noise/outlier measure. No overlap, noise, or rotation magnitude estimates available. Data appears clean on the source side; scale mismatch and unknown rotation magnitude prevent confident local-only choice.",
+  "information_sufficient": false,
+  "requested_probe": "PCA_ORIENTATION",
+  "probe_reason": "Rotation magnitude is not implemented/unknown, and bbox_diagonal_ratio of 1.4 suggests possible global misalignment; PCA_ORIENTATION gives a coarse relative rotation + orientation confidence at near-zero cost before committing to the more expensive global method.",
+  "candidate_methods": [
+    {
+      "method": "LOCAL_ICP",
+      "pros": "Fast, low cost, good for small rotation clean data",
+      "risks": "Identity-init only; with ~0.474 centroid offset and large bbox ratio, may diverge or land in local minima if rotation is significant"
+    },
+    {
+      "method": "GLOBAL_FPFH_RANSAC_ICP",
+      "pros": "Robust to large rotation and moderate noise; suitable given scale mismatch and translation gap",
+      "risks": "Slower; possibly unnecessary if rotation is actually small"
+    }
+  ],
+  "selected_method": null,
+  "parameter_policy": {
+    "global_corr_scale": null,
+    "icp_max_corr_scale": null
+  },
+  "reasoning_summary": "Insufficient info: rotation magnitude unknown, bbox diagonal ratio 1.4, centroid gap ~14x base scale, target scale larger. Request PCA_ORIENTATION probe to estimate coarse rotation and orientation confidence; then choose LOCAL_ICP (small rotation, clean) vs GLOBAL_FPFH_RANSAC_ICP (larger rotation/scale mismatch) accordingly.",
+  "confidence": 0.6,
+  "_agnnes_model": "agnes-3.0-flash",
+  "_agnnes_timestamp": "2026-10-08T10:59:44",
+  "_implementation": "agnnes_real"
+}

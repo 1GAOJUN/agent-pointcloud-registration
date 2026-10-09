@@ -1,0 +1,24 @@
+{
+  "step": 1,
+  "tool_name": "LOCAL_ICP",
+  "entrypoint": "src.agent_tools.run_local_icp",
+  "inputs": {
+    "source": "source_cloud",
+    "target": "target_cloud",
+    "base_scale": 0.03389384679429929,
+    "parameter_policy": {
+      "icp_max_corr_scale": 1.0
+    }
+  },
+  "returned_metrics_keys": [
+    "transform",
+    "fitness",
+    "rmse",
+    "inlier_rmse",
+    "elapsed_s",
+    "max_correspondence_distance",
+    "tool_name",
+    "parameter_policy_used"
+  ],
+  "gt_read": false
+}

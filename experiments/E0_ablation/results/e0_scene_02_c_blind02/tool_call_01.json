@@ -1,0 +1,27 @@
+{
+  "step": 1,
+  "tool_name": "GLOBAL_FPFH_RANSAC_ICP",
+  "entrypoint": "src.agent_tools.run_global_fpfh_ransac_icp",
+  "inputs": {
+    "source": "source_cloud",
+    "target": "target_cloud",
+    "base_scale": 0.03389384679429929,
+    "parameter_policy": {
+      "global_corr_scale": 5.0,
+      "icp_max_corr_scale": 2.0
+    }
+  },
+  "returned_metrics_keys": [
+    "transform",
+    "fitness",
+    "rmse",
+    "ransac_fitness",
+    "ransac_rmse",
+    "elapsed_s",
+    "ransac_max_correspondence_distance",
+    "icp_max_correspondence_distance",
+    "tool_name",
+    "parameter_policy_used"
+  ],
+  "gt_read": false
+}

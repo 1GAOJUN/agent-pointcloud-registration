@@ -1,0 +1,8 @@
+{
+  "assessment": "Registration produced a perfect-fit result (fitness=1.0, RMSE ~1.6e-16) via the global FPFH+RANSAC+ICP pipeline in under 0.6 s. Despite earlier probes indicating weak PCA orientation and only modest improvement from cheap local ICP, the global method recovered the full transform exactly, which is well above the deterministic guardrail floor (0.3). The result is high-quality and stable.",
+  "decision": "ACCEPT",
+  "reason": "Perfect fitness and negligible RMSE indicate a converged, reliable registration that comfortably exceeds the guardrail threshold; no further retries are needed.",
+  "next_method": null,
+  "next_parameter_policy": null,
+  "confidence": 0.97
+}

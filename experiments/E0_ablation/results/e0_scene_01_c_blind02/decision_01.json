@@ -1,0 +1,28 @@
+{
+  "observation_summary": "source 和 target 点数均为 30000，密度比接近 1，bbox 尺度接近；centroid_distance 0.376 相对 base_scale 0.0339 的偏移代理约 11.1，提示单位阵初值可能不是小角度场景。",
+  "information_sufficient": true,
+  "requested_probe": "NONE",
+  "candidate_methods": [
+    {
+      "method": "GLOBAL_FPFH_RANSAC_ICP",
+      "pros": "能在全局姿态不确定时提供 RANSAC 初值，降低单位阵 ICP 局部最优风险。",
+      "risks": "成本更高；若 FPFH/RANSAC 匹配不足仍可能失败。"
+    },
+    {
+      "method": "LOCAL_ICP",
+      "pros": "低成本且快速。",
+      "risks": "centroid 偏移代理较大，单位阵初值可能处于错误 basin，局部最优风险高。"
+    }
+  ],
+  "selected_method": "GLOBAL_FPFH_RANSAC_ICP",
+  "parameter_policy": {
+    "global_corr_scale": 6.0,
+    "icp_max_corr_scale": 2.0
+  },
+  "reasoning_summary": "诊断未提供可靠旋转幅度估计，centroid 偏移代理明显大于 3，且密度/尺度均衡。为保证全局可对齐性，优先选择鲁棒的全局 FPFH+RANSAC+ICP，采用中等放宽的 RANSAC 对应距离与适度 ICP 收敛阈值。",
+  "confidence": 0.78,
+  "_agnnes_model": "agnes-3.0-flash",
+  "_agnnes_timestamp": "2026-10-08T17:05:39",
+  "_implementation": "agnnes_real",
+  "_agnnes_raw_response": "{\n  \"observation_summary\": \"source 和 target 点数均为 30000，密度比接近 1，bbox 尺度接近；centroid_distance 0.376 相对 base_scale 0.0339 的偏移代理约 11.1，提示单位阵初值可能不是小角度场景。\",\n  \"information_sufficient\": true,\n  \"requested_probe\": \"NONE\",\n  \"candidate_methods\": [\n    {\"method\": \"GLOBAL_FPFH_RANSAC_ICP\", \"pros\": \"能在全局姿态不确定时提供 RANSAC 初值，降低单位阵 ICP 局部最优风险。\", \"risks\": \"成本更高；若 FPFH/RANSAC 匹配不足仍可能失败。\"},\n    {\"method\": \"LOCAL_ICP\", \"pros\": \"低成本且快速。\", \"risks\": \"centroid 偏移代理较大，单位阵初值可能处于错误 basin，局部最优风险高。\"}\n  ],\n  \"selected_method\": \"GLOBAL_FPFH_RANSAC_ICP\",\n  \"parameter_policy\": {\n    \"global_corr_scale\": 6.0,\n    \"icp_max_corr_scale\": 2.0\n  },\n  \"reasoning_summary\": \"诊断未提供可靠旋转幅度估计，centroid 偏移代理明显大于 3，且密度/尺度均衡。为保证全局可对齐性，优先选择鲁棒的全局 FPFH+RANSAC+ICP，采用中等放宽的 RANSAC 对应距离与适度 ICP 收敛阈值。\",\n  \"confidence\": 0.78\n}\n"
+}

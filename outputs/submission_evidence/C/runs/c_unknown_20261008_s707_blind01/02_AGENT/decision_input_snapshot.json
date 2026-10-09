@@ -1,0 +1,65 @@
+{
+  "snapshot_purpose": "Pre-Agnes-decision input audit. Captured before first real Agnes decision call.",
+  "case_label": "case_unknown_C",
+  "inputs_visible_to_agnnes": {
+    "input_summary": {
+      "case_id": "case_unknown_C",
+      "source_cloud": "source_cloud (3D point cloud, path withheld from Agent)",
+      "target_cloud": "target_cloud (3D point cloud, path withheld from Agent)",
+      "source_point_count": 30000,
+      "target_point_count": 32400,
+      "initial_transform_available": true,
+      "note": "Agent decision stage does not receive full paths, L1/L2/L3/L4 level labels, seed, or historical results."
+    },
+    "diagnosis": {
+      "source_point_count": 30000,
+      "target_point_count": 32400,
+      "source_bbox_diagonal": 1.6944251845707485,
+      "target_bbox_diagonal": 2.3752460983761825,
+      "source_median_spacing": 0.010951954394189865,
+      "target_median_spacing": 0.01307845415818755,
+      "density_ratio": 1.1941662362222598,
+      "point_count_ratio": 1.08,
+      "bbox_diagonal_ratio": 1.4018005161897469,
+      "nearest_neighbor_distance_stats": {
+        "source": {
+          "sample_size": 5000,
+          "median": 0.010951954394189865,
+          "p90": 0.020082700874096124,
+          "p95": 0.02307749335548026,
+          "mad": 0.004151679838429428,
+          "high_distance_threshold": 0.029417795979556273,
+          "high_distance_ratio_proxy": 0.0072
+        },
+        "target": {
+          "sample_size": 5000,
+          "median": 0.01307845415818755,
+          "p90": 0.02546189330471522,
+          "p95": 0.06625837355751635,
+          "mad": 0.004457231918035671,
+          "high_distance_threshold": 0.0329033302832266,
+          "high_distance_ratio_proxy": 0.063
+        },
+        "high_distance_ratio_delta": 0.0558,
+        "interpretation": "Robust within-cloud spacing and isolated-point proxies only; not a ground-truth noise/outlier estimate and not an algorithm trigger."
+      },
+      "centroid_distance": 0.47363530095141204,
+      "initial_transform_available": true,
+      "sample_size": 5000,
+      "sampling_seed": 101,
+      "overlap_ratio": "NOT_IMPLEMENTED",
+      "noise_level": "NOT_IMPLEMENTED",
+      "outlier_level": "NOT_IMPLEMENTED",
+      "rotation_magnitude_estimate": "NOT_IMPLEMENTED",
+      "base_scale": 0.03388850369141497
+    }
+  },
+  "inputs_NOT_visible_to_agnnes": [
+    "disk paths (source_cloud.ply / target_cloud.ply / gt_transform.npy)",
+    "level label",
+    "seed",
+    "rotation/translation magnitude description",
+    "historical B0/B3A/B3B results",
+    "GT transform values"
+  ]
+}

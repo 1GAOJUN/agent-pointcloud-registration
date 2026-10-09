@@ -1,0 +1,14 @@
+[
+  {
+    "attempt": 1,
+    "selected_method": "GLOBAL_FPFH_RANSAC_ICP",
+    "parameter_policy": {
+      "global_corr_scale": 5.0,
+      "icp_max_corr_scale": 2.0
+    },
+    "fitness": 0.9469197679466436,
+    "rmse": 0.014491727931279601,
+    "runtime_s": 151.90418130000035,
+    "outcome": "ACCEPT"
+  }
+]

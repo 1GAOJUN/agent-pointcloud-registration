@@ -1,0 +1,38 @@
+{
+  "run_id": "b3_l2_20261007_seed202_blind01",
+  "phase": "B3B",
+  "anonymous_case_label": "case_unknown_B",
+  "data_path_hidden_from_agent": "outputs/ICP/L2/L2/seed_202 (Python-only)",
+  "python_executable": "D:\\APP\\Anaconda\\envs\\pointcloud_agh\\python.exe",
+  "python_version": "3.11.16",
+  "open3d_version": "0.20.0",
+  "selected_method": "GLOBAL_FPFH_RANSAC_ICP",
+  "parameter_policy_agies": {
+    "global_corr_scale": 4.0,
+    "icp_max_corr_scale": 1.0
+  },
+  "derived_actual_parameters": {
+    "icp_max_corr_scale_agies": 1.0,
+    "global_corr_scale_agies": 4.0,
+    "icp_max_correspondence_distance": 0.033885,
+    "ransac_max_correspondence_distance": 0.13554
+  },
+  "final_agent_decision": "ACCEPT",
+  "gt_success": true,
+  "gt_rotation_error_deg": 0.0,
+  "gt_translation_error": 0.0,
+  "fitness": 1.0,
+  "rmse": 1.6312898482533053e-16,
+  "runtime_s": 0.5821463000029325,
+  "probe_chain": [
+    "PCA_ORIENTATION",
+    "CHEAP_LOCAL_ICP"
+  ],
+  "attempts": [
+    "attempt_01"
+  ],
+  "retry_occurred": false,
+  "evidence_dir": "D:\\STUDY\\darker\\agent-pointcloud-registration\\outputs\\submission_evidence\\B3\\L2\\runs\\b3_l2_20261007_seed202_blind01",
+  "core_frozen_file": "00_INDEX/B3B_CORE_FROZEN.md",
+  "created_at_utc": "2026-10-07"
+}

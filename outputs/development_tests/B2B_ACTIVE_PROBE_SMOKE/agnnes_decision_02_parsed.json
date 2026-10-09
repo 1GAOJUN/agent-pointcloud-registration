@@ -1,0 +1,28 @@
+{
+  "observation_summary": "PCA_ORIENTATION probe returned LOW confidence with a null rotation estimate due to near-line degeneracy (lambda1≈lambda2) on both clouds. Eigenvalues [0.11647, 0.04454, 0.04117] confirm the transverse axes are undetermined, making PCA-based orientation unusable. Diagnosis shows centroid_distance=0.376, matching point counts, matching median spacing (0.0111), density_ratio=1.0, and an initial transform available, suggesting good overlap but unknown rotation magnitude. No overlap ratio, noise, or rotation magnitude signals are available (NOT_IMPLEMENTED).",
+  "information_sufficient": false,
+  "requested_probe": "CHEAP_LOCAL_ICP",
+  "probe_reason": "PCA orientation is LOW confidence and rotation magnitude is unknown; a cheap local ICP convergence signal will indicate whether the initial transform is already near a local optimum, which determines whether low-cost LOCAL_ICP can suffice or whether the high-cost GLOBAL_FPFH_RANSAC_ICP is required.",
+  "candidate_methods": [
+    {
+      "method": "LOCAL_ICP",
+      "pros": "Low cost; suitable when rotation is small, data is clean, and overlap is high; initial_transform_available=true is a positive signal.",
+      "risks": "Identity init only; diverges or lands in a local optimum under large rotation; rotation magnitude currently unknown."
+    },
+    {
+      "method": "GLOBAL_FPFH_RANSAC_ICP",
+      "pros": "Robust to large rotation and dirty data; SOR + FPFH + RANSAC gives a safer global initialization.",
+      "risks": "High cost; with strong overlap and matching density, it may be unnecessary if the local probe shows the initial transform is already close."
+    }
+  ],
+  "selected_method": null,
+  "parameter_policy": {
+    "global_corr_scale": null,
+    "icp_max_corr_scale": null
+  },
+  "reasoning_summary": "With PCA uninformative and rotation magnitude NOT_IMPLEMENTED, choosing between LOCAL_ICP and GLOBAL_FPFH_RANSAC_ICP is the pivotal decision, and the cheapest way to resolve it is the remaining probe. Request CHEAP_LOCAL_ICP: if the local probe shows strong convergence, LOCAL_ICP is preferred for cost; if it stagnates or shows poor local progress, GLOBAL_FPFH_RANSAC_ICP is justified despite higher cost. Defer algorithm selection until the probe returns.",
+  "confidence": 0.3,
+  "_agnnes_model": "agnes-3.0-flash",
+  "_agnnes_timestamp": "2026-10-07T19:12:58",
+  "_implementation": "agnnes_real"
+}

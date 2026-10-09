@@ -1,0 +1,15 @@
+{
+  "fitness": 0.6161369193154034,
+  "rmse": 0.007299408880092164,
+  "ransac_fitness": 0.8913163498698635,
+  "ransac_rmse": 0.08416856041844016,
+  "elapsed_s": 110.78729350000503,
+  "ransac_max_correspondence_distance": 0.16946334841348945,
+  "icp_max_correspondence_distance": 0.05083900452404684,
+  "tool_name": "GLOBAL_FPFH_RANSAC_ICP",
+  "parameter_policy_used": {
+    "global_corr_scale": 5.0,
+    "icp_max_corr_scale": 1.5
+  },
+  "wall_clock_s": 110.788
+}

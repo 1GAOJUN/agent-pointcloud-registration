@@ -1,0 +1,33 @@
+{
+  "probe_name": "PCA_ORIENTATION",
+  "rotation_estimate_deg": 16.09,
+  "orientation_confidence": "MEDIUM",
+  "ambiguity_detected": false,
+  "ambiguity_reason": "partial_axis_degeneracy (one eigenvalue pair close; estimate usable but reduced confidence)",
+  "source_anisotropy": 3.4494,
+  "target_anisotropy": 2.9739,
+  "source_eigenvalues": [
+    0.00238597,
+    0.00112207,
+    0.0006917
+  ],
+  "target_eigenvalues": [
+    0.002757,
+    0.00134925,
+    0.00092708
+  ],
+  "selected_axis_permutation": [
+    0,
+    1,
+    2
+  ],
+  "ambiguity_handling": "per_axis_sign_greedy + permutation_argmax_trace",
+  "runtime_s": 0.0421,
+  "note": "rotation_estimate_deg 是 PCA 主轴 frame 相对旋转角（0~180°），非逐点配准误差。",
+  "_probe_request": {
+    "probe_name": "PCA_ORIENTATION",
+    "requested_by": "agnnes_real",
+    "probe_reason": "PCA gives a coarse relative-rotation estimate and anisotropy in under 1 ms. Given the large centroid offset and unknown rotation, even a LOW-confidence PCA result helps distinguish 'small rotation, likely LOCAL_ICP works' from 'large/symmetric rotation, need GLOBAL fallback', and flags ambiguity when the shape is isotropic. Cheaper and more informative than burning the first probe on an ICP trial before knowing the rotation regime.",
+    "round": 1
+  }
+}

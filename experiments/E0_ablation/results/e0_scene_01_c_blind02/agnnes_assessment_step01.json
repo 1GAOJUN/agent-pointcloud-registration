@@ -1,0 +1,11 @@
+{
+  "assessment": "GLOBAL_FPFH_RANSAC_ICP 的可观测结果非常强：fitness=1.0，rmse/inlier_rmse 接近机器精度；RANSAC 与后续 ICP 均显示高一致性。",
+  "global_consistency_assessment": "FPFH+RANSAC 与 ICP 两个阶段都达到极高一致性，且没有出现可观测矛盾；在当前可用观测中支持一个全局一致的配准结果。",
+  "local_optimum_risk": "LOW",
+  "evidence_conflicts": [],
+  "decision": "ACCEPT",
+  "reason": "全局阶段和局部阶段同时给出高 fitness 与极低 rmse；可观测证据足以支持接受该结果。",
+  "next_method": null,
+  "next_parameter_policy": null,
+  "confidence": 0.92
+}

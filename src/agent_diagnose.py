@@ -27,12 +27,20 @@ def _bbox_diagonal(pts: np.ndarray) -> float:
     return float(np.linalg.norm(pts.max(axis=0) - pts.min(axis=0)))
 
 
-def _nearest_neighbor_distance(pts: np.ndarray) -> float:
-    """中位数最近邻间距（排除自身）。numpy 向量化，分块控制内存。"""
+def _nearest_neighbor_stats(pts: np.ndarray) -> Dict[str, Any]:
+    """确定性最近邻距离统计（排除自身），只作 Observation，不作方法选择。"""
     pts = np.ascontiguousarray(pts, dtype=np.float64)
     n = len(pts)
     if n < 2:
-        return float("nan")
+        return {
+            "sample_size": n,
+            "median": None,
+            "p90": None,
+            "p95": None,
+            "mad": None,
+            "high_distance_threshold": None,
+            "high_distance_ratio_proxy": None,
+        }
     if n > SAMPLE_LIMIT:
         rng = np.random.RandomState(SAMPLING_SEED)
         idx = rng.choice(n, size=SAMPLE_LIMIT, replace=False)
@@ -48,7 +56,25 @@ def _nearest_neighbor_distance(pts: np.ndarray) -> float:
         # 把“自身”置为 inf：q 的 j 行对应全局索引 s + j
         d2[np.arange(m), s + np.arange(m)] = np.inf
         dists[s:s + m] = np.sqrt(d2.min(axis=1))
-    return float(np.median(dists))
+    median = float(np.median(dists))
+    mad = float(np.median(np.abs(dists - median)))
+    # 1.4826*MAD 是稳健 sigma 估计；高距离比例只是明显稀疏/孤立点代理，不是真实 outlier 标签。
+    threshold = float(median + 3.0 * 1.4826 * mad)
+    return {
+        "sample_size": int(n),
+        "median": median,
+        "p90": float(np.percentile(dists, 90)),
+        "p95": float(np.percentile(dists, 95)),
+        "mad": mad,
+        "high_distance_threshold": threshold,
+        "high_distance_ratio_proxy": float(np.mean(dists > threshold)),
+    }
+
+
+def _nearest_neighbor_distance(pts: np.ndarray) -> float:
+    """兼容旧调用：返回稳健 NN 中位间距。"""
+    value = _nearest_neighbor_stats(pts)["median"]
+    return float(value) if value is not None else float("nan")
 
 
 def diagnose(source_ply: str, target_ply: str) -> Dict[str, Any]:
@@ -60,8 +86,10 @@ def diagnose(source_ply: str, target_ply: str) -> Dict[str, Any]:
     sp = np.asarray(src.points, dtype=np.float64)
     tp = np.asarray(tgt.points, dtype=np.float64)
 
-    src_spacing = _nearest_neighbor_distance(sp)
-    tgt_spacing = _nearest_neighbor_distance(tp)
+    src_nn = _nearest_neighbor_stats(sp)
+    tgt_nn = _nearest_neighbor_stats(tp)
+    src_spacing = float(src_nn["median"]) if src_nn["median"] is not None else float("nan")
+    tgt_spacing = float(tgt_nn["median"]) if tgt_nn["median"] is not None else float("nan")
 
     density_ratio = None
     if (np.isfinite(src_spacing) and np.isfinite(tgt_spacing)
@@ -78,6 +106,25 @@ def diagnose(source_ply: str, target_ply: str) -> Dict[str, Any]:
         "source_median_spacing": src_spacing,
         "target_median_spacing": tgt_spacing,
         "density_ratio": density_ratio,
+        "point_count_ratio": float(len(tp) / len(sp)) if len(sp) else None,
+        "bbox_diagonal_ratio": (
+            float(_bbox_diagonal(tp) / _bbox_diagonal(sp))
+            if len(sp) and _bbox_diagonal(sp) > 0 else None
+        ),
+        "nearest_neighbor_distance_stats": {
+            "source": src_nn,
+            "target": tgt_nn,
+            "high_distance_ratio_delta": (
+                float(tgt_nn["high_distance_ratio_proxy"] - src_nn["high_distance_ratio_proxy"])
+                if (src_nn["high_distance_ratio_proxy"] is not None
+                    and tgt_nn["high_distance_ratio_proxy"] is not None)
+                else None
+            ),
+            "interpretation": (
+                "Robust within-cloud spacing and isolated-point proxies only; "
+                "not a ground-truth noise/outlier estimate and not an algorithm trigger."
+            ),
+        },
         "centroid_distance": centroid_distance,
         "initial_transform_available": True,
         "sample_size": min(len(sp), SAMPLE_LIMIT),

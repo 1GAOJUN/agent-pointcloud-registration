@@ -1,0 +1,13 @@
+{
+  "gt_evaluator": true,
+  "note": "GT read only here, after Agent stopped. Computed with pure-Python math (env numpy BLAS broken).",
+  "rot_err_deg": 1.2074182697257333e-06,
+  "trans_err": 1.3877787807814457e-17,
+  "success": true,
+  "rot_thr_deg": 5.0,
+  "trans_thr": 0.05,
+  "gt_path": "D:\\STUDY\\darker\\agent-pointcloud-registration\\outputs\\ICP\\L1\\L1\\seed_101\\gt_transform.npy",
+  "ortho_err_est": 6.661338147750939e-16,
+  "ortho_err_gt": 2.220446049250313e-16,
+  "timestamp": "2026-10-07 15:20:22"
+}

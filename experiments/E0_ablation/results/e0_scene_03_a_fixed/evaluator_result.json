@@ -1,0 +1,11 @@
+{
+  "gt_evaluator": true,
+  "note": "GT 仅在此处读取；Agent 决策阶段不可见。",
+  "rot_err_deg": 33.703446749985176,
+  "trans_err": 0.4816645053787378,
+  "success": false,
+  "rot_thr_deg": 5.0,
+  "trans_thr": 0.05,
+  "gt_path": "D:\\STUDY\\darker\\agent-pointcloud-registration\\experiments\\E0_ablation\\cases\\scene_03\\evaluator_only\\gt_transform.npy",
+  "timestamp": "2026-10-08 16:11:10"
+}

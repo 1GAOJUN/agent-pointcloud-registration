@@ -1,0 +1,19 @@
+{
+  "assessment": "Global RANSAC achieved ransac_fitness=0.8499 but final ICP fitness=0.6096; final RMSE=0.01562 is low relative to base_scale=0.03389, but support evidence from cheap ICP was weak and local convergence alone does not prove globally correct pose.",
+  "global_consistency_assessment": "RANSAC high support suggests a plausible global candidate; final ICP fitness lower than RANSAC, but final RMSE low. Ambiguity remains because PCA was LOW and source-target support is incomplete.",
+  "local_optimum_risk": "MEDIUM",
+  "evidence_conflicts": [
+    "cheap ICP bidirectional support=0.1924 vs final ICP fitness=0.6096",
+    "RANSAC fitness high but final ICP fitness moderate",
+    "PCA orientation unusable due to degeneracy"
+  ],
+  "decision": "RETRY",
+  "reason": "Observable final ICP fitness is below the usual 0.8 quality target and remains only moderate; retry LOCAL_ICP with a wider correspondence threshold to test whether a clean local basin can improve stability.",
+  "next_method": "LOCAL_ICP",
+  "next_parameter_policy": {
+    "icp_max_corr_scale": 2.0
+  },
+  "confidence": 0.61,
+  "_agnnes_model": "agnes-3.0-flash",
+  "_implementation": "agnnes_real"
+}

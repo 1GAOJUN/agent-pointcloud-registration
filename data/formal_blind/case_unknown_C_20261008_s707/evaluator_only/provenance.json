@@ -1,0 +1,8 @@
+{
+  "case_id": "case_unknown_C_20261008_s707",
+  "source_dataset": "data/L3/seed_707",
+  "configuration": "configs/L3.yaml",
+  "agent_input_directory": "../agent_input",
+  "evaluation_timing": "Only after the Agent has stopped",
+  "note": "Operator/evaluator provenance. This file is not Agent input."
+}

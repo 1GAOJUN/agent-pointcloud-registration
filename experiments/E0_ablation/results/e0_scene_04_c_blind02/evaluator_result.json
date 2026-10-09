@@ -1,0 +1,11 @@
+{
+  "gt_evaluator": true,
+  "note": "GT read only after Agent terminal verdict. Registered src.agent_evaluator / src.evaluate APIs are unusable in this environment: every 3x3 float64 matrix product (@, np.matmul, np.dot, np.einsum) aborts the native numpy 2.4.6 kernel with stack overflow (0xC00000FD, exit -1066598273). Formulas are reproduced here verbatim using scalar expansion (no matrix-product kernel), with the same registered thresholds (rot<5.0 deg, trans<0.05).",
+  "rot_err_deg": 0.10917334030532726,
+  "trans_err": 0.00011272224898405909,
+  "success": true,
+  "rot_thr_deg": 5.0,
+  "trans_thr": 0.05,
+  "gt_path": "D:\\STUDY\\darker\\agent-pointcloud-registration\\experiments\\E0_ablation\\cases\\scene_04\\evaluator_only\\gt_transform.npy",
+  "timestamp": "2026-10-08 18:32:53"
+}

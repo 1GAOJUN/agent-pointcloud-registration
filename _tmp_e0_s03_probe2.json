@@ -1,0 +1,19 @@
+{
+  "probe_name": "CHEAP_LOCAL_ICP",
+  "initial_fitness": 0.47956666666666664,
+  "probe_fitness": 0.5025666666666667,
+  "initial_rmse": 0.04214511738112511,
+  "probe_rmse": 0.042125565758578815,
+  "fitness_improvement": 0.023000000000000076,
+  "correspondence_count": null,
+  "iterations": 5,
+  "runtime_s": 0.8711,
+  "transform_delta_magnitude": 0.046394772807518886,
+  "max_correspondence_distance": 0.06777945129300596,
+  "source_to_target_support": 0.5025666666666667,
+  "target_to_source_support": 0.21382716049382716,
+  "bidirectional_support": 0.30000929437965757,
+  "support_confidence": "HIGH",
+  "support_distance_threshold": 0.06777945129300596,
+  "note": "initial_* \u4e3a identity \u521d\u503c 1 \u6b21\u8fed\u4ee3\u8fd1\u4f3c baseline\uff1bprobe \u56fa\u5b9a 5 \u6b21\u8fed\u4ee3\uff0c\u65e0 Global \u521d\u59cb\u5316\uff0c\u65e0 SOR\u3002 \u53cc\u5411 support \u662f\u540c\u4e00\u8ddd\u79bb\u9608\u503c\u4e0b\u7684\u6700\u8fd1\u90bb\u652f\u6301\u4ee3\u7406\uff0c\u4e0d\u662f\u771f\u5b9e overlap\u3002 \u7ed3\u679c\u53ea\u4f5c\u89c2\u5bdf\u4fe1\u606f\uff0c\u4e0d\u76f4\u63a5\u6620\u5c04\u7b97\u6cd5\u3002"
+}

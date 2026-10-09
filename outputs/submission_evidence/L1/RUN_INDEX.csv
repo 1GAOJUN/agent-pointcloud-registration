@@ -1,0 +1,2 @@
+run_id,date,seed,status,agnes_model,selected_method,retry_count,fitness,rmse,runtime,rotation_error_deg,translation_error,evidence_path,notes
+l1_20261007_seed101_run01,2026-10-06,101,PASS,agnes-3.0-flash,GLOBAL_FPFH_RANSAC_ICP,0,1.0,1.0480573452953922e-16,0.7089753000000201,0.0,1.3877787807814457e-17,runs/l1_20261007_seed101_run01/,First complete AGH Agent closed-loop run; reference run for L1. All values taken from observation_01.json / evaluator_result.json in this package; no re-run was performed. Original raw run dir: outputs/agent_runs/l1_seed_101/.

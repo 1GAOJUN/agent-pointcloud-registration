@@ -1,0 +1,27 @@
+{
+  "observation_summary": "Point counts, spacing, and density are identical across source and target (ratio 1.0), and both clouds are clean (high-distance ratio ~0.006); bbox diagonals are close (ratio ~1.055) but centroid distance is 0.56, indicating a translation-dominant global misalignment. Rotation magnitude is unknown and no probe has been run.",
+  "information_sufficient": false,
+  "requested_probe": "CHEAP_LOCAL_ICP",
+  "probe_reason": "Data is clean and scales match, but the sizable centroid offset and unknown rotation mean identity-init local ICP may be in the wrong basin; CHEAP_LOCAL_ICP tells us whether local convergence already exists, which distinguishes a translation-only pose (LOCAL_ICP viable) from a larger rotation/translation offset (GLOBAL_FPFH_RANSAC_ICP needed).",
+  "candidate_methods": [
+    {
+      "method": "LOCAL_ICP",
+      "pros": "Fast and low-cost; well suited to clean, same-scale, high-overlap data where the relative pose is small.",
+      "risks": "Identity-only init; with centroid offset 0.56 and unknown rotation it can diverge or settle in a local optimum if the true pose is not near identity."
+    },
+    {
+      "method": "GLOBAL_FPFH_RANSAC_ICP",
+      "pros": "Robust to the 0.56 centroid offset, any large rotation, and low overlap; provides a reliable global init before point-to-plane ICP.",
+      "risks": "Higher runtime; on clean same-scale data with a modest pose it may be unnecessary."
+    }
+  ],
+  "selected_method": null,
+  "parameter_policy": {
+    "icp_max_corr_scale": 1.5
+  },
+  "reasoning_summary": "Clean, matched-scale data favors LOCAL_ICP, but the 0.56 centroid distance and unknown rotation create local-optimum risk. Run the cheap local ICP probe first to test identity-init convergence; that single observation will let me select LOCAL_ICP or GLOBAL_FPFH_RANSAC_ICP next round with confidence.",
+  "confidence": 0.7,
+  "_error": "decision must be one of ACCEPT/RETRY/ABORT, got 'None'",
+  "_fitness": 0.0895,
+  "_agnnes_raw_response": "{\"observation_summary\":\"Point counts, spacing, and density are identical across source and target (ratio 1.0), and both clouds are clean (high-distance ratio ~0.006); bbox diagonals are close (ratio ~1.055) but centroid distance is 0.56, indicating a translation-dominant global misalignment. Rotation magnitude is unknown and no probe has been run.\",\"information_sufficient\":false,\"requested_probe\":\"CHEAP_LOCAL_ICP\",\"probe_reason\":\"Data is clean and scales match, but the sizable centroid offset and unknown rotation mean identity-init local ICP may be in the wrong basin; CHEAP_LOCAL_ICP tells us whether local convergence already exists, which distinguishes a translation-only pose (LOCAL_ICP viable) from a larger rotation/translation offset (GLOBAL_FPFH_RANSAC_ICP needed).\",\"candidate_methods\":[{\"method\":\"LOCAL_ICP\",\"pros\":\"Fast and low-cost; well suited to clean, same-scale, high-overlap data where the relative pose is small.\",\"risks\":\"Identity-only init; with centroid offset 0.56 and unknown rotation it can diverge or settle in a local optimum if the true pose is not near identity.\"},{\"method\":\"GLOBAL_FPFH_RANSAC_ICP\",\"pros\":\"Robust to the 0.56 centroid offset, any large rotation, and low overlap; provides a reliable global init before point-to-plane ICP.\",\"risks\":\"Higher runtime; on clean same-scale data with a modest pose it may be unnecessary.\"}],\"selected_method\":null,\"parameter_policy\":{\"icp_max_corr_scale\":1.5},\"reasoning_summary\":\"Clean, matched-scale data favors LOCAL_ICP, but the 0.56 centroid distance and unknown rotation create local-optimum risk. Run the cheap local ICP probe first to test identity-init convergence; that single observation will let me select LOCAL_ICP or GLOBAL_FPFH_RANSAC_ICP next round with confidence.\",\"confidence\":0.7}"
+}

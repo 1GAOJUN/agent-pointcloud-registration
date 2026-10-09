@@ -1,0 +1,27 @@
+{
+  "observation_summary": "Prior LOCAL_ICP (scale=4.0) produced fitness=1.0 but high rmse=0.0498 (~1.47x base_scale) and asymmetric probe support (source_to_target=0.50, target_to_source=0.21), strongly indicating local optimum. Retrying with global registration as recommended.",
+  "information_sufficient": true,
+  "requested_probe": "NONE",
+  "candidate_methods": [
+    {
+      "method": "GLOBAL_FPFH_RANSAC_ICP",
+      "pros": "Global RANSAC init escapes local optimum; handles large offset and noisy target",
+      "risks": "High cost (~60-150s); FPFH on 30k+ points may be slow"
+    },
+    {
+      "method": "LOCAL_ICP",
+      "pros": "Fast",
+      "risks": "Will likely converge to same local optimum as previous attempt"
+    }
+  ],
+  "selected_method": "GLOBAL_FPFH_RANSAC_ICP",
+  "parameter_policy": {
+    "global_corr_scale": 8.0,
+    "icp_max_corr_scale": 3.0
+  },
+  "reasoning_summary": "LOCAL_ICP result shows classic local optimum signature (perfect fitness, elevated rmse, asymmetric support). Global FPFH+RANSAC with widened RANSAC threshold (scale=8.0) should find correct global pose. ICP refinement at scale=3.0 tolerates target outliers.",
+  "confidence": 0.7,
+  "_agnnes_model": "agnes-3.0-flash",
+  "_agnnes_timestamp": "2026-10-08T17:14:00",
+  "_implementation": "agnnes_real"
+}

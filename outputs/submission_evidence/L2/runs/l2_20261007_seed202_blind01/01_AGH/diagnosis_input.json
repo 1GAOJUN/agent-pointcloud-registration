@@ -1,0 +1,18 @@
+{
+  "case_dir": "outputs/ICP/L2/L2/seed_202/",
+  "source_ply": "source_cloud (path withheld from Agent)",
+  "target_ply": "target_cloud (path withheld from Agent)",
+  "anonymous_names_used_in_prompt": ["source_cloud", "target_cloud"],
+  "level_label_given_to_agent": false,
+  "gt_path_given_to_agent": false,
+  "path_string_in_agent_prompt": false,
+  "diagnosis_input": {
+    "source_point_count": 30000,
+    "target_point_count": 30000,
+    "centroid_distance": 0.5591,
+    "density_ratio": 0.9999999999999997,
+    "base_scale": 0.03388506693216584
+  },
+  "tool_registry_provided": ["LOCAL_ICP", "GLOBAL_FPFH_RANSAC_ICP"],
+  "note": "Agent receives only anonymous cloud names and diagnostic metrics. No disk path, no L1/L2/L3/L4 label, no GT."
+}

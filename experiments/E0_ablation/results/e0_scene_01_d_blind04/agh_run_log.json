@@ -1,0 +1,30 @@
+{
+  "agent_model_name": "agnes-3.0-flash",
+  "agent_model_version": "2026-10-06",
+  "decision_implementation": "agnnes_real",
+  "variant": "REAL_AGNES_ACTIVE_PROBE",
+  "scene_id": "scene_01",
+  "seed": "1001",
+  "run_id": "e0_scene_01_d_blind04",
+  "run_timestamp": "2026-10-08 18:54:07",
+  "attempts": 1,
+  "probes_executed": [
+    "PCA_ORIENTATION"
+  ],
+  "final_verdict": "ACCEPT",
+  "gt_success": true,
+  "gt_rot_err_deg": 0.0,
+  "gt_trans_err": 6.206335383118183e-17,
+  "tool_calls": [
+    "tool_call_01.json"
+  ],
+  "decisions": [
+    "decision_01.json"
+  ],
+  "assessments": [
+    "agent_assessment_01.json"
+  ],
+  "probe_files": [
+    "probe_01_PCA_ORIENTATION.json"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "assessment": "GLOBAL_FPFH_RANSAC_ICP produced a strong global initialization (RANSAC fitness=0.851, RANSAC rmse=0.0854) which ICP then refined to fitness=0.602 and rmse=0.0217 under a tighter correspondence threshold (icp_max_corr_scale=2.0). The drop in fitness from RANSAC to ICP is expected: ICP's threshold (0.0678) is much tighter than RANSAC's (0.1695), so fewer correspondences pass. The absolute rmse of 0.0217 is well below base_scale (0.0339), indicating a tight local fit of the matched subset.",
+  "global_consistency_assessment": "RANSAC fitness of 0.851 at global_corr_scale=5.0 provides strong evidence that a globally consistent pose was found, not just a local optimum. The ICP refinement further tightened the fit to rmse=0.0217. The PCA orientation probe returned LOW confidence (near-line source, near-isotropic target), so no independent rotation cross-check was available; however, the high RANSAC fitness is itself strong global-consistency evidence. No probe observation contradicts the ICP result.",
+  "local_optimum_risk": "MEDIUM",
+  "evidence_conflicts": [
+    "PCA_ORIENTATION returned LOW confidence with ambiguity_detected=true, so no independent rotation estimate was available to cross-check the RANSAC/ICP result. The high RANSAC fitness (0.851) mitigates this concern but does not fully eliminate it.",
+    "ICP fitness (0.602) is below 0.8, meaning only ~60% of source points matched within the ICP threshold. This is consistent with the target having fewer points (point_count_ratio=0.601) and a smaller bounding box (bbox_diagonal_ratio=0.875), suggesting genuine partial overlap rather than a failed registration."
+  ],
+  "decision": "ACCEPT",
+  "reason": "RANSAC fitness=0.851 indicates a robust global pose was found despite large initial offset and PCA ambiguity. ICP refined the fit to rmse=0.0217 (well below base_scale=0.0339). The fitness drop from RANSAC to ICP is explained by the tighter ICP threshold. The partial-overlap signature (fitness=0.602) is consistent with the known target size reduction. A RETRY with LOCAL_ICP would risk convergence to a wrong basin at this offset; a RETRY with higher global_corr_scale would admit noisier correspondences without clear benefit. The evidence supports accepting the current result.",
+  "next_method": null,
+  "next_parameter_policy": null,
+  "confidence": 0.68
+}

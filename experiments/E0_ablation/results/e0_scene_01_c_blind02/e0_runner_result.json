@@ -1,0 +1,10 @@
+{
+  "run_dir": "experiments\\E0_ablation\\results\\e0_scene_01_c_blind02",
+  "attempts": 1,
+  "final_decision": "ACCEPT",
+  "gt_success": true,
+  "gt_rot_err_deg": 0.0,
+  "gt_trans_err": 0.0,
+  "evaluator_result": "experiments\\E0_ablation\\results\\e0_scene_01_c_blind02\\evaluator_result.json",
+  "agh_run_log": "experiments\\E0_ablation\\results\\e0_scene_01_c_blind02\\agh_run_log.json"
+}

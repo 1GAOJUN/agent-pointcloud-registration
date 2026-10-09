@@ -1,0 +1,22 @@
+{
+  "run_id": "e0_scene_04_b_heuristic",
+  "system_variant": "HEURISTIC_BASELINE",
+  "scene_id": "scene_04",
+  "seed": 1004,
+  "selected_method": "LOCAL_ICP",
+  "parameter_policy": {
+    "icp_max_corr_scale": 1.5
+  },
+  "probe_count": 0,
+  "attempt_count": 3,
+  "retry_count": 3,
+  "agent_verdict": "NOT_APPLICABLE",
+  "fitness": 0.6377333333333334,
+  "rmse": 0.007476849474500991,
+  "runtime_s": 252.46288439999626,
+  "rotation_error_deg": 0.034658318266211775,
+  "translation_error": 0.00017453493883036063,
+  "gt_success": true,
+  "false_accept": false,
+  "false_abort": false
+}

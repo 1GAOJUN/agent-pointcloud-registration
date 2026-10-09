@@ -1,0 +1,37 @@
+{
+  "run_id": "d_unknown_20261008_s811_blind01",
+  "probe_sequence": [
+    "PCA_ORIENTATION",
+    "CHEAP_LOCAL_ICP"
+  ],
+  "attempts": [
+    {
+      "step": 1,
+      "method": "GLOBAL_FPFH_RANSAC_ICP",
+      "policy": {
+        "global_corr_scale": 5.0,
+        "icp_max_corr_scale": 1.5
+      },
+      "fitness": 0.616176354602098,
+      "rmse": 0.0073373766124013905,
+      "wall_clock_s": 127.152,
+      "decision": "RETRY"
+    },
+    {
+      "step": 2,
+      "method": "LOCAL_ICP",
+      "policy": {
+        "icp_max_corr_scale": 2.0
+      },
+      "fitness": 0.6525333333333333,
+      "rmse": 0.011754162765814011,
+      "wall_clock_s": 0.632,
+      "decision": "ABORT"
+    }
+  ],
+  "final_verdict": "ABORT",
+  "final_fitness": 0.6525333333333333,
+  "final_rmse": 0.011754162765814011,
+  "note": "Agent stopped; evaluator may now read GT.",
+  "agent_model": "agnes-3.0-flash"
+}

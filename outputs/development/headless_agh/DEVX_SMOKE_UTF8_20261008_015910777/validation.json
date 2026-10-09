@@ -1,0 +1,6 @@
+{
+  "status": "FAILED",
+  "reason": "Windows PowerShell/.NET on this machine does not expose ProcessStartInfo.StandardInputEncoding. AGH was not started. The failed attempt is retained.",
+  "agh_exit_code": 2,
+  "session_id": "NOT_AVAILABLE"
+}

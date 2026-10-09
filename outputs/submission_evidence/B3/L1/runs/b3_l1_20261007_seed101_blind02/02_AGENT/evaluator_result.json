@@ -1,0 +1,10 @@
+{
+  "gt_evaluator": true,
+  "note": "GT read only after Agent stop (ACCEPT). Pure-Python computation (no BLAS matmul).",
+  "rot_err_deg": 0.9483414645974396,
+  "trans_err": 0.0008369475893995273,
+  "success": true,
+  "rot_thr_deg": 5.0,
+  "trans_thr": 0.05,
+  "gt_path": "D:\\STUDY\\darker\\agent-pointcloud-registration\\data\\L1\\seed_101\\gt_transform.npy"
+}

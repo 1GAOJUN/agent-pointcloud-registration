@@ -1,0 +1,9 @@
+{
+  "case_id": "case_unknown_C",
+  "source_cloud": "source_cloud (3D point cloud, path withheld from Agent)",
+  "target_cloud": "target_cloud (3D point cloud, path withheld from Agent)",
+  "source_point_count": 30000,
+  "target_point_count": 32400,
+  "initial_transform_available": true,
+  "note": "Agent decision stage does not receive full paths, L1/L2/L3/L4 level labels, seed, or historical results."
+}

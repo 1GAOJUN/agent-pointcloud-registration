@@ -1,0 +1,1 @@
+{"assessment":"Perfect registration achieved: fitness 1.0, RMSE 0.0014233. RANSAC global init found the correct correspondence (fitness 1.0) and ICP refinement converged cleanly.","decision":"ACCEPT","reason":"fitness=1.0 with RMSE 0.0014 is an essentially perfect registration; no further retry needed.","next_method":null,"next_parameter_policy":null,"confidence":0.99}

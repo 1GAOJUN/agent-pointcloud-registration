@@ -1,0 +1,8 @@
+{
+    "schema":  "devx-agh-identifiers/v1",
+    "session_id":  "agnes:local:local-dev:cli:workspace:f7a8d4b327eba0be",
+    "task_id":  "NOT_AVAILABLE",
+    "native_run_id":  "NOT_AVAILABLE",
+    "evidence_run_id":  "DEVX_TOOL_SMOKE_20261008_095119588",
+    "source":  "agnes-cli-result/v1 stdout"
+}

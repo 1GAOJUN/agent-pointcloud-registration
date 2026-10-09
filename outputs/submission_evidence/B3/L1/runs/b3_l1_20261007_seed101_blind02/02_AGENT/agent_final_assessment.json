@@ -1,0 +1,12 @@
+{
+  "assessment": "Perfect registration achieved: fitness 1.0, RMSE 0.0014233. RANSAC global init found the correct correspondence (fitness 1.0) and ICP refinement converged cleanly.",
+  "decision": "ACCEPT",
+  "reason": "fitness=1.0 with RMSE 0.0014 is an essentially perfect registration; no further retry needed.",
+  "next_method": null,
+  "next_parameter_policy": null,
+  "confidence": 0.99,
+  "_agnnes_model": "agnes-3.0-flash",
+  "_agnnes_timestamp": "2026-10-07T19:55:26",
+  "_implementation": "agnnes_real",
+  "_fitness": 1.0
+}

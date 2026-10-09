@@ -1,0 +1,29 @@
+{
+  "observation_summary": "30000-point clean point cloud pair at matching density/scale; PCA probe failed to give a usable rotation estimate, and centroid distance is small relative to scale, suggesting the transformation may be modest but unknown.",
+  "information_sufficient": true,
+  "requested_probe": "NONE",
+  "probe_reason": null,
+  "candidate_methods": [
+    {
+      "method": "LOCAL_ICP",
+      "pros": "Fast, effective for small rotations when clean data is available",
+      "risks": "May fail or converge poorly if rotation is large; lacks global robustness"
+    },
+    {
+      "method": "GLOBAL_FPFH_RANSAC_ICP",
+      "pros": "Robust to large rotations, suitable for clean point clouds and better when rotation magnitude is unknown",
+      "risks": "Heavier computation and possibly more parameters to tune"
+    }
+  ],
+  "selected_method": "GLOBAL_FPFH_RANSAC_ICP",
+  "parameter_policy": {
+    "global_corr_scale": 5.0,
+    "icp_max_corr_scale": 2.0
+  },
+  "reasoning_summary": "Because rotation magnitude is unknown and PCA did not provide a reliable estimate, a global registration approach is safer than assuming local alignment. The available CHEAP_LOCAL_ICP probe could check identity convergence, but the clean data, scale similarity, and uncertainty favor a robust global method.",
+  "confidence": 0.72,
+  "_agnnes_model": "agnes-3.0-flash",
+  "_agnnes_timestamp": "2026-10-08T18:53:11",
+  "_implementation": "agnnes_real",
+  "_agnnes_raw_response": "{\"observation_summary\":\"30000-point clean point cloud pair at matching density/scale; PCA probe failed to give a usable rotation estimate, and centroid distance is small relative to scale, suggesting the transformation may be modest but unknown.\",\"information_sufficient\":true,\"requested_probe\":\"NONE\",\"probe_reason\":null,\"candidate_methods\":[{\"method\":\"LOCAL_ICP\",\"pros\":\"Fast, effective for small rotations when clean data is available\",\"risks\":\"May fail or converge poorly if rotation is large; lacks global robustness\"},{\"method\":\"GLOBAL_FPFH_RANSAC_ICP\",\"pros\":\"Robust to large rotations, suitable for clean point clouds and better when rotation magnitude is unknown\",\"risks\":\"Heavier computation and possibly more parameters to tune\"}],\"selected_method\":\"GLOBAL_FPFH_RANSAC_ICP\",\"parameter_policy\":{\"global_corr_scale\":5.0,\"icp_max_corr_scale\":2.0},\"reasoning_summary\":\"Because rotation magnitude is unknown and PCA did not provide a reliable estimate, a global registration approach is safer than assuming local alignment. The available CHEAP_LOCAL_ICP probe could check identity convergence, but the clean data, scale similarity, and uncertainty favor a robust global method.\",\"confidence\":0.72}\n"
+}

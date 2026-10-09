@@ -1,0 +1,23 @@
+{
+  "run_id": "e0_scene_02_a_fixed",
+  "system_variant": "FIXED_PIPELINE",
+  "scene_id": "scene_02",
+  "seed": 1002,
+  "selected_method": "LOCAL_ICP",
+  "parameter_policy": {
+    "base_scale": 0.04,
+    "icp_max_corr_scale": 1.0
+  },
+  "probe_count": 0,
+  "attempt_count": 1,
+  "retry_count": 0,
+  "agent_verdict": "NOT_APPLICABLE",
+  "fitness": 0.13136666666666666,
+  "rmse": 0.022031613719840554,
+  "runtime_s": 3.460305499997048,
+  "rotation_error_deg": 126.88823043049726,
+  "translation_error": 0.5745598239874002,
+  "gt_success": false,
+  "false_accept": false,
+  "false_abort": false
+}

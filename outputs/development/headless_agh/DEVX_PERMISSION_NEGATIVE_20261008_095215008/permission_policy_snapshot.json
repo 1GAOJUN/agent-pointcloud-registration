@@ -1,0 +1,84 @@
+{
+  "schema": "agh-headless-permissions/v1",
+  "policy_version": "1.0.0",
+  "project": "AGH驱动的点云自动配准智能体",
+  "workspace": "D:\\STUDY\\darker\\agent-pointcloud-registration",
+  "agh_preset": "agent-pointcloud-headless-windows",
+  "enforcement": {
+    "mechanism": "AGH approval.command_policy",
+    "preset_source": "D:\\STUDY\\darker\\agnes-harness\\packages\\code\\presets\\agent-pointcloud-headless-windows.yaml",
+    "preset_sha256": "a322343524d4cd916b7b6f116cbe2ea5b6163623c180e561fee6338b553b1a68",
+    "profile_source": "D:\\STUDY\\darker\\agent-pointcloud-registration\\configs\\agh_profile.local-dev.yaml",
+    "profile_sha256": "f935298c454e02b5da80dcd71cd68ee8e139ca0ac3351ac3f075e15ec1ffa5e4",
+    "unmatched_requires_approval": "DENY_WHEN_HEADLESS",
+    "deny_precedence": true,
+    "global_approval_bypass": false
+  },
+  "agh_tool_registry_snapshot": {
+    "registered_names": [
+      "read",
+      "write",
+      "edit",
+      "grep",
+      "find",
+      "ls",
+      "todo"
+    ],
+    "source": "D:\\STUDY\\darker\\agnes-harness\\packages\\code\\presets\\agent-pointcloud-headless-windows.yaml",
+    "not_exposed": ["shell", "web_fetch"]
+  },
+  "allow": [
+    {
+      "tools": ["read", "grep", "find", "ls"],
+      "scope": "workspace-contained paths",
+      "reason": "Read-only project inspection; AGH tool metadata does not require approval."
+    },
+    {
+      "tools": ["write", "edit"],
+      "scope": "outputs/development/headless_agh/**",
+      "reason": "Development invocation and validation evidence."
+    },
+    {
+      "tools": ["write", "edit"],
+      "scope": "outputs/submission_evidence/** except outputs/submission_evidence/B3/**",
+      "reason": "Future formal Level/Run/Attempt evidence; Frozen B3 remains denied."
+    }
+  ],
+  "deny_or_require_explicit_review": [
+    {
+      "tools": ["write", "edit"],
+      "scope": "outputs/submission_evidence/B3/**",
+      "disposition": "DENY",
+      "reason": "Frozen Evidence."
+    },
+    {
+      "tools": ["write", "edit"],
+      "scope": "all other paths",
+      "disposition": "REQUIRE_EXPLICIT_REVIEW; DENY_WHEN_HEADLESS"
+    },
+    {
+      "tools": ["shell"],
+      "scope": "all commands, including destructive git, package changes, downloads, credential access, and project tool commands",
+      "disposition": "NOT_EXPOSED",
+      "reason": "AGH shipped-preset invariant forbids pre-approving any shell command."
+    },
+    {
+      "tools": ["web_fetch"],
+      "scope": "network access",
+      "disposition": "NOT_EXPOSED"
+    }
+  ],
+  "project_domain_tools": {
+    "python_registries": [
+      "PCA_ORIENTATION",
+      "CHEAP_LOCAL_ICP",
+      "LOCAL_ICP",
+      "GLOBAL_FPFH_RANSAC_ICP",
+      "SVD"
+    ],
+    "agh_registry_status": "NOT_REGISTERED_WITH_AGH",
+    "policy_status": "NOT_ALLOWLISTABLE_UNTIL_REGISTERED",
+    "evaluator_rule": "Evaluator may read GT only after Agent stop."
+  },
+  "secrets": "NONE"
+}

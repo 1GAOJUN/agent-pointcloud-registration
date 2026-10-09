@@ -1,0 +1,58 @@
+{
+  "task": "Registration result assessment: ACCEPT / RETRY / ABORT",
+  "current_attempt": {
+    "method": "GLOBAL_FPFH_RANSAC_ICP",
+    "parameter_policy": {
+      "global_corr_scale": 5.0,
+      "icp_max_corr_scale": 2.0
+    },
+    "observation": {
+      "fitness": 0.6024758740705585,
+      "rmse": 0.021734230838763826,
+      "ransac_fitness": 0.8507751937984496,
+      "ransac_rmse": 0.0854067409931291,
+      "elapsed_s": 212.33793429999787,
+      "ransac_max_correspondence_distance": 0.1694639438910025,
+      "icp_max_correspondence_distance": 0.067785577556401
+    }
+  },
+  "prior_attempts": [],
+  "probe_observations": [
+    {
+      "probe_name": "PCA_ORIENTATION",
+      "rotation_estimate_deg": null,
+      "orientation_confidence": "LOW",
+      "ambiguity_detected": true,
+      "ambiguity_reason": "near_line_degeneracy; near_isotropic_or_symmetric",
+      "source_anisotropy": 3.452,
+      "target_anisotropy": 1.3095,
+      "note": "rotation_estimate_deg null; axis structure unstable; not usable for angle confirmation."
+    }
+  ],
+  "guardrail_reference": {
+    "floor_fitness": 0.3,
+    "max_retry_remaining": 3,
+    "note": "Guardrail only sets a minimum acceptable quality floor and retry limit; the professional judgment of ACCEPT/RETRY/ABORT is yours."
+  },
+  "output_schema": {
+    "assessment": "string (short professional assessment of result quality)",
+    "global_consistency_assessment": "string (whether all observable geometry/probe evidence supports one globally consistent pose)",
+    "local_optimum_risk": "LOW | MEDIUM | HIGH | UNKNOWN",
+    "evidence_conflicts": "array of unresolved contradictions or ambiguities; empty only when none remain",
+    "decision": "ACCEPT | RETRY | ABORT",
+    "reason": "string (short professional reason)",
+    "next_method": "string (tool name) or null (if ACCEPT/ABORT)",
+    "next_parameter_policy": "object or null",
+    "confidence": "float in [0.0, 1.0]"
+  },
+  "notes": [
+    "Do NOT read GT transform or rotation/translation error in your assessment.",
+    "Fitness and RMSE measure consistency of accepted local correspondences; even strong values are not, by themselves, proof of the globally correct pose.",
+    "Cross-check the current result against all available orientation, geometry, probe, and prior-attempt evidence before deciding.",
+    "If ambiguity, degeneracy, or probe contradiction remains, explicitly assess local-optimum risk and decide whether more evidence, changed parameters, another registered method, or acceptance is professionally justified.",
+    "ACCEPT: the combined observable evidence, not fitness alone, is sufficient for the task; explain why any remaining local-optimum risk is acceptable.",
+    "RETRY: result is below acceptable quality but there is a plausible retry path.",
+    "ABORT: no reasonable path to a better result; stop.",
+    "These are judgment requirements only. Python does not map any observation to a method or verdict."
+  ]
+}

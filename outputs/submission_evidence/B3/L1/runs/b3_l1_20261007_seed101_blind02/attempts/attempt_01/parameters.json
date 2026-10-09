@@ -1,0 +1,13 @@
+{
+  "base_scale": 0.004997335593520008,
+  "agnnes_multiplier": {
+    "global_corr_scale": 5.0,
+    "icp_max_corr_scale": 2.0
+  },
+  "derived_actual_parameters": {
+    "max_correspondence_distance": null,
+    "ransac_max_corr": 0.024987
+  },
+  "final_selected_method": "GLOBAL_FPFH_RANSAC_ICP",
+  "note": "Agent chooses multiplier; Python computes actual distances."
+}

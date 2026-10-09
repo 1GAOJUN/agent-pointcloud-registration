@@ -1,0 +1,9 @@
+{
+    "schema":  "devx-agh-exit-status/v1",
+    "agh_process_exit_code":  2,
+    "agh_result_exit_code":  "NOT_AVAILABLE",
+    "reason":  "NOT_AVAILABLE",
+    "session_id":  "NOT_AVAILABLE",
+    "launcher_error":  "The property \u0027StandardInputEncoding\u0027 cannot be found on this object. Verify that the property exists and can be set.",
+    "completed_at_utc":  "2026-10-07T17:59:12.2900846Z"
+}

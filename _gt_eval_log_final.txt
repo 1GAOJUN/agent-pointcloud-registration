@@ -1,0 +1,5 @@
+trace_val = 2.9997260481107566
+rot_err_deg = 0.948341
+trans_err = 0.000837
+success = True
+evaluator_result.json written

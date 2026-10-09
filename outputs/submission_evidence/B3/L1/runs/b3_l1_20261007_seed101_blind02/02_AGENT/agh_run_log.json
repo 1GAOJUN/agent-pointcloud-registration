@@ -1,0 +1,43 @@
+{
+  "agent_model_name": "agnes-3.0-flash",
+  "agent_model_version": "2026-10-07",
+  "decision_implementation": "agnnes_real",
+  "run_timestamp": "2026-10-07T20:16:54",
+  "gh_session_key": "f2adfac5-8193-400e-8ba7-e7ccdb4f8476",
+  "task_prompt_summary": "给定匿名 source_cloud/target_cloud 与诊断指标及可用工具说明，选择配准方法与参数策略，执行后据可观测指标判断 ACCEPT/RETRY/ABORT。",
+  "decision_rounds": [
+    {
+      "round": 1,
+      "raw_file": "agnnes_raw_decision_01.json",
+      "implementation": "agnnes_real"
+    },
+    {
+      "round": 2,
+      "raw_file": "agnnes_raw_decision_02.json",
+      "implementation": "agnnes_real"
+    },
+    {
+      "round": 3,
+      "raw_file": "agnnes_raw_decision_03.json",
+      "implementation": "agnnes_real"
+    }
+  ],
+  "assessment": {
+    "raw_file": "agnnes_raw_assessment.json",
+    "implementation": "agnnes_real"
+  },
+  "probe_observations": [
+    {
+      "file": "probe_observation_01.json",
+      "probe": "PCA_ORIENTATION"
+    },
+    {
+      "file": "probe_observation_02.json",
+      "probe": "CHEAP_LOCAL_ICP"
+    }
+  ],
+  "tool_calls": [
+    "tool_call_01.json"
+  ],
+  "note": "All decisions and assessments from real Agnes (subagent_fork). Python only validates guardrails and dispatches tools."
+}

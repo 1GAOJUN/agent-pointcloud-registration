@@ -1,0 +1,15 @@
+{
+    "schema":  "devx-agh-environment/v1",
+    "captured_at_utc":  "2026-10-07T17:57:43.0577110Z",
+    "computer_name":  "LAPTOP-M6DKBA6A",
+    "os_version":  "Microsoft Windows NT 10.0.22621.0",
+    "powershell_version":  "5.1.22621.4249",
+    "node_version":  "v24.21.0",
+    "agh_cli_version":  "agh 0.0.0 node 24.21.0 protocol _agnes/v1",
+    "agh_entry":  "D:\\STUDY\\darker\\agnes-harness\\packages\\cli\\dist\\local-dev-20261007-234020144\\agnes.mjs",
+    "agh_entry_sha256":  "19e365c9461bc8aa13ced0fb68b552a8fd2d177991f56f4ed499319afe1cb24a",
+    "workspace":  "D:\\STUDY\\darker\\agent-pointcloud-registration",
+    "profile":  "local-dev",
+    "permission_mode":  "profile-default",
+    "permission_note":  "The current AGH CLI has no general permission-mode flag; profile/session policy applies."
+}

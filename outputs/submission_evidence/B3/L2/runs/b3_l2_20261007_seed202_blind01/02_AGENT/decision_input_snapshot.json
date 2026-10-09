@@ -1,0 +1,42 @@
+{
+  "snapshot_purpose": "Pre-Agnes-decision input audit. Captured before first real Agnes decision call.",
+  "case_label": "case_unknown_B",
+  "inputs_visible_to_agnnes": {
+    "input_summary": {
+      "case_id": "case_unknown_B",
+      "source_cloud": "source_cloud (3D point cloud, path withheld from Agent)",
+      "target_cloud": "target_cloud (3D point cloud, path withheld from Agent)",
+      "source_point_count": 30000,
+      "target_point_count": 30000,
+      "initial_transform_available": true,
+      "note": "Agent decision stage does not receive full paths, L1/L2/L3/L4 level labels, seed, or historical results."
+    },
+    "diagnosis": {
+      "source_point_count": 30000,
+      "target_point_count": 30000,
+      "source_bbox_diagonal": 1.694253346608292,
+      "target_bbox_diagonal": 1.7874296448904887,
+      "source_median_spacing": 0.010847342104691012,
+      "target_median_spacing": 0.010847342104691009,
+      "density_ratio": 0.9999999999999997,
+      "centroid_distance": 0.5591454022022617,
+      "initial_transform_available": true,
+      "sample_size": 5000,
+      "sampling_seed": 101,
+      "overlap_ratio": "NOT_IMPLEMENTED",
+      "noise_level": "NOT_IMPLEMENTED",
+      "outlier_level": "NOT_IMPLEMENTED",
+      "rotation_magnitude_estimate": "NOT_IMPLEMENTED",
+      "base_scale": 0.03388506693216584
+    }
+  },
+  "inputs_NOT_visible_to_agnnes": [
+    "disk paths (source.ply / target.ply / gt_transform.npy)",
+    "level label (L2)",
+    "seed (202)",
+    "rotation/translation magnitude description",
+    "historical B0 result",
+    "B3A result",
+    "GT transform values"
+  ]
+}

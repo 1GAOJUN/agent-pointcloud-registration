@@ -1,0 +1,92 @@
+{
+  "prompt": {
+    "task": "Registration result assessment: ACCEPT / RETRY / ABORT",
+    "current_attempt": {
+      "method": "LOCAL_ICP",
+      "parameter_policy": {
+        "global_corr_scale": null,
+        "icp_max_corr_scale": 2.5
+      },
+      "observation": {
+        "fitness": 1.0,
+        "rmse": 2.689547463250141e-16,
+        "inlier_rmse": 2.689547463250141e-16,
+        "elapsed_s": 0.7346623000012187,
+        "max_correspondence_distance": 0.08473007885816825,
+        "tool_name": "LOCAL_ICP",
+        "parameter_policy_used": {
+          "global_corr_scale": null,
+          "icp_max_corr_scale": 2.5
+        }
+      }
+    },
+    "prior_attempts": [],
+    "probe_observations": [
+      {
+        "probe_name": "PCA_ORIENTATION",
+        "rotation_estimate_deg": null,
+        "orientation_confidence": "LOW",
+        "ambiguity_detected": true,
+        "ambiguity_reason": "near_line_degeneracy (λ1≈λ2; transverse axes undetermined); near_line_degeneracy (λ1≈λ2; transverse axes undetermined)",
+        "source_anisotropy": 2.8291,
+        "target_anisotropy": 2.8291,
+        "source_eigenvalues": [
+          0.1164712,
+          0.04453601,
+          0.04116888
+        ],
+        "target_eigenvalues": [
+          0.1164712,
+          0.04453601,
+          0.04116888
+        ],
+        "ambiguity_handling": "per_axis_sign_greedy + permutation_argmax_trace",
+        "runtime_s": 0.0994,
+        "note": "主轴结构不稳定；不得将 rotation_estimate_deg 用于算法选择。",
+        "_probe_request": {
+          "probe_name": "PCA_ORIENTATION",
+          "requested_by": "agnnes_real",
+          "probe_reason": "rotation_magnitude_estimate is NOT_IMPLEMENTED, which is the main uncertainty separating LOCAL_ICP from GLOBAL_FPFH_RANSAC_ICP. PCA_ORIENTATION gives a coarse relative orientation at negligible cost and directly addresses that uncertainty. A low-confidence or ambiguous PCA result would still leave the option to fall back to the other probe or a conservative choice."
+        }
+      },
+      {
+        "probe_name": "CHEAP_LOCAL_ICP",
+        "initial_fitness": 0.23563333333333333,
+        "probe_fitness": 0.2764,
+        "initial_rmse": 0.037058647462257684,
+        "probe_rmse": 0.03691683125691449,
+        "fitness_improvement": 0.040766666666666646,
+        "correspondence_count": null,
+        "iterations": 5,
+        "runtime_s": 0.4415,
+        "transform_delta_magnitude": 0.4082618904862413,
+        "max_correspondence_distance": 0.06778406308653459,
+        "note": "initial_* 为 identity 初值 1 次迭代近似 baseline；probe 固定 5 次迭代，无 Global 初始化，无 SOR。 结果只作观察信息，不直接映射算法。",
+        "_probe_request": {
+          "probe_name": "CHEAP_LOCAL_ICP",
+          "requested_by": "agnnes_real",
+          "probe_reason": "PCA orientation is LOW confidence and rotation magnitude is unknown; a cheap local ICP convergence signal will indicate whether the initial transform is already near a local optimum, which determines whether low-cost LOCAL_ICP can suffice or whether the high-cost GLOBAL_FPFH_RANSAC_ICP is required."
+        }
+      }
+    ],
+    "guardrail_reference": {
+      "floor_fitness": 0.3,
+      "max_retry_remaining": 3,
+      "note": "Guardrail only sets a minimum acceptable quality floor and retry limit; the professional judgment of ACCEPT/RETRY/ABORT is yours."
+    },
+    "output_schema": {
+      "assessment": "string (short professional assessment of result quality)",
+      "decision": "ACCEPT | RETRY | ABORT",
+      "reason": "string (short professional reason)",
+      "next_method": "string (tool name) or null (if ACCEPT/ABORT)",
+      "next_parameter_policy": "object or null",
+      "confidence": "float in [0.0, 1.0]"
+    },
+    "notes": [
+      "Do NOT read GT transform or rotation/translation error in your assessment.",
+      "ACCEPT: result quality is sufficient for the task.",
+      "RETRY: result is below acceptable quality but there is a plausible retry path.",
+      "ABORT: no reasonable path to a better result; stop."
+    ]
+  }
+}

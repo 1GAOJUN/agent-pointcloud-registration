@@ -1,0 +1,24 @@
+{
+  "observation_summary": "source has 30000 pts, target has 18024 pts (60.1 percent of source). centroid_distance=0.5952 (17.5x base_scale=0.0339) indicates very large initial offset. PCA_ORIENTATION probe returned LOW confidence with ambiguity detected (near-line source geometry, near-isotropic target geometry); no usable rotation estimate. The combination of large centroid offset, target size reduction, and absent reliable orientation evidence strongly suggests a high-rotation, low-overlap scenario.",
+  "information_sufficient": true,
+  "requested_probe": "NONE",
+  "candidate_methods": [
+    {
+      "method": "GLOBAL_FPFH_RANSAC_ICP",
+      "pros": "Robust to large rotation and low overlap via FPFH+RANSAC global initialization; handles the large centroid offset without falling into a wrong ICP basin.",
+      "risks": "Higher wall time; RANSAC may struggle if overlap is very low; SOR may remove useful structure on small target. PCA LOW confidence means no independent rotation confirmation, so RANSAC search space is wider than ideal."
+    },
+    {
+      "method": "LOCAL_ICP",
+      "pros": "Fast, clean convergence when angle is small and overlap is high.",
+      "risks": "Identity init with 17.5x base_scale centroid offset and unconfirmed rotation magnitude will almost certainly converge to a wrong basin. PCA LOW confidence means we cannot confirm angle is small. High local-optimum risk."
+    }
+  ],
+  "selected_method": "GLOBAL_FPFH_RANSAC_ICP",
+  "parameter_policy": {
+    "global_corr_scale": 5.0,
+    "icp_max_corr_scale": 2.0
+  },
+  "reasoning_summary": "Large centroid offset (17.5x base_scale), target size reduction (point_count_ratio=0.601, bbox_diagonal_ratio=0.875), and PCA LOW confidence (no usable rotation estimate) all point to a high-rotation/low-overlap scenario. GLOBAL_FPFH_RANSAC_ICP with global_corr_scale=5.0 gives RANSAC sufficient correspondence range to handle the unknown rotation; icp_max_corr_scale=2.0 provides a moderate ICP refinement threshold. LOCAL_ICP is rejected due to high local-optimum risk at this offset.",
+  "confidence": 0.72
+}

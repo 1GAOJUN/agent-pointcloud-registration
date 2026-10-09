@@ -1,0 +1,3 @@
+step1: obs loaded
+step2: T_est shape=(4, 4)
+step3: T_gt shape=(4, 4)

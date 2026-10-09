@@ -1,0 +1,16 @@
+{
+  "probe_requests": [
+    {
+      "probe_name": "PCA_ORIENTATION",
+      "requested_by": "agnnes_real",
+      "probe_reason": "PCA gives a coarse relative-rotation estimate and anisotropy in under 1 ms. Given the large centroid offset and unknown rotation, even a LOW-confidence PCA result helps distinguish 'small rotation, likely LOCAL_ICP works' from 'large/symmetric rotation, need GLOBAL fallback', and flags ambiguity when the shape is isotropic. Cheaper and more informative than burning the first probe on an ICP trial before knowing the rotation regime.",
+      "round": 1
+    },
+    {
+      "probe_name": "CHEAP_LOCAL_ICP",
+      "requested_by": "agnnes_real",
+      "probe_reason": "PCA with MEDIUM confidence tells us there may be roughly a small-to-moderate rotation, but does not say whether identity-initialized local ICP will actually converge. A CHEAP_LOCAL_ICP probe directly tests that convergence trend at very low cost and discriminates between the LOCAL_ICP and GLOBAL_FPFH_RANSAC_ICP regimes, which the PCA angle alone cannot confirm given its uncertainty and the degenerate eigenvalue pair.",
+      "round": 2
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "agent_model_name": "agnes-3.0-flash",
+  "agent_model_version": "2026-10-06",
+  "decision_implementation": "agnnes_real",
+  "run_id": "e0_scene_04_c_blind02",
+  "variant": "REAL_AGNES_NO_PROBE",
+  "scene_id": "scene_04",
+  "frozen_seed_metadata": 1004,
+  "run_timestamp": "2026-10-08",
+  "requested_probe": "NONE",
+  "probe_policy_note": "Active Probe disabled for this variant; src.agent_probes.dispatch_probe not called; requested_probe kept NONE.",
+  "decision_source": "Agnes (AGH session), not src.agent_runner.heuristic_decide",
+  "assessment_source": "Agnes (AGH session), not src.agent_runner.heuristic_assess",
+  "registration_dispatch": "src.agent_tools dispatch (run_local_icp / run_global_fpfh_ransac_icp)",
+  "attempt_count": 1,
+  "attempts": [
+    {
+      "step": 1,
+      "tool_name": "GLOBAL_FPFH_RANSAC_ICP",
+      "entrypoint": "src.agent_tools.run_global_fpfh_ransac_icp",
+      "parameter_policy": {"global_corr_scale": 6.0, "icp_max_corr_scale": 1.5},
+      "observation": "observation_01.json",
+      "tool_call_record": "tool_call_01.json",
+      "agent_assessment": "agent_assessment_01.json",
+      "decision": "ACCEPT"
+    }
+  ],
+  "gt_evaluator": {
+    "note": "Independent evaluator read evaluator_only/gt_transform.npy only after the Agent reached its terminal verdict (GT isolation preserved).",
+    "result_file": "evaluator_result.json"
+  },
+  "notes": [
+    "decision_implementation=agnnes_real: decision/assessment JSON produced by the real Agnes model inside the AGH session; the @deprecated heuristic baseline in src.agent_runner was not used.",
+    "Environment deviation, documented in evaluator_result.json: the registered src.agent_evaluator / src.evaluate matrix-product kernels crash with a native stack overflow (0xC00000FD) in the pointcloud_agh Python env (numpy 2.4.6). The evaluator was run via a verbatim scalar-expansion of the same registered formulas and thresholds (rot<5.0 deg, trans<0.05); no new formula, parameter, or threshold was introduced."
+  ]
+}

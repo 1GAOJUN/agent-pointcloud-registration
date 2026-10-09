@@ -1,0 +1,22 @@
+{
+  "assessment": "LOCAL_ICP converged to fitness=1.0 in under 1 second, indicating strong local convergence. However, the high_rmse value of 0.0498 (nearly 3x base_scale=0.0339) and the cheap ICP probe's low bidirectional_support=0.30 strongly suggest the result is trapped in a local optimum - the ICP accepted a large set of inlier correspondences but likely aligned to a geometrically incorrect pose.",
+  "global_consistency_assessment": "The high rmse relative to base_scale is a major concern. The cheap ICP probe showed only 50% source-to-target support and just 21% target-to-source support, meaning most target points are far from the aligned source. This pattern is inconsistent with a globally correct pose where support would be symmetric and high on both sides.",
+  "local_optimum_risk": "HIGH",
+  "evidence_conflicts": [
+    "fitness=1.0 but rmse=0.0498 (~1.47x base_scale) is uncharacteristic of a well-aligned result where rmse should approach the noise level",
+    "asymmetric support (source_to_target=0.50, target_to_source=0.21) from CHEAP_LOCAL_ICP probe indicates many target points lack source counterparts",
+    "PCA_ORIENTATION returned LOW confidence with no usable rotation estimate, so there is no independent orientation evidence to confirm the ICP result"
+  ],
+  "decision": "RETRY",
+  "reason": "Despite perfect fitness, the high rmse and asymmetric probe support strongly indicate local optimum. A global registration method is needed to obtain a correct global pose estimate.",
+  "next_method": "GLOBAL_FPFH_RANSAC_ICP",
+  "next_parameter_policy": {
+    "global_corr_scale": 8.0,
+    "icp_max_corr_scale": 3.0
+  },
+  "confidence": 0.72,
+  "_agnnes_model": "agnes-3.0-flash",
+  "_agnnes_timestamp": "2026-10-08T17:12:33",
+  "_implementation": "agnnes_real",
+  "_fitness": 1.0
+}

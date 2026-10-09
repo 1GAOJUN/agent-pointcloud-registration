@@ -1,0 +1,22 @@
+{
+  "agent_model_name": "agnes-3.0-flash",
+  "agent_model_version": "2026-10-06",
+  "decision_implementation": "agnnes_real",
+  "run_timestamp": "2026-10-08 12:15:39",
+  "probe_sequence": [
+    "PCA_ORIENTATION",
+    "CHEAP_LOCAL_ICP"
+  ],
+  "attempts": [
+    {
+      "step": 1,
+      "method": "LOCAL_ICP",
+      "policy": {
+        "icp_max_corr_scale": 2.0
+      },
+      "decision": "ACCEPT",
+      "fitness": 0.9829666666666667
+    }
+  ],
+  "note": "Agnes made all decisions. GLOBAL_FPFH_RANSAC_ICP not formally attempted."
+}

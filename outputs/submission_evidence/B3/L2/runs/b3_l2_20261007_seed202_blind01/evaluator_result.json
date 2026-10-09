@@ -1,0 +1,38 @@
+{
+  "gt_evaluator": true,
+  "note": "GT 仅在此处读取；Agent 决策阶段不可见。",
+  "rot_err_deg": 0.0,
+  "trans_err": 0.0,
+  "success": true,
+  "rot_thr_deg": 5.0,
+  "trans_thr": 0.05,
+  "gt_path": "D:\\STUDY\\darker\\agent-pointcloud-registration\\outputs\\ICP\\L2\\L2\\seed_202\\gt_transform.npy",
+  "timestamp": "2026-10-07 21:01:22",
+  "final_agent_decision": "ACCEPT",
+  "estimated_transform": [
+    [
+      0.43301270189221935,
+      -0.853853892268062,
+      0.2888486293176435,
+      0.2
+    ],
+    [
+      -0.24999999999999992,
+      0.19411428382689067,
+      0.9485882377588146,
+      0.4
+    ],
+    [
+      -0.8660254037844389,
+      -0.48296291314453416,
+      -0.12940952255126037,
+      0.3
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ]
+}

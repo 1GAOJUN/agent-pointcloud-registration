@@ -1,0 +1,18 @@
+{
+  "source_point_count": 30000,
+  "target_point_count": 30282,
+  "source_bbox_diagonal": 0.2498667796760004,
+  "target_bbox_diagonal": 0.7427149068791176,
+  "source_median_spacing": 0.001568212320182312,
+  "target_median_spacing": 0.0027931771317078516,
+  "density_ratio": 1.781121788013457,
+  "centroid_distance": 0.39307727635848594,
+  "initial_transform_available": true,
+  "sample_size": 5000,
+  "sampling_seed": 101,
+  "overlap_ratio": "NOT_IMPLEMENTED",
+  "noise_level": "NOT_IMPLEMENTED",
+  "outlier_level": "NOT_IMPLEMENTED",
+  "rotation_magnitude_estimate": "NOT_IMPLEMENTED",
+  "base_scale": 0.004997335593520008
+}

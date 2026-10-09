@@ -1,0 +1,28 @@
+git_snapshot.txt — updated 2026-10-07 (L1 freeze / submission_evidence/L1 created)
+Repository: D:\STUDY\darker\agent-pointcloud-registration
+NO automatic commit was made (per instruction: check only, do not commit).
+
+branch: main
+branch state: up to date with origin/main
+current commit hash: 314a85e6a749eb1be7dd159acf3d1dcab85c4956
+current commit subject: update: 新的方案和项目书
+
+git status --porcelain (untracked, as of this freeze):
+  ?? docs/evidence_log/
+  ?? outputs/submission_evidence/
+
+Breakdown of untracked content:
+  outputs/submission_evidence/l1_seed_101/        (previous closeout, L1 evidence package v1)
+  outputs/submission_evidence/L1/                 (NEW, this freeze: 00_INDEX / 01_AGH / 02_AGENT /
+                                                   03_TOOL_CHAIN / 04_CONFIG / 05_VALIDATION /
+                                                   06_VISUALS, 23 files total)
+  docs/evidence_log/2026-10-07.md                 (new evidence log, to be updated this round)
+
+Note on git-ignored files (NOT shown in status but present on disk):
+  outputs/submission_evidence/l1_seed_101/figures/source.ply
+  outputs/submission_evidence/l1_seed_101/figures/target.ply
+  (covered by .gitignore rule "outputs/**/*.ply"; kept on disk for
+   reproducibility of figure generation, deliberately not tracked)
+
+No files under outputs/agent_runs/l1_seed_101/ (original L1 run evidence)
+were created, modified, moved or deleted by this freeze.

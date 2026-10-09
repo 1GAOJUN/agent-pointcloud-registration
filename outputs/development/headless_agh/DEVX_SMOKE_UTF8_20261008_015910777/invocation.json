@@ -1,0 +1,27 @@
+{
+    "schema":  "devx-agh-invocation/v1",
+    "evidence_run_id":  "DEVX_SMOKE_UTF8_20261008_015910777",
+    "started_at_utc":  "2026-10-07T17:59:10.8032903Z",
+    "launcher":  "D:\\STUDY\\darker\\agent-pointcloud-registration\\scripts\\agh_run.ps1",
+    "prompt_source":  "D:\\STUDY\\darker\\agent-pointcloud-registration\\tasks\\DEVX_SMOKE.md",
+    "prompt_snapshot":  "prompt_snapshot.md",
+    "workspace":  "D:\\STUDY\\darker\\agent-pointcloud-registration",
+    "output_directory":  "D:\\STUDY\\darker\\agent-pointcloud-registration\\outputs\\development\\headless_agh\\DEVX_SMOKE_UTF8_20261008_015910777",
+    "agh_entry":  "D:\\STUDY\\darker\\agnes-harness\\packages\\cli\\dist\\local-dev-20261007-234020144\\agnes.mjs",
+    "profile":  "local-dev",
+    "model_override":  "PROFILE_DEFAULT",
+    "permission_mode":  "profile-default",
+    "agh_home_override":  "C:\\Users\\GAOJUN\\AppData\\Local\\Temp\\agh-devx-home-20261008",
+    "command":  [
+                    "node",
+                    "D:\\STUDY\\darker\\agnes-harness\\packages\\cli\\dist\\local-dev-20261007-234020144\\agnes.mjs",
+                    "-p",
+                    "--mode",
+                    "json",
+                    "--profile",
+                    "local-dev",
+                    "--cwd",
+                    "D:\\STUDY\\darker\\agent-pointcloud-registration"
+                ],
+    "prompt_transport":  "stdin"
+}

@@ -1,0 +1,68 @@
+{
+  "observation_summary": "Attempt 1 GLOBAL_FPFH_RANSAC_ICP produced moderate ICP fitness 0.6096 and low RMSE 0.01562; retry local ICP with wider correspondence threshold to test local basin stability and improve final fitness.",
+  "information_sufficient": true,
+  "requested_probe": "NONE",
+  "candidate_methods": [
+    {
+      "method": "LOCAL_ICP",
+      "pros": "fast; can test local basin and improve final ICP fitness if overlap sufficient",
+      "risks": "identity initial value may converge to a local optimum; support evidence was weak"
+    },
+    {
+      "method": "GLOBAL_FPFH_RANSAC_ICP",
+      "pros": "global robustness",
+      "risks": "runtime high; attempt 1 already used the same tool class"
+    }
+  ],
+  "selected_method": "LOCAL_ICP",
+  "parameter_policy": {
+    "icp_max_corr_scale": 2.0
+  },
+  "reasoning_summary": "Assessment requested LOCAL_ICP retry; use wider 2.0 base_scale threshold to recover more correspondences after initial identity/local convergence.",
+  "confidence": 0.58,
+  "_agnnes_model": "agnes-3.0-flash",
+  "_implementation": "agnnes_real",
+  "probe_observations": [
+    {
+      "probe_name": "PCA_ORIENTATION",
+      "rotation_estimate_deg": null,
+      "orientation_confidence": "LOW",
+      "ambiguity_detected": true,
+      "ambiguity_reason": "near_line_degeneracy (λ1≈λ2; transverse axes undetermined); near_line_degeneracy (λ1≈λ2; transverse axes undetermined)",
+      "source_anisotropy": 3.1628,
+      "target_anisotropy": 1.2963,
+      "source_eigenvalues": [
+        0.12128473,
+        0.04564041,
+        0.03834729
+      ],
+      "target_eigenvalues": [
+        0.06114707,
+        0.04844439,
+        0.0471694
+      ],
+      "ambiguity_handling": "per_axis_sign_greedy + permutation_argmax_trace",
+      "runtime_s": 0.0226,
+      "note": "主轴结构不稳定；不得将 rotation_estimate_deg 用于算法选择。"
+    },
+    {
+      "probe_name": "CHEAP_LOCAL_ICP",
+      "initial_fitness": 0.12393333333333334,
+      "probe_fitness": 0.15083333333333335,
+      "initial_rmse": 0.03807836668236578,
+      "probe_rmse": 0.038081320856580614,
+      "fitness_improvement": 0.026900000000000007,
+      "correspondence_count": null,
+      "iterations": 5,
+      "runtime_s": 0.2523,
+      "transform_delta_magnitude": 0.20531095827948395,
+      "max_correspondence_distance": 0.06778533936539578,
+      "source_to_target_support": 0.15083333333333335,
+      "target_to_source_support": 0.2656189259732326,
+      "bidirectional_support": 0.19240711080628264,
+      "support_confidence": "HIGH",
+      "support_distance_threshold": 0.06778533936539578,
+      "note": "initial_* 为 identity 初值 1 次迭代近似 baseline；probe 固定 5 次迭代，无 Global 初始化，无 SOR。 双向 support 是同一距离阈值下的最近邻支持代理，不是真实 overlap。 结果只作观察信息，不直接映射算法。"
+    }
+  ]
+}

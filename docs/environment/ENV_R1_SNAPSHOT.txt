@@ -1,0 +1,34 @@
+ENV_R1_SNAPSHOT.txt
+Generated: 2026-10-07 19:34:38
+============================================================
+
+sys.executable: D:\APP\Anaconda\envs\pointcloud_agh\python.exe
+Python version:   3.11.16 | packaged by conda-forge | (main, Sep  2 2026, 23:31:17) [MSC v.1944 64 bit (AMD64)]
+conda env:        pointcloud_agh
+
+Package versions (pip):
+  open3d           0.20.0
+  open3d-cpu       0.20.0
+  numpy            2.4.6
+  matplotlib       3.11.2
+
+sys.path (in env):
+  D:\APP\Anaconda\envs\pointcloud_agh\python311.zip
+  D:\APP\Anaconda\envs\pointcloud_agh\DLLs
+  D:\APP\Anaconda\envs\pointcloud_agh\Lib
+  D:\APP\Anaconda\envs\pointcloud_agh
+  D:\APP\Anaconda\envs\pointcloud_agh\Lib\site-packages
+
+Open3D install location:
+  D:\APP\Anaconda\envs\pointcloud_agh\Lib\site-packages\open3d
+  (DLLs: Open3D.dll, tbb12.dll)
+
+Smoke test results:
+  SMOKE 1  import open3d + version print          PASS
+  SMOKE 2  o3d.geometry.PointCloud()             PASS  npts=3
+  SMOKE 3  read_point_cloud L1/seed_001 source    PASS  30000 pts
+  SMOKE 4  agent_diagnose.py L1/seed_001         PASS  valid JSON
+
+Status: ENV_R1_RECOVERED
+
+No API keys, tokens, or secrets are recorded in this file.

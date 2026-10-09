@@ -1,0 +1,17 @@
+{
+  "assessment": "LOCAL_ICP retry improved final ICP fitness to 0.6525 and RMSE to 0.01175, but still below a professional 0.8 quality target; retry quota exhausted.",
+  "global_consistency_assessment": "No additional global probe remains; PCA was degenerate and cheap ICP support was weak, so global pose consistency cannot be fully established from observations alone.",
+  "local_optimum_risk": "MEDIUM",
+  "evidence_conflicts": [
+    "improved local ICP metrics remain moderate",
+    "weak bidirectional support from cheap ICP",
+    "PCA orientation unusable"
+  ],
+  "decision": "ABORT",
+  "reason": "After one RETRY and reaching the existing retry limit, fitness=0.6525 remains below acceptable quality; stopping Agent before independent evaluation.",
+  "next_method": null,
+  "next_parameter_policy": null,
+  "confidence": 0.73,
+  "_agnnes_model": "agnes-3.0-flash",
+  "_implementation": "agnnes_real"
+}

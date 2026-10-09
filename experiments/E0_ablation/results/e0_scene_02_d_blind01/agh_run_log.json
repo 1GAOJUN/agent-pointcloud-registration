@@ -1,0 +1,33 @@
+{
+  "agent_model_name": "agnes-3.0-flash",
+  "agent_model_version": "2026-10-06",
+  "decision_implementation": "agnnes_real",
+  "run_timestamp": "2026-10-08 17:10:11",
+  "task_prompt_summary": "给定匿名 source_cloud / target_cloud 与诊断指标及可用工具说明，选择配准方法与参数策略，执行后据可观测指标判断 ACCEPT/RETRY/ABORT。",
+  "probe_sequence": [
+    "PCA_ORIENTATION",
+    "CHEAP_LOCAL_ICP"
+  ],
+  "tool_calls": [
+    "tool_call_01.json"
+  ],
+  "decisions": [
+    "decision_01.json"
+  ],
+  "assessments": [
+    "agent_assessment_01.json"
+  ],
+  "attempts": [
+    {
+      "step": 1,
+      "method": "GLOBAL_FPFH_RANSAC_ICP",
+      "policy": {
+        "global_corr_scale": 5.0,
+        "icp_max_corr_scale": 2.0
+      },
+      "decision": "ACCEPT",
+      "fitness": 1.0
+    }
+  ],
+  "note": "decision_implementation=agnnes_real: decision/assessment JSON 由真实 Agnes 模型产生。"
+}

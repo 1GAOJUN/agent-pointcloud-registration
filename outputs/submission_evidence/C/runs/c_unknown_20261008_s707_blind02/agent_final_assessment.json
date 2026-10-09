@@ -1,0 +1,8 @@
+{
+  "assessment": "LOCAL_ICP achieved high fitness (0.983) with low RMSE. Alignment is strong.",
+  "decision": "ACCEPT",
+  "reason": "fitness=0.9830 greatly exceeds 0.8 quality threshold; rmse=0.016156 is very low relative to base_scale=0.0339",
+  "confidence": 0.92,
+  "_agnnes_model": "agnes-3.0-flash",
+  "_implementation": "agnnes_real"
+}

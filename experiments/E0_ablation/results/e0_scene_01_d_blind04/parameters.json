@@ -1,0 +1,9 @@
+{
+  "base_scale": 0.033890278894224815,
+  "final_selected_method": "GLOBAL_FPFH_RANSAC_ICP",
+  "final_parameter_policy": {
+    "global_corr_scale": 5.0,
+    "icp_max_corr_scale": 2.0
+  },
+  "note": "Agent-selected scale factors are dimensionless relative to base_scale (diagnosis-derived)."
+}

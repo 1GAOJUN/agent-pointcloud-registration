@@ -1,0 +1,19 @@
+{
+  "probe_name": "CHEAP_LOCAL_ICP",
+  "initial_fitness": 0.12393333333333334,
+  "probe_fitness": 0.15083333333333335,
+  "initial_rmse": 0.03807836668236578,
+  "probe_rmse": 0.038081320856580614,
+  "fitness_improvement": 0.026900000000000007,
+  "correspondence_count": null,
+  "iterations": 5,
+  "runtime_s": 0.2523,
+  "transform_delta_magnitude": 0.20531095827948395,
+  "max_correspondence_distance": 0.06778533936539578,
+  "source_to_target_support": 0.15083333333333335,
+  "target_to_source_support": 0.2656189259732326,
+  "bidirectional_support": 0.19240711080628264,
+  "support_confidence": "HIGH",
+  "support_distance_threshold": 0.06778533936539578,
+  "note": "initial_* 为 identity 初值 1 次迭代近似 baseline；probe 固定 5 次迭代，无 Global 初始化，无 SOR。 双向 support 是同一距离阈值下的最近邻支持代理，不是真实 overlap。 结果只作观察信息，不直接映射算法。"
+}

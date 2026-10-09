@@ -1,0 +1,23 @@
+{
+  "run_id": "e0_scene_03_b_heuristic",
+  "system_variant": "HEURISTIC_BASELINE",
+  "scene_id": "scene_03",
+  "seed": 1003,
+  "selected_method": "GLOBAL_FPFH_RANSAC_ICP",
+  "parameter_policy": {
+    "global_corr_scale": 5.0,
+    "icp_max_corr_scale": 2.0
+  },
+  "probe_count": 0,
+  "attempt_count": 1,
+  "retry_count": 0,
+  "agent_verdict": "NOT_APPLICABLE",
+  "fitness": 0.9469197679466436,
+  "rmse": 0.014491727931279601,
+  "runtime_s": 151.90418130000035,
+  "rotation_error_deg": 84.36887650893678,
+  "translation_error": 0.00437730169349524,
+  "gt_success": false,
+  "false_accept": false,
+  "false_abort": false
+}

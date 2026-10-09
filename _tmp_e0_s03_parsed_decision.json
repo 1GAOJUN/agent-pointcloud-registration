@@ -1,0 +1,26 @@
+{
+  "observation_summary": "source 30000 pts, target 32400 pts, density_ratio=1.1917, bbox_diagonal_ratio=1.399, centroid_distance=0.4739 (offset_proxy approx 14). PCA_ORIENTATION LOW confidence (near_line_degeneracy, no usable rotation). CHEAP_LOCAL_ICP: initial_fitness=0.4796, probe_fitness=0.5026, small improvement; bidirectional_support=0.30 (low). Target high_distance_ratio_proxy=0.0684 (elevated).",
+  "information_sufficient": true,
+  "requested_probe": "NONE",
+  "candidate_methods": [
+    {
+      "method": "LOCAL_ICP",
+      "pros": "Low cost (~1-2s), can converge if overlap sufficient despite offset",
+      "risks": "Large centroid offset (0.47m) and low bidirectional support (0.30) may cause divergence or local optimum; target has elevated isolated-point proxy"
+    },
+    {
+      "method": "GLOBAL_FPFH_RANSAC_ICP",
+      "pros": "Robust global init handles large offset and noisy target; achieves high fitness in similar scenes",
+      "risks": "High cost (~60-150s); on clean small-angle data may be unnecessary"
+    }
+  ],
+  "selected_method": "LOCAL_ICP",
+  "parameter_policy": {
+    "icp_max_corr_scale": 4.0
+  },
+  "reasoning_summary": "Offset proxy ~14 and low bidirectional support suggest large initial misalignment. Try LOCAL_ICP first with widened correspondence threshold (scale=4.0) to tolerate outliers. If fitness insufficient, retry with GLOBAL_FPFH_RANSAC_ICP.",
+  "confidence": 0.55,
+  "_agnnes_model": "agnes-3.0-flash",
+  "_agnnes_timestamp": "2026-10-08T17:11:58",
+  "_implementation": "agnnes_real"
+}

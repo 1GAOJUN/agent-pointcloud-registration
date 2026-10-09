@@ -1,0 +1,2 @@
+run_id,phase,anonymous_case_label,python_executable,open3d_version,frozen_hash_verified,gt_success,final_status,core_frozen,evidence_path,created_at,notes
+b3_l2_20261007_seed202_blind01,B3B,case_unknown_B,D:\APP\Anaconda\envs\pointcloud_agh\python.exe,0.20.0,true,true,PASS,TRUE,outputs/submission_evidence/B3/L2/runs/b3_l2_20261007_seed202_blind01,2026-10-07,"network/transport interruption occurred after B3B core experiment had already completed and been frozen; no core rerun required."

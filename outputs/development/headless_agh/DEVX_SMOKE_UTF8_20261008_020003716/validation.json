@@ -1,0 +1,32 @@
+{
+  "schema": "devx-smoke-validation/v1",
+  "status": "PASSED",
+  "workspace": "D:\\STUDY\\darker\\agent-pointcloud-registration",
+  "agh_exit_code": 0,
+  "agh_reason": "completed",
+  "session_id": "agnes:local:local-dev:cli:workspace:f7a8d4b327eba0be",
+  "actual_primary_model": "agnes-3.0-flash",
+  "actual_primary_route": "account-acct-72beee64-f559-4c9c-8096-306373f6c35c",
+  "prompt_utf8_verified_in_native_ledger": true,
+  "native_export": "AVAILABLE",
+  "accepted_turn_tool_calls": [
+    {
+      "name": "read",
+      "args": {
+        "path": "README.md"
+      },
+      "resolved_policy": "read-only; approval never"
+    },
+    {
+      "name": "ls",
+      "args": {
+        "path": "<workspace>"
+      },
+      "resolved_policy": "read-only; approval never"
+    }
+  ],
+  "probe_run": false,
+  "registration_run": false,
+  "evaluator_run": false,
+  "ground_truth_read": false
+}

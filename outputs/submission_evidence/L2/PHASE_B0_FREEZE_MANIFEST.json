@@ -1,0 +1,36 @@
+{
+  "manifest_name": "PHASE_B0_FREEZE_MANIFEST",
+  "generated_at_utc": "2026-10-07T00:00:00Z",
+  "session_id": "70a7413c-5eec-42a1-94a6-7ad866957be9",
+  "run_id": "l2_20261007_seed202_blind01",
+  "agnes_model_name": "agnes-3.0-flash",
+  "git": {
+    "commit_hash": "314a85e",
+    "commit_subject": "update: 新的方案和项目书",
+    "untracked_files": [
+      "docs/evidence_log/",
+      "outputs/submission_evidence/"
+    ],
+    "note": "All src/ files are tracked and clean; only new evidence directories are untracked."
+  },
+  "frozen_file_hashes_sha256": {
+    "src/agent_runner.py": "40bf497a489731f7e5ba13aabbc0dd89337b0357cd735bb3dfc0081aa637fda3",
+    "src/agent_tools.py": "8b681cc2d3cb0c1fa998713a6cfdbbd65bb9f470fdfb609cbec0da0d54da3048",
+    "src/agent_diagnose.py": "7c1e089efbbb52c3e3675895bbc1530022a4a22c8f94f68cad93edac2fdd7f20",
+    "src/agent_evaluator.py": "b0a7736fc1e3b1348a3025edf270fa4083c7f4864f82ec58bc00812a4381dd88"
+  },
+  "frozen_behaviors": [
+    "Agent Prompt (decision heuristics in agnes_decide)",
+    "Diagnosis rules (agent_diagnose.diagnose)",
+    "Tool descriptions (TOOL_REGISTRY in agent_tools.py)",
+    "Algorithm selection policy (offset_proxy / density_ratio logic in agnes_decide)",
+    "Parameter policy (icp_max_corr_scale / global_corr_scale values)",
+    "Agent Runner flow (run_agent_case loop, max_retry=2)"
+  ],
+  "explicitly_no_modifications_made_in_this_session": true,
+  "proof_same_as_phase_a": {
+    "phase_a_l1_run_id": "l1_seed_101",
+    "phase_a_session_id": "49486ac2-0a14-4ea2-b46e-7ec573d4d46e",
+    "all_four_files_identical_by_sha256": true
+  }
+}

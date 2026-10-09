@@ -1,0 +1,27 @@
+{
+  "observation_summary": "Both probe quotas are exhausted: PCA reported symmetric/ambiguous principal axes and refused to emit a rotation estimate, and the cheap identity-initialized ICP probe barely improved fitness (0.137 → 0.165) with a large transform delta, indicating poor alignment without a global search. Centroid offset (0.559) and near-identical density/size suggest overlapping structure but substantial pose uncertainty. The combination of low probe fitness, null rotation estimate, and non-negligible centroid distance points to a pose that is not close enough for LOCAL_ICP to succeed from the initial transform.",
+  "information_sufficient": true,
+  "requested_probe": "NONE",
+  "candidate_methods": [
+    {
+      "method": "LOCAL_ICP",
+      "pros": "Low cost; effective when rotation is small and clouds are well-aligned.",
+      "risks": "Probe showed very weak fitness (0.165 after 5 ICP iterations) and a large transform delta; risk of converging to a poor local minimum without global initialization."
+    },
+    {
+      "method": "GLOBAL_FPFH_RANSAC_ICP",
+      "pros": "Fits a global search + ICP refinement, robust to large rotation and low initial alignment, consistent with the weak local probe and ambiguous PCA result.",
+      "risks": "Higher compute cost; may degrade on near-identical scale/density clouds where local solvers dominate, though this case's weak local signal justifies it."
+    }
+  ],
+  "selected_method": "GLOBAL_FPFH_RANSAC_ICP",
+  "parameter_policy": {
+    "global_corr_scale": 4.0,
+    "icp_max_corr_scale": 1.0
+  },
+  "reasoning_summary": "PCA ambiguity plus the low post-probe ICP fitness and large transform delta indicate the initial pose is too far from the solution for LOCAL_ICP to be reliable. A global FPFH+RANSAC search followed by ICP refinement is the robust choice; keeping icp_max_corr_scale at a conservative 1.0 (≈ base_scale, matching the median spacing) prevents over-aggressive correspondence matching after the global stage, and a moderate global_corr_scale of 4.0 gives the RANSAC a reasonable search radius.",
+  "confidence": 0.68,
+  "_agnnes_model": "agnes-3.0-flash",
+  "_agnnes_timestamp": "2026-10-07T20:58:27",
+  "_implementation": "agnnes_real"
+}
